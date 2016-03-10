@@ -7,6 +7,8 @@ project(${BINARY_NAME})
 
 set(CMAKE_CXX_EXTRA_FLAGS "-std=c++11 -Wall")
 
+set(CMAKE_AUTOMOC ON)
+
 if (DEBUG)
     set(CMAKE_CXX_EXTRA_FLAGS "${CMAKE_CXX_EXTRA_FLAGS} -O0 -DDEBUG=1")
 
@@ -46,7 +48,11 @@ set(HEADERS
 
 set(SOURCE_FILES ${SOURCES} ${HEADERS})
 
+find_package(Qt5Widgets)
+
 add_executable(${BINARY_NAME} ${SOURCE_FILES} src/jougen.cpp)
+
+target_link_libraries(${BINARY_NAME} Qt5::Widgets)
 
 if (ENABLE_TESTS)
     file(GLOB TEST_SOURCES
