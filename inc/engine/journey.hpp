@@ -4,9 +4,9 @@
 #include <iostream>
 #include <string>
 
-#include <common.h>
-#include <peopleStats.h>
-#include <day.h>
+#include <common.hpp>
+#include <peopleStats.hpp>
+#include <day.hpp>
 
 class Journey : public PeopleStats<Day> {
     public:

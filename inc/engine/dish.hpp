@@ -5,9 +5,9 @@
 #include <string>
 #include <map>
 
-#include <common.h>
-#include <peopleStats.h>
-#include <food.h>
+#include <common.hpp>
+#include <peopleStats.hpp>
+#include <food.hpp>
 
 #define HUNHDRED_GRAM 100
 

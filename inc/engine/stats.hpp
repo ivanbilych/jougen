@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 
-#include <common.h>
+#include <common.hpp>
 
 class Stats {
     private:

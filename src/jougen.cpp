@@ -1,4 +1,4 @@
-#include <debug.h>
+#include <debug.hpp>
 
 int main() {
     PRINT("Hello jougen!");

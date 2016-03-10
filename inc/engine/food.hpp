@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include <common.h>
-#include <item.h>
+#include <common.hpp>
+#include <item.hpp>
 
 class Food : public Item {
     public:

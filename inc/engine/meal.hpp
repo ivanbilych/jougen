@@ -3,9 +3,9 @@
 
 #include <iostream>
 
-#include <common.h>
-#include <peopleStats.h>
-#include <dish.h>
+#include <common.hpp>
+#include <peopleStats.hpp>
+#include <dish.hpp>
 
 class Meal : public PeopleStats<Dish> {
     public:

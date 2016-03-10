@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 
-#include <common.h>
-#include <stats.h>
+#include <common.hpp>
+#include <stats.hpp>
 
 class Item : public Stats {
     public:

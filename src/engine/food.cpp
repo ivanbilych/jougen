@@ -1,7 +1,7 @@
-#include <food.h>
-#include <engineLimits.h>
-#include <debug.h>
-#include <errors.h>
+#include <food.hpp>
+#include <engineLimits.hpp>
+#include <debug.hpp>
+#include <errors.hpp>
 
 Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType measureType, uint64_t fats, uint64_t proteins, uint64_t carbohydrates, uint64_t calories) :
         Item(name, mass, price, measureType, FOOD_MIN_MASS, FOOD_MAX_MASS, FOOD_MIN_PRICE, FOOD_MAX_PRICE, FOOD_MIN_FATS, FOOD_MAX_FATS, FOOD_MIN_PROTEINS, FOOD_MAX_PROTEINS, FOOD_MIN_CARBOHYDRATES, FOOD_MAX_CARBOHYDRATES, FOOD_MIN_CALORIES, FOOD_MAX_CALORIES) {

@@ -4,10 +4,10 @@
 #include <iostream>
 #include <string>
 
-#include <common.h>
-#include <peopleStats.h>
-#include <meal.h>
-#include <date.h>
+#include <common.hpp>
+#include <peopleStats.hpp>
+#include <meal.hpp>
+#include <date.hpp>
 
 class Day : public PeopleStats<Meal> {
     private:

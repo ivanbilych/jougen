@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include <common.h>
+#include <common.hpp>
 
 #define FEBRUARY               2
 #define NOT_LEAP_DAYS         28

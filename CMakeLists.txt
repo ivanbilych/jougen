@@ -19,7 +19,7 @@ else()
 endif()
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_EXTRA_FLAGS}")
-SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_EXTRA_FLAGS}")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_EXTRA_FLAGS}")
 
 set(INC_DIRS
     "inc/engine"
@@ -32,10 +32,10 @@ file(GLOB ENGINE_SOURCES
     "src/engine/*.cpp")
 
 file(GLOB ENGINE_HEADERS
-    "inc/engine/*.h")
+    "inc/engine/*.hpp")
 
 file(GLOB COMMON_HEADERS
-    "inc/*.h")
+    "inc/*.hpp")
 
 set(SOURCES
     ${ENGINE_SOURCES})
@@ -53,7 +53,7 @@ if (ENABLE_TESTS)
         "src/tests/*.cpp")
 
     file(GLOB TEST_HEADERS
-        "inc/tests/*.h")
+        "inc/tests/*.hpp")
 
     set(TEST_SOURCE_FILES ${SOURCE_FILES} ${TEST_SOURCES} ${TEST_HEADERS})
 

@@ -1,8 +1,8 @@
-#include <dish.h>
-#include <item.h>
-#include <engineLimits.h>
-#include <debug.h>
-#include <errors.h>
+#include <dish.hpp>
+#include <item.hpp>
+#include <engineLimits.hpp>
+#include <debug.hpp>
+#include <errors.hpp>
 
 Dish::Dish(std::string name, Food& food, uint64_t foodMass, uint64_t amountOfPeople) :
         Stats(name, DISH_MIN_MASS, DISH_MAX_MASS, DISH_MIN_PRICE, DISH_MAX_PRICE, DISH_MIN_FATS, DISH_MAX_FATS, DISH_MIN_PROTEINS, DISH_MAX_PROTEINS, DISH_MIN_CARBOHYDRATES, DISH_MAX_CARBOHYDRATES, DISH_MIN_CALORIES, DISH_MAX_CALORIES),

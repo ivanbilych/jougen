@@ -1,7 +1,7 @@
-#include <item.h>
-#include <engineLimits.h>
-#include <debug.h>
-#include <errors.h>
+#include <item.hpp>
+#include <engineLimits.hpp>
+#include <debug.hpp>
+#include <errors.hpp>
 
 const std::string Item::itemMeasureTypeNames[] = {
     "gram",

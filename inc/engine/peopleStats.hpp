@@ -5,11 +5,11 @@
 #include <string>
 #include <list>
 
-#include <common.h>
-#include <stats.h>
-#include <engineLimits.h>
-#include <debug.h>
-#include <errors.h>
+#include <common.hpp>
+#include <stats.hpp>
+#include <engineLimits.hpp>
+#include <debug.hpp>
+#include <errors.hpp>
 
 template<class T>
 class PeopleStats : public Stats {

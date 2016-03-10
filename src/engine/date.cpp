@@ -1,6 +1,6 @@
-#include <date.h>
-#include <debug.h>
-#include <errors.h>
+#include <date.hpp>
+#include <debug.hpp>
+#include <errors.hpp>
 
 const uint32_t Date::highDays[] = {1, 3, 5, 7, 8, 10, 12};
 
