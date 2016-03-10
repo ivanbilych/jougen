@@ -29,7 +29,9 @@ class Item : public Stats {
     public:
         Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType);
         virtual ~Item(void);
+
         Item& operator=(const Item& right);
+
         MeasureType getUnitType(void) const;
         std::string getUnitTypeName(void) const;
 };

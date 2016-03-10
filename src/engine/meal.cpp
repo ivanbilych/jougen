@@ -11,8 +11,16 @@ const std::string Meal::mealTypeNames[] = {
 };
 
 Meal::Meal(MealType mealType, const Dish& dish) :
-        PeopleStats<Dish>(mealTypeNames[static_cast<uint32_t>(mealType)], MEAL_MIN_MASS, MEAL_MAX_MASS, MEAL_MIN_PRICE, MEAL_MAX_PRICE, MEAL_MIN_FATS, MEAL_MAX_FATS, MEAL_MIN_PROTEINS, MEAL_MAX_PROTEINS, MEAL_MIN_CARBOHYDRATES, MEAL_MAX_CARBOHYDRATES, MEAL_MIN_CALORIES, MEAL_MAX_CALORIES, MEAL_MIN_AMOUNT_OF_DISH, MEAL_MAX_AMOUNT_OF_DISH, MEAL_MIN_AMOUNT_OF_PEOPLE, MEAL_MAX_AMOUNT_OF_PEOPLE),
-        mealType(mealType) {
+    PeopleStats<Dish> {mealTypeNames[static_cast<uint32_t>(mealType)],
+                       MEAL_MIN_MASS, MEAL_MAX_MASS, MEAL_MIN_PRICE,
+                       MEAL_MAX_PRICE, MEAL_MIN_FATS, MEAL_MAX_FATS,
+                       MEAL_MIN_PROTEINS, MEAL_MAX_PROTEINS,
+                       MEAL_MIN_CARBOHYDRATES, MEAL_MAX_CARBOHYDRATES,
+                       MEAL_MIN_CALORIES, MEAL_MAX_CALORIES,
+                       MEAL_MIN_AMOUNT_OF_DISH, MEAL_MAX_AMOUNT_OF_DISH,
+                       MEAL_MIN_AMOUNT_OF_PEOPLE, MEAL_MAX_AMOUNT_OF_PEOPLE},
+    mealType {mealType} {
+
     setAmountOfPeople(dish.getAmountOfPeople());
 
     addItem(dish);

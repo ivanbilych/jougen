@@ -16,7 +16,9 @@ class Day : public PeopleStats<Meal> {
     public:
         Day(std::string name, const Date& date, const Meal& meal);
         ~Day(void);
+
         Day& operator=(const Day& right);
+
         Date getDate(void) const;
 };
 

@@ -5,14 +5,17 @@
 #include <errors.hpp>
 
 Dish::Dish(std::string name, Food& food, uint64_t foodMass, uint64_t amountOfPeople) :
-        Stats(name, DISH_MIN_MASS, DISH_MAX_MASS, DISH_MIN_PRICE, DISH_MAX_PRICE, DISH_MIN_FATS, DISH_MAX_FATS, DISH_MIN_PROTEINS, DISH_MAX_PROTEINS, DISH_MIN_CARBOHYDRATES, DISH_MAX_CARBOHYDRATES, DISH_MIN_CALORIES, DISH_MAX_CALORIES),
-        minListItemsAmount(DISH_MIN_AMOUNT_OF_FOOD), maxListItemsAmount(DISH_MAX_AMOUNT_OF_FOOD), minAmountOfPeople(DISH_MIN_AMOUNT_OF_PEOPLE), maxAmountOfPeople(DISH_MAX_AMOUNT_OF_PEOPLE) {
+    Stats {name, DISH_MIN_MASS, DISH_MAX_MASS, DISH_MIN_PRICE, DISH_MAX_PRICE,
+           DISH_MIN_FATS, DISH_MAX_FATS, DISH_MIN_PROTEINS, DISH_MAX_PROTEINS,
+           DISH_MIN_CARBOHYDRATES, DISH_MAX_CARBOHYDRATES, DISH_MIN_CALORIES,
+           DISH_MAX_CALORIES} {
+
     setMass(foodMass);
-    setPrice(food.getPrice()*foodMass/food.getMass());
-    setFats(food.getFats()*foodMass/HUNHDRED_GRAM);
-    setProteins(food.getProteins()*foodMass/HUNHDRED_GRAM);
-    setCarbohydrates(food.getCarbohydrates()*foodMass/HUNHDRED_GRAM);
-    setCalories(food.getCalories()*foodMass/HUNHDRED_GRAM);
+    setPrice(food.getPrice()/food.getMass()*foodMass);
+    setFats(food.getFats()/HUNHDRED_GRAM*foodMass);
+    setProteins(food.getProteins()/HUNHDRED_GRAM*foodMass);
+    setCarbohydrates(food.getCarbohydrates()/HUNHDRED_GRAM*foodMass);
+    setCalories(food.getCalories()/HUNHDRED_GRAM*foodMass);
     setAmountOfPeople(amountOfPeople);
 
     ingridients.insert(std::pair<Food, uint64_t>(food, foodMass));
@@ -25,8 +28,6 @@ Dish::~Dish(void) {
 }
 
 Dish& Dish::operator=(const Dish& right) {
-    std::map<Food, uint64_t, Stats::Compare> dishMap = right.getIngridientMap();
-
     if ( this == &right ) {
         return *this;
     }
@@ -35,8 +36,8 @@ Dish& Dish::operator=(const Dish& right) {
 
     ingridients.clear();
 
-    for ( std::map<Food, uint64_t, Stats::Compare>::iterator it = dishMap.begin(); it != dishMap.end(); it++ ) {
-        addFood(it->first, it->second);
+    for ( auto& entry: right.getIngridientMap() ) {
+        addFood(entry.first, entry.second);
     }
 
     return *this;

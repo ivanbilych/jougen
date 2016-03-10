@@ -4,8 +4,15 @@
 #include <errors.hpp>
 
 Day::Day(std::string name, const Date& date, const Meal& meal) :
-        PeopleStats<Meal>(name, DAY_MIN_MASS, DAY_MAX_MASS, DAY_MIN_PRICE, DAY_MAX_PRICE, DAY_MIN_FATS, DAY_MAX_FATS, DAY_MIN_PROTEINS, DAY_MAX_PROTEINS, DAY_MIN_CARBOHYDRATES, DAY_MAX_CARBOHYDRATES, DAY_MIN_CALORIES, DAY_MAX_CALORIES, DAY_MIN_AMOUNT_OF_MEAL, DAY_MAX_AMOUNT_OF_MEAL, DAY_MIN_AMOUNT_OF_PEOPLE, DAY_MAX_AMOUNT_OF_PEOPLE),
-        date(date) {
+    PeopleStats<Meal> {name, DAY_MIN_MASS, DAY_MAX_MASS, DAY_MIN_PRICE,
+                       DAY_MAX_PRICE, DAY_MIN_FATS, DAY_MAX_FATS,
+                       DAY_MIN_PROTEINS, DAY_MAX_PROTEINS,
+                       DAY_MIN_CARBOHYDRATES, DAY_MAX_CARBOHYDRATES,
+                       DAY_MIN_CALORIES, DAY_MAX_CALORIES,
+                       DAY_MIN_AMOUNT_OF_MEAL, DAY_MAX_AMOUNT_OF_MEAL,
+                       DAY_MIN_AMOUNT_OF_PEOPLE, DAY_MAX_AMOUNT_OF_PEOPLE},
+    date {date} {
+
     setAmountOfPeople(meal.getAmountOfPeople());
 
     addItem(meal);

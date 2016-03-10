@@ -5,18 +5,19 @@
 #include <iostream>
 
 #include <common.hpp>
+#include <engineLimits.hpp>
 
 class Stats {
     private:
         static uint64_t lastId;
         std::string name;
-        uint64_t id;
-        uint64_t mass;
-        uint64_t price;
-        uint64_t fats;
-        uint64_t proteins;
-        uint64_t carbohydrates;
-        uint64_t calories;
+        uint64_t id {lastId};
+        uint64_t mass {};
+        uint64_t price {};
+        uint64_t fats {};
+        uint64_t proteins {};
+        uint64_t carbohydrates {};
+        uint64_t calories {};
 
         void updateId(void);
 
@@ -38,24 +39,26 @@ class Stats {
         const uint64_t maxMass;
         const uint64_t minPrice;
         const uint64_t maxPrice;
-        const uint64_t priceRatio;
-        const uint64_t minFats;
-        const uint64_t maxFats;
-        const uint64_t fatsRatio;
-        const uint64_t minProteins;
-        const uint64_t maxProteins;
-        const uint64_t proteinsRatio;
-        const uint64_t minCarbohydrates;
-        const uint64_t maxCarbohydrates;
-        const uint64_t carbohydratesRatio;
-        const uint64_t minCalories;
-        const uint64_t maxCalories;
-        const uint64_t caloriesRatio;
+        const uint64_t priceRatio {STATS_PRICE_RATIO};
+        const uint64_t minFats {};
+        const uint64_t maxFats {};
+        const uint64_t fatsRatio {STATS_FATS_RATIO};
+        const uint64_t minProteins {};
+        const uint64_t maxProteins {};
+        const uint64_t proteinsRatio {STATS_PROTEINS_RATIO};
+        const uint64_t minCarbohydrates {};
+        const uint64_t maxCarbohydrates {};
+        const uint64_t carbohydratesRatio {STATS_CARBOHYDRATES_RATIO};
+        const uint64_t minCalories {};
+        const uint64_t maxCalories {};
+        const uint64_t caloriesRatio {STATS_CALORIES_RATIO};
 
         Stats(std::string name, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice);
         Stats(std::string name, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories);
         ~Stats(void);
+
         Stats& operator=(const Stats& right);
+
         const std::string& getName(void) const;
         uint64_t getId(void) const;
         uint64_t getMass(void) const;

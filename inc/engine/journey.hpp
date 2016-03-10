@@ -12,6 +12,7 @@ class Journey : public PeopleStats<Day> {
     public:
         Journey(std::string name, const Day& day);
         ~Journey(void);
+
         Journey& operator=(const Journey& right);
 };
 

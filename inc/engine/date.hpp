@@ -29,6 +29,7 @@ class Date {
     public:
         Date(uint32_t day, uint32_t mounth, int32_t year);
         ~Date(void);
+
         void setDay(uint32_t day);
         void setMounth(uint32_t mounth);
         void setYear(int32_t year);

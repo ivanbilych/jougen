@@ -14,9 +14,13 @@ const std::string Item::itemMeasureTypeNames[] = {
 };
 
 Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories) :
-        Stats(name, minMass, maxMass, minPrice, maxPrice, minFats, maxFats, minProteins, maxProteins, minCarbohydrates, maxCarbohydrates, minCalories, maxCalories), measureType(measureType) {
+    Stats {name, minMass, maxMass, minPrice, maxPrice, minFats, maxFats,
+           minProteins, maxProteins, minCarbohydrates, maxCarbohydrates,
+           minCalories, maxCalories},
+    measureType {measureType} {
+
     if ( measureType == GRAM && mass != MIN_MASS_FOR_GRAM ) {
-        PRINT_ERR("Wrong item mass for GRAMM value provided");
+        PRINT_ERR("Wrong item mass for GRAM value provided");
 
         throw WrongItemMass();
     }
@@ -28,7 +32,9 @@ Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureT
 }
 
 Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType) :
-        Stats(name, ITEM_MIN_MASS, ITEM_MAX_MASS, ITEM_MIN_PRICE, ITEM_MAX_PRICE), measureType(measureType) {
+    Stats {name, ITEM_MIN_MASS, ITEM_MAX_MASS, ITEM_MIN_PRICE, ITEM_MAX_PRICE},
+    measureType {measureType} {
+
     if ( measureType == GRAM && mass != MIN_MASS_FOR_GRAM ) {
         PRINT_ERR("Wrong item mass for GRAMM value provided");
 

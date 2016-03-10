@@ -1,19 +1,36 @@
 #include <stats.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
 #include <errors.hpp>
 
-uint64_t Stats::lastId = 0;
+uint64_t Stats::lastId {};
 
 Stats::Stats(std::string name, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice) :
-        name(name), id(lastId), mass(0), price(0), fats(0), proteins(0), carbohydrates(0), calories(0), minMass(minMass), maxMass(maxMass), minPrice(minPrice), maxPrice(maxPrice), priceRatio(STATS_PRICE_RATIO), minFats(0), maxFats(0), fatsRatio(STATS_FATS_RATIO), minProteins(0), maxProteins(0), proteinsRatio(STATS_PROTEINS_RATIO), minCarbohydrates(0), maxCarbohydrates(0), carbohydratesRatio(STATS_CARBOHYDRATES_RATIO), minCalories(0), maxCalories(0), caloriesRatio(STATS_CALORIES_RATIO) {
+    name {name},
+    minMass {minMass},
+    maxMass {maxMass},
+    minPrice {minPrice},
+    maxPrice {maxPrice} {
+
     updateId();
 
     PRINT_OBJ("Created stats class " << NAME_ID);
 }
 
 Stats::Stats(std::string name, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories) :
-        name(name), id(lastId), mass(0), price(0), fats(0), proteins(0), carbohydrates(0), calories(0), minMass(minMass), maxMass(maxMass), minPrice(minPrice), maxPrice(maxPrice), priceRatio(STATS_PRICE_RATIO), minFats(minFats), maxFats(maxFats), fatsRatio(STATS_FATS_RATIO), minProteins(minProteins), maxProteins(maxProteins), proteinsRatio(STATS_PROTEINS_RATIO), minCarbohydrates(minCarbohydrates), maxCarbohydrates(maxCarbohydrates), carbohydratesRatio(STATS_CARBOHYDRATES_RATIO), minCalories(minCalories), maxCalories(maxCalories), caloriesRatio(STATS_CALORIES_RATIO) {
+    name {name},
+    minMass {minMass},
+    maxMass {maxMass},
+    minPrice {minPrice},
+    maxPrice {maxPrice},
+    minFats {minFats},
+    maxFats {maxFats},
+    minProteins {minProteins},
+    maxProteins {maxProteins},
+    minCarbohydrates {minCarbohydrates},
+    maxCarbohydrates {maxCarbohydrates},
+    minCalories {minCalories},
+    maxCalories {maxCalories} {
+
     updateId();
 
     PRINT_OBJ("Created stats class " << NAME_ID);
@@ -89,7 +106,8 @@ void Stats::setProteins(uint64_t proteins) {
 }
 
 void Stats::setCarbohydrates(uint64_t carbohydrates) {
-    if ( carbohydrates < minCarbohydrates || carbohydrates > maxCarbohydrates ) {
+    if ( carbohydrates < minCarbohydrates ||
+         carbohydrates > maxCarbohydrates ) {
         PRINT_ERR("Wrong food carbohydrates value provided [" << carbohydrates << "]");
 
         throw WrongStatsCarbohydrates();
@@ -152,7 +170,8 @@ void Stats::updateId(void) {
     lastId += 1;
 }
 
-const bool Stats::Compare::operator()(const Stats& left, const Stats& right) const {
+const bool Stats::Compare::operator()(const Stats& left,
+                                      const Stats& right) const {
     return left.getId() < right.getId();
 }
 
@@ -176,13 +195,13 @@ std::ostream& operator<<(std::ostream& out, const Stats& stats) {
     out.fill(prevFill);
     out.width(prevWide);
 
-    out << ")" << std::endl;
-    out << "        - mass: " << stats.getMass() << " gram" << std::endl;
-    out << "        - price: " << price / stats.priceRatio << "." << price % stats.priceRatio << std::endl;
-    out << "        - fats: " << fats / stats.fatsRatio << "." << fats % stats.fatsRatio << std::endl;
-    out << "        - proteins: " << proteins / stats.proteinsRatio << "." << proteins % stats.proteinsRatio << std::endl;
-    out << "        - carbohydrates: " << carbohydrates / stats.carbohydratesRatio << "." << carbohydrates % stats.carbohydratesRatio << std::endl;
-    out << "        - calories: " << calories / stats.caloriesRatio << "." << calories % stats.caloriesRatio;
+    out << ")" << std::endl
+        << "        - mass: " << stats.getMass() << " gram" << std::endl
+        << "        - price: " << price / stats.priceRatio << "." << price % stats.priceRatio << std::endl
+        << "        - fats: " << fats / stats.fatsRatio << "." << fats % stats.fatsRatio << std::endl
+        << "        - proteins: " << proteins / stats.proteinsRatio << "." << proteins % stats.proteinsRatio << std::endl
+        << "        - carbohydrates: " << carbohydrates / stats.carbohydratesRatio << "." << carbohydrates % stats.carbohydratesRatio << std::endl
+        << "        - calories: " << calories / stats.caloriesRatio << "." << calories % stats.caloriesRatio;
 #else
     out << "\"" << stats.getName() << "\"";
 #endif

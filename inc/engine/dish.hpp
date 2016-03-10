@@ -19,14 +19,16 @@ class Dish : public Stats {
         void setAmountOfPeople(uint64_t amountOfPeople);
 
     public:
-        const uint64_t minListItemsAmount;
-        const uint64_t maxListItemsAmount;
-        const uint64_t minAmountOfPeople;
-        const uint64_t maxAmountOfPeople;
+        const uint64_t minListItemsAmount {DISH_MIN_AMOUNT_OF_FOOD};
+        const uint64_t maxListItemsAmount {DISH_MAX_AMOUNT_OF_FOOD};
+        const uint64_t minAmountOfPeople {DISH_MIN_AMOUNT_OF_PEOPLE};
+        const uint64_t maxAmountOfPeople {DISH_MAX_AMOUNT_OF_PEOPLE};
 
-        Dish(std::string name, Food& food, uint64_t foodMass, uint64_t amountOfPeople=1);
+        Dish(std::string name, Food& food, uint64_t foodMass, uint64_t amountOfPeople = 1);
         ~Dish(void);
+
         Dish& operator=(const Dish& right);
+
         void addFood(const Food& food, uint64_t foodMass);
         void removeFood(const Food& food);
         void changeAmountOfPeople(uint64_t amountOfPeople);

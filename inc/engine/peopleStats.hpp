@@ -11,7 +11,7 @@
 #include <debug.hpp>
 #include <errors.hpp>
 
-template<class T>
+template<typename T>
 class PeopleStats : public Stats {
     private:
         uint64_t amountOfPeople;
@@ -28,7 +28,9 @@ class PeopleStats : public Stats {
 
         PeopleStats(std::string name, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories, uint64_t minListItemsAmount, uint64_t maxListItemsAmount, uint64_t minAmountOfPeople, uint64_t maxAmountOfPeople);
         ~PeopleStats(void);
+
         PeopleStats& operator=(const PeopleStats& right);
+
         uint64_t getAmountOfPeople(void) const;
         const std::list<T>& getList(void) const;
         void addItem(const T& statsItem);
@@ -36,19 +38,25 @@ class PeopleStats : public Stats {
         void changeAmountOfPeople(uint64_t amountOfPeople);
 };
 
-template<class T>
+template<typename T>
 PeopleStats<T>::PeopleStats(std::string name, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories, uint64_t minListItemsAmount, uint64_t maxListItemsAmount, uint64_t minAmountOfPeople, uint64_t maxAmountOfPeople) :
-        Stats(name, minMass, maxMass, minPrice, maxPrice, minFats, maxFats, minProteins, maxProteins, minCarbohydrates, maxCarbohydrates, minCalories, maxCalories),
-        minListItemsAmount(minListItemsAmount), maxListItemsAmount(maxListItemsAmount), minAmountOfPeople(minAmountOfPeople), maxAmountOfPeople(maxAmountOfPeople) {
+        Stats {name, minMass, maxMass, minPrice, maxPrice, minFats, maxFats,
+               minProteins, maxProteins, minCarbohydrates, maxCarbohydrates,
+               minCalories, maxCalories},
+        minListItemsAmount {minListItemsAmount},
+        maxListItemsAmount {maxListItemsAmount},
+        minAmountOfPeople {minAmountOfPeople},
+        maxAmountOfPeople {maxAmountOfPeople} {
+
     PRINT_OBJ("Created people stats class " << NAME_ID);
 }
 
-template<class T>
+template<typename T>
 PeopleStats<T>::~PeopleStats(void) {
     PRINT_OBJ("Destroyed people stats class " << NAME_ID);
 }
 
-template<class T>
+template<typename T>
 PeopleStats<T>& PeopleStats<T>::operator=(const PeopleStats& right) {
     if ( this == &right ) {
         return *this;
@@ -66,7 +74,7 @@ PeopleStats<T>& PeopleStats<T>::operator=(const PeopleStats& right) {
     return *this;
 }
 
-template<class T>
+template<typename T>
 void PeopleStats<T>::setAmountOfPeople(uint64_t amountOfPeople) {
     if ( amountOfPeople < minAmountOfPeople || amountOfPeople > maxAmountOfPeople ) {
         PRINT_ERR("Wrong people stats amount of people provided [" << amountOfPeople << "]");
@@ -78,7 +86,7 @@ void PeopleStats<T>::setAmountOfPeople(uint64_t amountOfPeople) {
     PRINT_INFO("People stats class " << NAME_ID << " amount of people set to " << amountOfPeople);
 }
 
-template<class T>
+template<typename T>
 void PeopleStats<T>::addItem(const T& item) {
     uint64_t newMass, newPrice, newFats, newProteins, newCarbohydrates, newCalories;
 
@@ -143,7 +151,7 @@ void PeopleStats<T>::addItem(const T& item) {
     PRINT_INFO(NAME_ID_CLASS(item) << " was added to meal " << NAME_ID);
 }
 
-template<class T>
+template<typename T>
 void PeopleStats<T>::removeItem(const T& item) {
     uint64_t newMass, newPrice, newFats, newProteins, newCarbohydrates, newCalories;
     bool erased = false;
@@ -182,7 +190,7 @@ void PeopleStats<T>::removeItem(const T& item) {
     setCalories(newCalories);
 }
 
-template<class T>
+template<typename T>
 void PeopleStats<T>::changeAmountOfPeople(uint64_t amountOfPeople) {
     uint64_t newMass, newPrice, newFats, newProteins, newCarbohydrates, newCalories;
     typename std::list<T>::iterator it = items.begin();
@@ -237,7 +245,7 @@ void PeopleStats<T>::changeAmountOfPeople(uint64_t amountOfPeople) {
             it->changeAmountOfPeople(amountOfPeople);
         }
     } catch ( const DishException& e ) {
-        PRINT_ERR("Could not recalculate people amount for " << NAME_ID << ". Fixing");
+        PRINT_ERR("Could not recalculate people amount for " << NAME_ID << ". Fixing...");
 
         for ( typename std::list<T>::iterator fixIt = items.begin(); fixIt != it; fixIt++ ) {
             fixIt->changeAmountOfPeople(amountOfPeople);
@@ -255,17 +263,17 @@ void PeopleStats<T>::changeAmountOfPeople(uint64_t amountOfPeople) {
     setAmountOfPeople(amountOfPeople);
 }
 
-template<class T>
+template<typename T>
 uint64_t PeopleStats<T>::getAmountOfPeople(void) const {
     return amountOfPeople;
 }
 
-template<class T>
+template<typename T>
 const std::list<T>& PeopleStats<T>::getList(void) const {
     return items;
 }
 
-template<class T>
+template<typename T>
 std::ostream& operator<<(std::ostream& out, const PeopleStats<T>& peopleStats) {
 #ifdef DEBUG
     out << static_cast<const Stats&>(peopleStats) << std::endl;

@@ -23,7 +23,9 @@ class Meal : public PeopleStats<Dish> {
     public:
         Meal(MealType mealType, const Dish& dish);
         ~Meal(void);
+
         Meal& operator=(const Meal& right);
+
         MealType getMealType(void) const;
 };
 
