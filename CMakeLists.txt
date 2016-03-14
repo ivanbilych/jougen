@@ -8,6 +8,9 @@ project(${BINARY_NAME})
 set(CMAKE_CXX_EXTRA_FLAGS "-std=c++11 -Wall")
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 if (DEBUG)
     set(CMAKE_CXX_EXTRA_FLAGS "${CMAKE_CXX_EXTRA_FLAGS} -O0 -DDEBUG=1")
@@ -25,6 +28,7 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${CMAKE_EXE_LINKER_EXTRA_F
 
 set(INC_DIRS
     "inc/engine"
+    "inc/gui"
     "inc/tests"
     "inc")
 
@@ -32,18 +36,23 @@ include_directories(${INC_DIRS})
 
 file(GLOB ENGINE_SOURCES
     "src/engine/*.cpp")
+file(GLOB GUI_SOURCES
+    "src/gui/*.cpp")
 
 file(GLOB ENGINE_HEADERS
     "inc/engine/*.hpp")
-
+file(GLOB GUI_HEADERS
+    "inc/gui/*.hpp")
 file(GLOB COMMON_HEADERS
     "inc/*.hpp")
 
 set(SOURCES
-    ${ENGINE_SOURCES})
+    ${ENGINE_SOURCES}
+    ${GUI_SOURCES})
 
 set(HEADERS
     ${ENGINE_HEADERS}
+    ${GUI_HEADERS}
     ${COMMON_HEADERS})
 
 set(SOURCE_FILES ${SOURCES} ${HEADERS})
