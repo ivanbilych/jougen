@@ -14,6 +14,10 @@ public:
     explicit NewIngridientWindow(QWidget *parent = 0);
     ~NewIngridientWindow();
 
+private slots:
+    void on_buttonBox_1_accepted();
+    void on_buttonBox_1_rejected();
+
 private:
     Ui::NewIngridientWindow *ui;
 };

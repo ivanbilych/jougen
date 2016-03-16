@@ -11,3 +11,11 @@ NewDishWindow::NewDishWindow(QWidget *parent) :
 NewDishWindow::~NewDishWindow() {
     delete ui;
 }
+
+void NewDishWindow::on_buttonBox_1_accepted() {
+    this->hide();
+}
+
+void NewDishWindow::on_buttonBox_1_rejected() {
+    this->hide();
+}

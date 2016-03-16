@@ -14,6 +14,10 @@ public:
     explicit NewDishWindow(QWidget *parent = 0);
     ~NewDishWindow();
 
+private slots:
+    void on_buttonBox_1_accepted();
+    void on_buttonBox_1_rejected();
+
 private:
     Ui::NewDishWindow *ui;
 };
