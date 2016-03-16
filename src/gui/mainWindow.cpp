@@ -1,3 +1,5 @@
+#include <debug.hpp>
+
 #include <mainWindow.hpp>
 #include "ui_mainWindow.h"
 
@@ -9,12 +11,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
     newIngridientWindow = new NewIngridientWindow();
     newDishWindow = new NewDishWindow();
+
+    PRINT_OBJ("MainWindow created");
 }
 
 MainWindow::~MainWindow() {
     delete ui;
     delete newIngridientWindow;
     delete newDishWindow;
+
+    PRINT_OBJ("MainWindow destroyed");
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
