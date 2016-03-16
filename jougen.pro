@@ -26,10 +26,14 @@ HEADERS += \
     inc/engine/meal.hpp \
     inc/engine/peopleStats.hpp \
     inc/engine/stats.hpp \
-    inc/gui/mainWindow.hpp
+    inc/gui/mainWindow.hpp \
+    inc/gui/newIngridientWindow.hpp \
+    inc/gui/newDishWindow.hpp
 
 FORMS += \
-    src/gui/mainWindow.ui
+    src/gui/mainWindow.ui \
+    src/gui/newIngridientWindow.ui \
+    src/gui/newDishWindow.ui
 
 SOURCES += \
     src/jougen.cpp \
@@ -41,4 +45,6 @@ SOURCES += \
     src/engine/journey.cpp \
     src/engine/meal.cpp \
     src/engine/stats.cpp \
-    src/gui/mainWindow.cpp
+    src/gui/mainWindow.cpp \
+    src/gui/newIngridientWindow.cpp \
+    src/gui/newDishWindow.cpp
