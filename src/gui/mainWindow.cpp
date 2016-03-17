@@ -4,17 +4,16 @@
 #include "ui_mainWindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    itemStringList(new QStringList),
-    dishStringList(new QStringList),
-    itemListModel(new QStringListModel(*itemStringList, NULL)),
-    dishListModel(new QStringListModel(*dishStringList, NULL)) {
+    QMainWindow {parent},
+    ui {new Ui::MainWindow},
+    newIngridientWindow {new NewIngridientWindow},
+    newDishWindow {new NewDishWindow},
+    itemStringList {new QStringList},
+    dishStringList {new QStringList},
+    itemListModel {new QStringListModel {*itemStringList, NULL}},
+    dishListModel {new QStringListModel {*dishStringList, NULL}} {
 
     ui->setupUi(this);
-
-    newIngridientWindow = new NewIngridientWindow();
-    newDishWindow = new NewDishWindow();
 
     ui->listView_1->setModel(itemListModel);
     ui->listView_2->setModel(dishListModel);
