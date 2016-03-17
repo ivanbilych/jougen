@@ -1,7 +1,13 @@
 #include <debug.hpp>
 
-int main() {
-    PRINT("Hello jougen!");
+#include <QApplication>
+#include <mainWindow.hpp>
 
-    return 0;
+int main(int argc, char **argv) {
+    QApplication app(argc, argv);
+
+    MainWindow mainWindow;
+    mainWindow.show();
+
+    return app.exec();
 }
