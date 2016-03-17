@@ -2,11 +2,19 @@
 
 Work in progress, for now nothing to show :D
 
+## requirements
+I'm using Ubuntu 15.04. Install all required stuff with
+```
+sudo apt-get install qtcreator cmake
+```
+
 ## build
-To build project use this commands:
+To build project with cmake use this commands:
 ```
 mkdir build; cd build
 cmake ..
 make
 ```
 To build with debug prints add `-DDEBUG=ON` to `cmake`. You can add `-DDEBUG_LEVEL=<0..5>` for different debug prints and `-DENABLE_TESTS=ON` to build test application.
+
+To build with QtCreator open `jougen.pro` project file and build.
