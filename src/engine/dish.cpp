@@ -12,10 +12,10 @@ Dish::Dish(std::string name, Food& food, uint64_t foodMass, uint64_t amountOfPeo
 
     setMass(foodMass);
     setPrice(food.getPrice()/food.getMass()*foodMass);
-    setFats(food.getFats()/HUNHDRED_GRAM*foodMass);
-    setProteins(food.getProteins()/HUNHDRED_GRAM*foodMass);
-    setCarbohydrates(food.getCarbohydrates()/HUNHDRED_GRAM*foodMass);
-    setCalories(food.getCalories()/HUNHDRED_GRAM*foodMass);
+    setFats(food.getFats()/HUNDRED_GRAM*foodMass);
+    setProteins(food.getProteins()/HUNDRED_GRAM*foodMass);
+    setCarbohydrates(food.getCarbohydrates()/HUNDRED_GRAM*foodMass);
+    setCalories(food.getCalories()/HUNDRED_GRAM*foodMass);
     setAmountOfPeople(amountOfPeople);
 
     ingridients.insert(std::pair<Food, uint64_t>(food, foodMass));
@@ -66,10 +66,10 @@ void Dish::addFood(const Food& food, uint64_t foodMass) {
 
     newMass = getMass() + foodMass;
     newPrice = getPrice() + food.getPrice() * foodMass / food.getMass();
-    newFats = getFats() + food.getFats() * foodMass / HUNHDRED_GRAM;
-    newProteins = getProteins() + food.getProteins() * foodMass / HUNHDRED_GRAM;
-    newCarbohydrates = getCarbohydrates() + food.getCarbohydrates() * foodMass / HUNHDRED_GRAM;
-    newCalories = getCalories() + food.getCalories() * foodMass / HUNHDRED_GRAM;
+    newFats = getFats() + food.getFats() * foodMass / HUNDRED_GRAM;
+    newProteins = getProteins() + food.getProteins() * foodMass / HUNDRED_GRAM;
+    newCarbohydrates = getCarbohydrates() + food.getCarbohydrates() * foodMass / HUNDRED_GRAM;
+    newCalories = getCalories() + food.getCalories() * foodMass / HUNDRED_GRAM;
 
     if ( newMass > maxMass ) {
         PRINT_ERR("Could not add new food " << NAME_ID_CLASS(food) << " to the dish. Result mass is too big [" << newMass << "]");

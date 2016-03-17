@@ -9,7 +9,7 @@
 #include <peopleStats.hpp>
 #include <food.hpp>
 
-#define HUNHDRED_GRAM 100
+#define HUNDRED_GRAM 100
 
 class Dish : public Stats {
     private:
