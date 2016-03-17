@@ -1,5 +1,7 @@
 #include <debug.hpp>
 
+#include <QString>
+
 #include <mainWindow.hpp>
 #include "ui_mainWindow.h"
 
@@ -11,21 +13,23 @@ MainWindow::MainWindow(QWidget *parent) :
     itemStringList {new QStringList},
     dishStringList {new QStringList},
     itemListModel {new QStringListModel {*itemStringList, NULL}},
-    dishListModel {new QStringListModel {*dishStringList, NULL}} {
+    dishListModel {new QStringListModel {*dishStringList, NULL}},
+    itemForm {new ItemForm} {
 
     ui->setupUi(this);
 
     ui->listView_1->setModel(itemListModel);
     ui->listView_2->setModel(dishListModel);
 
-    itemStringList->append("Apple");
-    itemStringList->append("Potato");
-    itemStringList->append("Rice");
-    itemStringList->append("Nails");
-
-    dishStringList->append("Apple pie");
-    dishStringList->append("Fired Potato");
-    dishStringList->append("Rice with spices");
+    for ( auto& entry: itemForm->avaliableItems ) {
+        itemStringList->append(QString::fromStdString(entry.getName()));
+    }
+    for ( auto& entry: itemForm->avaliableFood ) {
+        itemStringList->append(QString::fromStdString(entry.getName()));
+    }
+    for ( auto& entry: itemForm->avaliableDish ) {
+        dishStringList->append(QString::fromStdString(entry.getName()));
+    }
 
     itemListModel->setStringList(*itemStringList);
     dishListModel->setStringList(*dishStringList);

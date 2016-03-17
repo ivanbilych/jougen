@@ -6,6 +6,7 @@
 
 #include <newIngridientWindow.hpp>
 #include <newDishWindow.hpp>
+#include <itemsForm.hpp>
 
 namespace Ui {
     class MainWindow;
@@ -44,6 +45,7 @@ private:
     QStringList *dishStringList {};
     QStringListModel *itemListModel {};
     QStringListModel *dishListModel {};
+    ItemForm *itemForm {};
 };
 
 #endif // MAINWINDOW_H
