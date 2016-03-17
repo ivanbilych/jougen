@@ -22,13 +22,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->listView_2->setModel(dishListModel);
 
     for ( auto& entry: itemForm->avaliableItems ) {
-        itemStringList->append(QString::fromStdString(entry.getName()));
-    }
-    for ( auto& entry: itemForm->avaliableFood ) {
-        itemStringList->append(QString::fromStdString(entry.getName()));
+        itemStringList->append(QString::fromStdString(entry->getName()));
     }
     for ( auto& entry: itemForm->avaliableDish ) {
-        dishStringList->append(QString::fromStdString(entry.getName()));
+        dishStringList->append(QString::fromStdString(entry->getName()));
     }
 
     itemListModel->setStringList(*itemStringList);
@@ -73,9 +70,77 @@ void MainWindow::on_pushButton_5_clicked() {
 }
 
 void MainWindow::on_listView_1_clicked(const QModelIndex &index) {
-    infoWindowType = ITEM;
+    displayListViewInfoItem(index);
+
+    PRINT_DEBUG("Clicked item/food: " << index.data().toString().toStdString());
 }
 
 void MainWindow::on_listView_2_clicked(const QModelIndex &index) {
+    displayListViewInfoDish(index);
+
+    PRINT_DEBUG("Clicked dish: " << index.data().toString().toStdString());
+}
+
+void MainWindow::on_listView_1_entered(const QModelIndex &index) {
+    displayListViewInfoItem(index);
+
+    PRINT_DEBUG("Entered item/food: " << index.data().toString().toStdString());
+}
+
+void MainWindow::on_listView_2_entered(const QModelIndex &index) {
+    displayListViewInfoDish(index);
+
+    PRINT_DEBUG("Entered dish: " << index.data().toString().toStdString());
+}
+
+void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
+    std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+    QString itemInfo;
+
+    std::advance(item, index.row());
+
+    if ( dynamic_cast<Food *> (*item) ) {
+        infoWindowType = FOOD;
+    } else {
+        infoWindowType = ITEM;
+    }
+
+    itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
+    itemInfo += "Price: "+ QString::number((*item)->getPrice()) + "\n";
+    itemInfo += "Mass: "+ QString::number((*item)->getMass()) + "\n";
+
+    if ( infoWindowType == FOOD ) {
+       itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
+       itemInfo += "Proteins: "+ QString::number((*item)->getProteins()) + "\n";
+       itemInfo += "Carbohydrates: "+ QString::number((*item)->getCarbohydrates()) + "\n";
+       itemInfo += "Calories: "+ QString::number((*item)->getCalories()) + "\n";
+    }
+
+    ui->textEdit_1->setText(itemInfo);
+}
+
+void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
+    std::list<Dish *>::iterator item = itemForm->avaliableDish.begin();
+    QString itemInfo;
+
+    std::advance(item, index.row());
+
     infoWindowType = DISH;
+
+    itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
+    itemInfo += "Price: "+ QString::number((*item)->getPrice()) + "\n";
+    itemInfo += "Mass: "+ QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
+    itemInfo += "Proteins: "+ QString::number((*item)->getProteins()) + "\n";
+    itemInfo += "Carbohydrates: "+ QString::number((*item)->getCarbohydrates()) + "\n";
+    itemInfo += "Calories: "+ QString::number((*item)->getCalories()) + "\n\n";
+    itemInfo += "Amount of people: "+ QString::number((*item)->getAmountOfPeople()) + "\n\n";
+
+    itemInfo += "Ingridients:\n";
+    for ( auto& entry: (*item)->getIngridientMap() ) {
+        itemInfo += QString::fromStdString(entry.first.getName()) + " (";
+        itemInfo += QString::number(entry.second) + ")\n";
+    }
+
+    ui->textEdit_1->setText(itemInfo);
 }
