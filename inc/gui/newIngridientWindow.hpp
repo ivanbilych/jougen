@@ -24,6 +24,9 @@ private slots:
 private:
     Ui::NewIngridientWindow *ui;
     QStringList measureList {};
+
+    Item* createNewItem(void);
+    Food* createNewFood(void);
 };
 
 #endif // NEWINGRIDIENTWINDOW_H

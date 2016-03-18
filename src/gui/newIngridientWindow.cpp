@@ -34,3 +34,21 @@ void NewIngridientWindow::on_buttonBox_1_accepted() {
 void NewIngridientWindow::on_buttonBox_1_rejected() {
     this->hide();
 }
+
+Item* NewIngridientWindow::createNewItem(void) {
+    return new Item(ui->lineEdit_1->text().toStdString(),
+                    ui->lineEdit_2->text().toLong(),
+                    ui->lineEdit_4->text().toLong(),
+                    static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
+}
+
+Food* NewIngridientWindow::createNewFood(void) {
+    return new Food(ui->lineEdit_1->text().toStdString(),
+                    ui->lineEdit_2->text().toLong(),
+                    ui->lineEdit_4->text().toLong(),
+                    static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()),
+                    ui->lineEdit_3->text().toLong(),
+                    ui->lineEdit_5->text().toLong(),
+                    ui->lineEdit_6->text().toLong(),
+                    ui->lineEdit_7->text().toLong());
+}
