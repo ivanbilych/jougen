@@ -130,6 +130,14 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_1</tabstop>
+  <tabstop>listView_1</tabstop>
+  <tabstop>pushButton_1</tabstop>
+  <tabstop>pushButton_2</tabstop>
+  <tabstop>columnView_1</tabstop>
+  <tabstop>lineEdit_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
