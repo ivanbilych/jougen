@@ -1,4 +1,7 @@
 #include <debug.hpp>
+#include <item.hpp>
+#include <dish.hpp>
+#include <food.hpp>
 
 #include <QString>
 
