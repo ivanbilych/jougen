@@ -10,7 +10,8 @@ const std::string Item::itemMeasureTypeNames[] = {
     "stick",
     "jar",
     "can",
-    "loaf"
+    "loaf",
+    ""
 };
 
 Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories) :
@@ -69,6 +70,10 @@ Item::MeasureType Item::getUnitType(void) const {
 
 std::string Item::getUnitTypeName(void) const {
     return itemMeasureTypeNames[static_cast<uint32_t>(getUnitType())];
+}
+
+const std::string* Item::getItemMeasureTypeNamesList(void) {
+    return itemMeasureTypeNames;
 }
 
 std::ostream& operator<<(std::ostream& out, const Item& item) {

@@ -34,6 +34,8 @@ class Item : public Stats {
 
         MeasureType getUnitType(void) const;
         std::string getUnitTypeName(void) const;
+
+        static const std::string* getItemMeasureTypeNamesList(void);
 };
 
 std::ostream& operator<<(std::ostream& out, const Item& item);
