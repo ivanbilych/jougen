@@ -28,6 +28,12 @@ NewIngridientWindow::~NewIngridientWindow() {
 }
 
 void NewIngridientWindow::on_buttonBox_1_accepted() {
+    if ( ui->radioButton_1->isChecked() ) {
+        emit foodObjectReady(createNewFood());
+    } else if ( ui->radioButton_2->isChecked() ) {
+        emit itemObjectReady(createNewItem());
+    }
+
     this->hide();
 }
 

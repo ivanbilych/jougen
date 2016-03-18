@@ -38,6 +38,10 @@ private slots:
     void on_listView_1_entered(const QModelIndex &index);
     void on_listView_2_entered(const QModelIndex &index);
 
+public slots:
+    void addNewItemObject(Item *item);
+    void addNewFoodObject(Food *food);
+
 private:
     Ui::MainWindow *ui;
     NewIngridientWindow *newIngridientWindow {};

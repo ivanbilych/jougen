@@ -17,6 +17,10 @@ public:
     explicit NewIngridientWindow(QWidget *parent = 0);
     ~NewIngridientWindow();
 
+signals:
+    void itemObjectReady(Item *item);
+    void foodObjectReady(Food *food);
+
 private slots:
     void on_buttonBox_1_accepted();
     void on_buttonBox_1_rejected();

@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
     itemListModel->setStringList(*itemStringList);
     dishListModel->setStringList(*dishStringList);
 
+    QObject::connect(newIngridientWindow, SIGNAL(itemObjectReady(Item *)), this, SLOT(addNewItemObject(Item *)));
+    QObject::connect(newIngridientWindow, SIGNAL(foodObjectReady(Food *)), this, SLOT(addNewFoodObject(Food *)));
+
     PRINT_OBJ("MainWindow created");
 }
 
@@ -94,6 +97,24 @@ void MainWindow::on_listView_2_entered(const QModelIndex &index) {
     displayListViewInfoDish(index);
 
     PRINT_DEBUG("Entered dish: " << index.data().toString().toStdString());
+}
+
+void MainWindow::addNewItemObject(Item *item) {
+    itemStringList->append(QString::fromStdString(item->getName()));
+    itemListModel->setStringList(*itemStringList);
+
+    itemForm->avaliableItems.push_back(item);
+
+    PRINT_DEBUG("New item added");
+}
+
+void MainWindow::addNewFoodObject(Food *food) {
+    itemStringList->append(QString::fromStdString(food->getName()));
+    itemListModel->setStringList(*itemStringList);
+
+    itemForm->avaliableItems.push_back(food);
+
+    PRINT_DEBUG("New food added");
 }
 
 void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
