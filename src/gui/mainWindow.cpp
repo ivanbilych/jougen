@@ -61,6 +61,20 @@ void MainWindow::on_pushButton_1_clicked() {
     newIngridientWindow->show();
 }
 
+void MainWindow::on_pushButton_2_clicked() {
+    QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
+
+    if ( !selected.isEmpty() ) {
+        std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+
+        std::advance(item, selected.first().row());
+        itemForm->avaliableItems.erase(item);
+
+        itemStringList->removeAt(selected.first().row());
+        itemListModel->setStringList(*itemStringList);
+   }
+}
+
 void MainWindow::on_pushButton_3_clicked() {
     newDishWindow->show();
 }
