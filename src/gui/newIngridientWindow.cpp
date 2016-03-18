@@ -4,10 +4,19 @@
 #include "ui_newIngridientWindow.h"
 
 NewIngridientWindow::NewIngridientWindow(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::NewIngridientWindow) {
+    QDialog {parent},
+    ui {new Ui::NewIngridientWindow},
+    measureList {QStringList()} {
+
+    const std::string* names = Item::getItemMeasureTypeNamesList();
 
     ui->setupUi(this);
+
+    for ( int i = 0; !names[i].empty(); i++ ) {
+        measureList.append(QString::fromStdString(names[i]));
+    }
+
+    ui->comboBox_1->addItems(measureList);
 
     PRINT_OBJ("NewIngridientWindow created");
 }

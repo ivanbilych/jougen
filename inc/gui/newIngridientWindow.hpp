@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+#include <item.hpp>
+#include <food.hpp>
+
 namespace Ui {
     class NewIngridientWindow;
 }
@@ -20,6 +23,7 @@ private slots:
 
 private:
     Ui::NewIngridientWindow *ui;
+    QStringList measureList {};
 };
 
 #endif // NEWINGRIDIENTWINDOW_H
