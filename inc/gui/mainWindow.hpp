@@ -15,9 +15,6 @@ namespace Ui {
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-protected:
-    void closeEvent(QCloseEvent *event) Q_DECL_OVERRIDE;
-
 public:
     enum InfoType {
         ITEM,
@@ -45,8 +42,6 @@ public slots:
 
 private:
     Ui::MainWindow *ui;
-    NewIngridientWindow *newIngridientWindow {};
-    NewDishWindow *newDishWindow {};
     InfoType infoWindowType {NONE};
     QStringList *itemStringList {};
     QStringList *dishStringList {};

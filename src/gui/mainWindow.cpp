@@ -11,8 +11,6 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow {parent},
     ui {new Ui::MainWindow},
-    newIngridientWindow {new NewIngridientWindow},
-    newDishWindow {new NewDishWindow},
     itemStringList {new QStringList},
     dishStringList {new QStringList},
     itemListModel {new QStringListModel {*itemStringList, NULL}},
@@ -34,16 +32,11 @@ MainWindow::MainWindow(QWidget *parent) :
     itemListModel->setStringList(*itemStringList);
     dishListModel->setStringList(*dishStringList);
 
-    QObject::connect(newIngridientWindow, SIGNAL(itemObjectReady(Item *)), this, SLOT(addNewItemObject(Item *)));
-    QObject::connect(newIngridientWindow, SIGNAL(foodObjectReady(Food *)), this, SLOT(addNewFoodObject(Food *)));
-
     PRINT_OBJ("MainWindow created");
 }
 
 MainWindow::~MainWindow() {
     delete ui;
-    delete newIngridientWindow;
-    delete newDishWindow;
     delete itemStringList;
     delete dishStringList;
     delete itemListModel;
@@ -52,13 +45,13 @@ MainWindow::~MainWindow() {
     PRINT_OBJ("MainWindow destroyed");
 }
 
-void MainWindow::closeEvent(QCloseEvent *event) {
-    newIngridientWindow->close();
-    newDishWindow->close();
-}
-
 void MainWindow::on_pushButton_1_clicked() {
-    newIngridientWindow->show();
+    NewIngridientWindow newIngridientWindow;
+
+    QObject::connect(&newIngridientWindow, SIGNAL(itemObjectReady(Item *)), this, SLOT(addNewItemObject(Item *)));
+    QObject::connect(&newIngridientWindow, SIGNAL(foodObjectReady(Food *)), this, SLOT(addNewFoodObject(Food *)));
+
+    newIngridientWindow.exec();
 }
 
 void MainWindow::on_pushButton_2_clicked() {
@@ -76,16 +69,24 @@ void MainWindow::on_pushButton_2_clicked() {
 }
 
 void MainWindow::on_pushButton_3_clicked() {
-    newDishWindow->show();
+    NewDishWindow newDishWindow;
+
+    newDishWindow.exec();
 }
 
 void MainWindow::on_pushButton_5_clicked() {
     if ( infoWindowType == ITEM ) {
-        newIngridientWindow->show();
+        NewIngridientWindow newIngridientWindow;
+
+        newIngridientWindow.exec();
     } else if ( infoWindowType == FOOD ) {
-        newIngridientWindow->show();
+        NewIngridientWindow newIngridientWindow;
+
+        newIngridientWindow.exec();
     } else if ( infoWindowType == DISH ) {
-        newDishWindow->show();
+        NewDishWindow newDishWindow;
+
+        newDishWindow.exec();
     }
 }
 
