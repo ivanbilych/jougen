@@ -25,6 +25,7 @@ MainWindow::MainWindow(QWidget *parent) :
     for ( auto& entry: itemForm->avaliableItems ) {
         itemStringList->append(QString::fromStdString(entry->getName()));
     }
+
     for ( auto& entry: itemForm->avaliableDish ) {
         dishStringList->append(QString::fromStdString(entry->getName()));
     }
@@ -134,21 +135,21 @@ void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
 
     std::advance(item, index.row());
 
-    if ( dynamic_cast<Food *> (*item) ) {
+    if ( dynamic_cast<Food *>(*item) ) {
         infoWindowType = FOOD;
     } else {
         infoWindowType = ITEM;
     }
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
-    itemInfo += "Price: "+ QString::number((*item)->getPrice()) + "\n";
-    itemInfo += "Mass: "+ QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Price: " + QString::number((*item)->getPrice()) + "\n";
+    itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
 
     if ( infoWindowType == FOOD ) {
        itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
        itemInfo += "Proteins: "+ QString::number((*item)->getProteins()) + "\n";
-       itemInfo += "Carbohydrates: "+ QString::number((*item)->getCarbohydrates()) + "\n";
-       itemInfo += "Calories: "+ QString::number((*item)->getCalories()) + "\n";
+       itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + "\n";
+       itemInfo += "Calories: " + QString::number((*item)->getCalories()) + "\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
@@ -163,15 +164,15 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
     infoWindowType = DISH;
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
-    itemInfo += "Price: "+ QString::number((*item)->getPrice()) + "\n";
-    itemInfo += "Mass: "+ QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Price: " + QString::number((*item)->getPrice()) + "\n";
+    itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
     itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
-    itemInfo += "Proteins: "+ QString::number((*item)->getProteins()) + "\n";
-    itemInfo += "Carbohydrates: "+ QString::number((*item)->getCarbohydrates()) + "\n";
-    itemInfo += "Calories: "+ QString::number((*item)->getCalories()) + "\n\n";
-    itemInfo += "Amount of people: "+ QString::number((*item)->getAmountOfPeople()) + "\n\n";
-
+    itemInfo += "Proteins: " + QString::number((*item)->getProteins()) + "\n";
+    itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + "\n";
+    itemInfo += "Calories: " + QString::number((*item)->getCalories()) + "\n\n";
+    itemInfo += "Amount of people: " + QString::number((*item)->getAmountOfPeople()) + "\n\n";
     itemInfo += "Ingridients:\n";
+
     for ( auto& entry: (*item)->getIngridientMap() ) {
         itemInfo += QString::fromStdString(entry.first.getName()) + " (";
         itemInfo += QString::number(entry.second) + ")\n";
