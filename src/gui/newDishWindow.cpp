@@ -20,8 +20,12 @@ NewDishWindow::~NewDishWindow() {
 
 void NewDishWindow::on_buttonBox_1_accepted() {
     this->hide();
+
+    PRINT_DEBUG("New item/food accepted");
 }
 
 void NewDishWindow::on_buttonBox_1_rejected() {
     this->hide();
+
+    PRINT_DEBUG("New item/food rejected");
 }
