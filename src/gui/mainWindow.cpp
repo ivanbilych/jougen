@@ -75,11 +75,7 @@ void MainWindow::on_pushButton_3_clicked() {
 }
 
 void MainWindow::on_pushButton_5_clicked() {
-    if ( infoWindowType == ITEM ) {
-        NewIngridientWindow newIngridientWindow;
-
-        newIngridientWindow.exec();
-    } else if ( infoWindowType == FOOD ) {
+    if ( infoWindowType == ITEM || infoWindowType == FOOD ) {
         NewIngridientWindow newIngridientWindow;
 
         newIngridientWindow.exec();
