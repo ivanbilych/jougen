@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>New Ingridient</string>
+   <string>New Item/Food</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_1">
    <item>
@@ -157,19 +157,19 @@
          <number>2</number>
         </property>
         <item>
+         <widget class="QRadioButton" name="radioButton_2">
+          <property name="text">
+           <string>Item</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QRadioButton" name="radioButton_1">
           <property name="text">
            <string>Food</string>
           </property>
           <property name="checked">
            <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_2">
-          <property name="text">
-           <string>Item</string>
           </property>
          </widget>
         </item>
@@ -202,7 +202,6 @@
  </widget>
  <tabstops>
   <tabstop>lineEdit_1</tabstop>
-  <tabstop>radioButton_1</tabstop>
   <tabstop>radioButton_2</tabstop>
   <tabstop>comboBox_1</tabstop>
   <tabstop>lineEdit_2</tabstop>

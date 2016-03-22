@@ -55,7 +55,7 @@
       </property>
       <widget class="QWidget" name="tab_1">
        <attribute name="title">
-        <string>Items/Food</string>
+        <string>Ingridients</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_1">
         <item>
@@ -63,7 +63,7 @@
           <item>
            <widget class="QLabel" name="label_1">
             <property name="text">
-             <string>Items/Ingridients:</string>
+             <string>Items/Food:</string>
             </property>
            </widget>
           </item>
