@@ -114,19 +114,31 @@ void MainWindow::on_listView_2_entered(const QModelIndex &index) {
 }
 
 void MainWindow::addNewItemObject(Item *item) {
+    QModelIndex index;
+
     itemStringList->append(QString::fromStdString(item->getName()));
     itemListModel->setStringList(*itemStringList);
 
     itemForm->avaliableItems.push_back(item);
 
+    index = itemListModel->index(itemForm->avaliableItems.size()-1);
+    ui->listView_1->setCurrentIndex(index);
+    displayListViewInfoItem(index);
+
     PRINT_DEBUG("New item added");
 }
 
 void MainWindow::addNewFoodObject(Food *food) {
+    QModelIndex index;
+
     itemStringList->append(QString::fromStdString(food->getName()));
     itemListModel->setStringList(*itemStringList);
 
     itemForm->avaliableItems.push_back(food);
+
+    index = itemListModel->index(itemForm->avaliableItems.size()-1);
+    ui->listView_1->setCurrentIndex(index);
+    displayListViewInfoItem(index);
 
     PRINT_DEBUG("New food added");
 }
