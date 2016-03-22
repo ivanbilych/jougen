@@ -59,6 +59,7 @@ void MainWindow::on_pushButton_2_clicked() {
     QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
 
     if ( !selected.isEmpty() ) {
+        const QModelIndex index = itemListModel->index(selected.first().row()?selected.first().row()-1:0);
         std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
 
         std::advance(item, selected.first().row());
@@ -66,6 +67,11 @@ void MainWindow::on_pushButton_2_clicked() {
 
         itemStringList->removeAt(selected.first().row());
         itemListModel->setStringList(*itemStringList);
+
+        if ( itemStringList->size() ) {
+            ui->listView_1->setCurrentIndex(index);
+            displayListViewInfoItem(index);
+        }
 
         ui->textEdit_1->clear();
    }
