@@ -55,7 +55,7 @@
       </property>
       <widget class="QWidget" name="tab_1">
        <attribute name="title">
-        <string>Items/Food</string>
+        <string>Ingridients</string>
        </attribute>
        <layout class="QHBoxLayout" name="horizontalLayout_1">
         <item>
@@ -63,12 +63,19 @@
           <item>
            <widget class="QLabel" name="label_1">
             <property name="text">
-             <string>Items/Ingridients:</string>
+             <string>Items/Food:</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QListView" name="listView_1"/>
+           <widget class="QListView" name="listView_1">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="verticalScrollMode">
+             <enum>QAbstractItemView::ScrollPerPixel</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -100,7 +107,14 @@
            </widget>
           </item>
           <item>
-           <widget class="QListView" name="listView_2"/>
+           <widget class="QListView" name="listView_2">
+            <property name="editTriggers">
+             <set>QAbstractItemView::NoEditTriggers</set>
+            </property>
+            <property name="verticalScrollMode">
+             <enum>QAbstractItemView::ScrollPerPixel</enum>
+            </property>
+           </widget>
           </item>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -135,6 +149,9 @@
            <widget class="QTextEdit" name="textEdit_1">
             <property name="enabled">
              <bool>true</bool>
+            </property>
+            <property name="undoRedoEnabled">
+             <bool>false</bool>
             </property>
             <property name="readOnly">
              <bool>true</bool>
@@ -298,6 +315,38 @@
     <hint type="destinationlabel">
      <x>319</x>
      <y>240</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView_1</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>listView_2</receiver>
+   <slot>clearSelection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>215</x>
+     <y>219</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>324</x>
+     <y>183</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>listView_2</sender>
+   <signal>pressed(QModelIndex)</signal>
+   <receiver>listView_1</receiver>
+   <slot>clearSelection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>261</x>
+     <y>301</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>216</x>
+     <y>302</y>
     </hint>
    </hints>
   </connection>
