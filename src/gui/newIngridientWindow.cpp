@@ -36,13 +36,13 @@ void NewIngridientWindow::on_buttonBox_1_accepted() {
 
     this->hide();
 
-    PRINT_DEBUG("New dish rejected");
+    PRINT_DEBUG("New item/food accepted");
 }
 
 void NewIngridientWindow::on_buttonBox_1_rejected() {
     this->hide();
 
-    PRINT_DEBUG("New dish rejected");
+    PRINT_DEBUG("New item/food rejected");
 }
 
 Item* NewIngridientWindow::createNewItem(void) {
