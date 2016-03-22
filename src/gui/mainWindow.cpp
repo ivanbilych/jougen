@@ -71,9 +71,9 @@ void MainWindow::on_pushButton_2_clicked() {
         if ( itemStringList->size() ) {
             ui->listView_1->setCurrentIndex(index);
             displayListViewInfoItem(index);
+        } else {
+            ui->textEdit_1->clear();
         }
-
-        ui->textEdit_1->clear();
    }
 }
 
