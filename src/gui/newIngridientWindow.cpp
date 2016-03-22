@@ -62,3 +62,17 @@ Food* NewIngridientWindow::createNewFood(void) {
                     ui->lineEdit_6->text().toLong(),
                     ui->lineEdit_7->text().toLong());
 }
+
+void NewIngridientWindow::on_radioButton_1_clicked() {
+    ui->lineEdit_3->setDisabled(false);
+    ui->lineEdit_5->setDisabled(false);
+    ui->lineEdit_6->setDisabled(false);
+    ui->lineEdit_7->setDisabled(false);
+}
+
+void NewIngridientWindow::on_radioButton_2_clicked() {
+    ui->lineEdit_3->setDisabled(true);
+    ui->lineEdit_5->setDisabled(true);
+    ui->lineEdit_6->setDisabled(true);
+    ui->lineEdit_7->setDisabled(true);
+}

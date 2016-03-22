@@ -24,6 +24,8 @@ signals:
 private slots:
     void on_buttonBox_1_accepted();
     void on_buttonBox_1_rejected();
+    void on_radioButton_1_clicked();
+    void on_radioButton_2_clicked();
 
 private:
     Ui::NewIngridientWindow *ui;
