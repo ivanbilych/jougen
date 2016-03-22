@@ -26,6 +26,7 @@ private slots:
     void on_buttonBox_1_rejected();
     void on_radioButton_1_clicked();
     void on_radioButton_2_clicked();
+    void on_comboBox_1_currentIndexChanged(const QString &arg1);
 
 private:
     Ui::NewIngridientWindow *ui;

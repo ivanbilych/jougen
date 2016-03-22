@@ -18,6 +18,8 @@ NewIngridientWindow::NewIngridientWindow(QWidget *parent) :
 
     ui->comboBox_1->addItems(measureList);
 
+    ui->lineEdit_2->setDisabled(true);
+
     PRINT_OBJ("NewIngridientWindow created");
 }
 
@@ -47,14 +49,14 @@ void NewIngridientWindow::on_buttonBox_1_rejected() {
 
 Item* NewIngridientWindow::createNewItem(void) {
     return new Item(ui->lineEdit_1->text().toStdString(),
-                    ui->lineEdit_2->text().toLong(),
+                    (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
                     ui->lineEdit_4->text().toLong(),
                     static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
 Food* NewIngridientWindow::createNewFood(void) {
     return new Food(ui->lineEdit_1->text().toStdString(),
-                    ui->lineEdit_2->text().toLong(),
+                    (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
                     ui->lineEdit_4->text().toLong(),
                     static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()),
                     ui->lineEdit_3->text().toLong(),
@@ -75,4 +77,14 @@ void NewIngridientWindow::on_radioButton_2_clicked() {
     ui->lineEdit_5->setDisabled(true);
     ui->lineEdit_6->setDisabled(true);
     ui->lineEdit_7->setDisabled(true);
+}
+
+void NewIngridientWindow::on_comboBox_1_currentIndexChanged(const QString &arg1) {
+    if ( !arg1.toStdString().compare("gram") ) {
+        ui->lineEdit_2->setDisabled(true);
+    } else {
+        ui->lineEdit_2->setDisabled(false);
+    }
+
+    PRINT_DEBUG(arg1.toStdString() << " selected");
 }
