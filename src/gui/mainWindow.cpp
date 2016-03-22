@@ -66,6 +66,8 @@ void MainWindow::on_pushButton_2_clicked() {
 
         itemStringList->removeAt(selected.first().row());
         itemListModel->setStringList(*itemStringList);
+
+        ui->textEdit_1->clear();
    }
 }
 
