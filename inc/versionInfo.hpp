@@ -8,8 +8,10 @@
 #define VERSION_SUFFIX " alpha"
 
 #ifndef COMMIT_ID
-#define COMMIT_ID "unknown"
+#define COMMIT_ID unknown
 #endif
+#define STRINGIZE(x) #x
+#define STRINGIZE_VALUE_OF(x) STRINGIZE(x)
 #ifndef BUILD_DATE
 #define BUILD_DATE __DATE__
 #endif
@@ -26,7 +28,7 @@ const std::string programVersion { versionMajor + "." + versionMinor + versionSu
 const std::string buildDate { BUILD_DATE };
 const std::string buildTime { BUILD_TIME };
 const std::string buildTimestamp { buildDate + " " + buildTime };
-const std::string buildCommit { COMMIT_ID };
+const std::string buildCommit { STRINGIZE_VALUE_OF(COMMIT_ID) };
 const std::string projectURL { PROJECT_URL };
 
 #endif // COMMON_H
