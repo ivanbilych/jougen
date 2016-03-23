@@ -25,6 +25,8 @@ signals:
 private slots:
     void on_buttonBox_1_accepted();
     void on_buttonBox_1_rejected();
+    void on_pushButton_1_clicked();
+    void on_pushButton_2_clicked();
 
 public slots:
     void fillItemList(std::list<Item *> *itemsList);
@@ -33,6 +35,9 @@ private:
     Ui::NewDishWindow *ui;
     QStringList *foodStringList {};
     QStringListModel *itemListModel {};
+    Dish *newDish {};
+    std::list<Item *> *avaliableItemsList;
+    std::list<Item *> dishItemsList;
 
     Dish* createNewDish(void);
 };
