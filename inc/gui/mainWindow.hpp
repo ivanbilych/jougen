@@ -6,6 +6,7 @@
 
 #include <newIngridientWindow.hpp>
 #include <newDishWindow.hpp>
+#include <aboutWindow.hpp>
 #include <itemsForm.hpp>
 
 namespace Ui {
@@ -35,6 +36,7 @@ private slots:
     void on_listView_2_clicked(const QModelIndex &index);
     void on_listView_1_entered(const QModelIndex &index);
     void on_listView_2_entered(const QModelIndex &index);
+    void on_actionAbout_triggered();
 
 public slots:
     void addNewItemObject(Item *item);
