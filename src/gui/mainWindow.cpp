@@ -200,3 +200,9 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
 
     ui->textEdit_1->setText(itemInfo);
 }
+
+void MainWindow::on_actionAbout_triggered() {
+    AboutWindow aboutWindow;
+
+    aboutWindow.exec();
+}

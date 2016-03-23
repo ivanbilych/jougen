@@ -29,12 +29,14 @@ HEADERS += \
     inc/engine/itemsForm.hpp \
     inc/gui/mainWindow.hpp \
     inc/gui/newIngridientWindow.hpp \
-    inc/gui/newDishWindow.hpp
+    inc/gui/newDishWindow.hpp \
+    inc/gui/aboutWindow.hpp
 
 FORMS += \
     src/gui/mainWindow.ui \
     src/gui/newIngridientWindow.ui \
-    src/gui/newDishWindow.ui
+    src/gui/newDishWindow.ui \
+    src/gui/aboutWindow.ui
 
 SOURCES += \
     src/jougen.cpp \
@@ -49,4 +51,5 @@ SOURCES += \
     src/engine/itemsForm.cpp \
     src/gui/mainWindow.cpp \
     src/gui/newIngridientWindow.cpp \
-    src/gui/newDishWindow.cpp
+    src/gui/newDishWindow.cpp \
+    src/gui/aboutWindow.cpp
