@@ -70,5 +70,13 @@ void NewDishWindow::on_pushButton_1_clicked() {
 }
 
 void NewDishWindow::on_pushButton_2_clicked() {
+    if ( ui->tableWidget_1->currentRow() != -1 ) {
+        std::list<Item *>::iterator item = dishItemsList.begin();
+        int currentRow = ui->tableWidget_1->currentRow();
 
+        std::advance(item, currentRow);
+        dishItemsList.remove(*item);
+
+        ui->tableWidget_1->removeRow(currentRow);
+    }
 }
