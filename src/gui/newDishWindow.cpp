@@ -58,11 +58,13 @@ void NewDishWindow::on_pushButton_1_clicked() {
 
         if ( std::find(dishItemsList.begin(), dishItemsList.end(), *item) == dishItemsList.end() ) {
             QTableWidgetItem *newItem;
+            int rowCount = ui->tableWidget_1->rowCount();
+
             dishItemsList.push_back(*item);
 
             newItem = new QTableWidgetItem(tr("%1").arg(QString::fromStdString((*item)->getName())));
-            ui->tableWidget_1->setRowCount(ui->tableWidget_1->rowCount()+1);
-            ui->tableWidget_1->setItem(ui->tableWidget_1->rowCount()-1, 0, newItem);
+            ui->tableWidget_1->setRowCount(rowCount+1);
+            ui->tableWidget_1->setItem(rowCount, 0, newItem);
         }
    }
 }
