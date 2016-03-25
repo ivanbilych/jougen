@@ -59,13 +59,15 @@ void MainWindow::on_pushButton_2_clicked() {
     QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
 
     if ( !selected.isEmpty() ) {
-        const QModelIndex index = itemListModel->index(selected.first().row()?selected.first().row()-1:0);
+        int row = selected.first().row();
+
+        const QModelIndex index = itemListModel->index(row?row-1:0);
         std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
 
-        std::advance(item, selected.first().row());
+        std::advance(item, row);
         itemForm->avaliableItems.erase(item);
 
-        itemStringList->removeAt(selected.first().row());
+        itemStringList->removeAt(row);
         itemListModel->setStringList(*itemStringList);
 
         if ( itemStringList->size() ) {
@@ -92,13 +94,15 @@ void MainWindow::on_pushButton_4_clicked() {
     QModelIndexList selected = ui->listView_2->selectionModel()->selectedIndexes();
 
     if ( !selected.isEmpty() ) {
-        const QModelIndex index = dishListModel->index(selected.first().row()?selected.first().row()-1:0);
+        int row = selected.first().row();
+
+        const QModelIndex index = dishListModel->index(row?row-1:0);
         std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
 
-        std::advance(dish, selected.first().row());
+        std::advance(dish, row);
         itemForm->avaliableDish.erase(dish);
 
-        dishStringList->removeAt(selected.first().row());
+        dishStringList->removeAt(row);
         dishListModel->setStringList(*dishStringList);
 
         if ( dishStringList->size() ) {
