@@ -37,7 +37,7 @@ private:
     QStringListModel *itemListModel {};
     Dish *newDish {};
     std::list<Item *> *avaliableItemsList;
-    std::list<Item *> dishItemsList;
+    std::list<Item *> dishFoodList;
 
     Dish* createNewDish(void);
 };

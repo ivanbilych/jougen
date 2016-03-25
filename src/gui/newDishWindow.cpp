@@ -25,7 +25,7 @@ NewDishWindow::~NewDishWindow() {
 }
 
 void NewDishWindow::on_buttonBox_1_accepted() {
-    if ( dishItemsList.size() ) {
+    if ( dishFoodList.size() ) {
         emit itemObjectReady(createNewDish());
     }
     this->hide();
@@ -46,7 +46,7 @@ void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
 }
 
 Dish* NewDishWindow::createNewDish(void) {
-    std::list<Item *>::iterator item = dishItemsList.begin();
+    std::list<Item *>::iterator item = dishFoodList.begin();
     uint64_t amountOfPeople = static_cast<uint64_t>(ui->lineEdit_2->text().toLong());
     int pos_y = 0;
 
@@ -61,7 +61,7 @@ Dish* NewDishWindow::createNewDish(void) {
     pos_y += 1;
     std::advance(item, 1);
 
-    for ( ; item != dishItemsList.end(); item++ ) {
+    for ( ; item != dishFoodList.end(); item++ ) {
         newDish->addFood(*dynamic_cast<Food *>(*item),
                          static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
         pos_y += 1;
@@ -78,10 +78,10 @@ void NewDishWindow::on_pushButton_1_clicked() {
 
         std::advance(item, selected.first().row());
 
-        if ( std::find(dishItemsList.begin(), dishItemsList.end(), *item) == dishItemsList.end() ) {
+        if ( std::find(dishFoodList.begin(), dishFoodList.end(), *item) == dishFoodList.end() && dynamic_cast<Food *>(*item) ) {
             int rowCount = ui->tableWidget_1->rowCount();
 
-            dishItemsList.push_back(*item);
+            dishFoodList.push_back(*item);
 
             ui->tableWidget_1->setRowCount(rowCount+1);
             ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString((*item)->getName())));
@@ -92,11 +92,11 @@ void NewDishWindow::on_pushButton_1_clicked() {
 
 void NewDishWindow::on_pushButton_2_clicked() {
     if ( ui->tableWidget_1->currentRow() != -1 ) {
-        std::list<Item *>::iterator item = dishItemsList.begin();
+        std::list<Item *>::iterator item = dishFoodList.begin();
         int currentRow = ui->tableWidget_1->currentRow();
 
         std::advance(item, currentRow);
-        dishItemsList.remove(*item);
+        dishFoodList.remove(*item);
 
         ui->tableWidget_1->removeRow(currentRow);
     }
