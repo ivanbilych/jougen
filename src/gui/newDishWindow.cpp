@@ -20,6 +20,8 @@ NewDishWindow::NewDishWindow(QWidget *parent) :
 
 NewDishWindow::~NewDishWindow() {
     delete ui;
+    delete foodStringList;
+    delete itemListModel;
 
     PRINT_OBJ("NewDishWindow destroyed");
 }
