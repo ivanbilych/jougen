@@ -42,6 +42,7 @@ MainWindow::~MainWindow() {
     delete dishStringList;
     delete itemListModel;
     delete dishListModel;
+    delete itemForm;
 
     PRINT_OBJ("MainWindow destroyed");
 }
@@ -66,6 +67,8 @@ void MainWindow::on_pushButton_2_clicked() {
 
         std::advance(item, row);
         itemForm->avaliableItems.erase(item);
+
+        delete *item;
 
         itemStringList->removeAt(row);
         itemListModel->setStringList(*itemStringList);
@@ -101,6 +104,8 @@ void MainWindow::on_pushButton_4_clicked() {
 
         std::advance(dish, row);
         itemForm->avaliableDish.erase(dish);
+
+        delete *dish;
 
         dishStringList->removeAt(row);
         dishListModel->setStringList(*dishStringList);
