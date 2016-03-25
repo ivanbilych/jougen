@@ -47,12 +47,17 @@ void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
 
 Dish* NewDishWindow::createNewDish(void) {
     std::list<Item *>::iterator item = dishItemsList.begin();
+    uint64_t amountOfPeople = static_cast<uint64_t>(ui->lineEdit_2->text().toLong());
     int pos_y = 0;
+
+    if ( amountOfPeople < 1 ) {
+        amountOfPeople = 1;
+    }
 
     newDish = new Dish(ui->lineEdit_1->text().toStdString(),
                        *dynamic_cast<Food *>(*item),
                        static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()),
-                       static_cast<uint64_t>(ui->lineEdit_2->text().toLong()));
+                       amountOfPeople);
     pos_y += 1;
     std::advance(item, 1);
 
@@ -74,14 +79,13 @@ void NewDishWindow::on_pushButton_1_clicked() {
         std::advance(item, selected.first().row());
 
         if ( std::find(dishItemsList.begin(), dishItemsList.end(), *item) == dishItemsList.end() ) {
-            QTableWidgetItem *newItem;
             int rowCount = ui->tableWidget_1->rowCount();
 
             dishItemsList.push_back(*item);
 
-            newItem = new QTableWidgetItem(tr("%1").arg(QString::fromStdString((*item)->getName())));
             ui->tableWidget_1->setRowCount(rowCount+1);
-            ui->tableWidget_1->setItem(rowCount, 0, newItem);
+            ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString((*item)->getName())));
+            ui->tableWidget_1->setItem(rowCount, 1, new QTableWidgetItem(QString("1")));
         }
    }
 }
