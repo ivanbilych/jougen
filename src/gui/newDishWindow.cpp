@@ -25,8 +25,9 @@ NewDishWindow::~NewDishWindow() {
 }
 
 void NewDishWindow::on_buttonBox_1_accepted() {
-    emit itemObjectReady(createNewDish());
-
+    if ( dishItemsList.size() ) {
+        emit itemObjectReady(createNewDish());
+    }
     this->hide();
 }
 
@@ -45,6 +46,22 @@ void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
 }
 
 Dish* NewDishWindow::createNewDish(void) {
+    std::list<Item *>::iterator item = dishItemsList.begin();
+    int pos_y = 0;
+
+    newDish = new Dish(ui->lineEdit_1->text().toStdString(),
+                       *dynamic_cast<Food *>(*item),
+                       static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()),
+                       static_cast<uint64_t>(ui->lineEdit_2->text().toLong()));
+    pos_y += 1;
+    std::advance(item, 1);
+
+    for ( ; item != dishItemsList.end(); item++ ) {
+        newDish->addFood(*dynamic_cast<Food *>(*item),
+                         static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
+        pos_y += 1;
+    }
+
     return newDish;
 }
 

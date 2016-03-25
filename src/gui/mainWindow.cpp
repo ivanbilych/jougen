@@ -135,6 +135,11 @@ void MainWindow::addNewFoodObject(Food *food) {
 }
 
 void MainWindow::addNewDishObject(Dish *dish) {
+    dishStringList->append(QString::fromStdString(dish->getName()));
+    dishListModel->setStringList(*dishStringList);
+
+    itemForm->avaliableDish.push_back(dish);
+
     PRINT_DEBUG("New dish added");
 }
 
