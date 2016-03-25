@@ -110,7 +110,70 @@
       </layout>
      </item>
      <item>
-      <widget class="QColumnView" name="columnView_1"/>
+      <widget class="QTableWidget" name="tableWidget_1">
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="sizeAdjustPolicy">
+        <enum>QAbstractScrollArea::AdjustIgnored</enum>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="showGrid">
+        <bool>true</bool>
+       </property>
+       <property name="gridStyle">
+        <enum>Qt::DotLine</enum>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+       <property name="cornerButtonEnabled">
+        <bool>true</bool>
+       </property>
+       <property name="rowCount">
+        <number>0</number>
+       </property>
+       <property name="columnCount">
+        <number>2</number>
+       </property>
+       <attribute name="horizontalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="horizontalHeaderCascadingSectionResizes">
+        <bool>true</bool>
+       </attribute>
+       <attribute name="horizontalHeaderDefaultSectionSize">
+        <number>85</number>
+       </attribute>
+       <attribute name="horizontalHeaderMinimumSectionSize">
+        <number>10</number>
+       </attribute>
+       <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderVisible">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderCascadingSectionResizes">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderDefaultSectionSize">
+        <number>19</number>
+       </attribute>
+       <attribute name="verticalHeaderMinimumSectionSize">
+        <number>19</number>
+       </attribute>
+       <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+        <bool>false</bool>
+       </attribute>
+       <attribute name="verticalHeaderStretchLastSection">
+        <bool>false</bool>
+       </attribute>
+       <column/>
+       <column/>
+      </widget>
      </item>
     </layout>
    </item>
@@ -135,7 +198,7 @@
   <tabstop>listView_1</tabstop>
   <tabstop>pushButton_1</tabstop>
   <tabstop>pushButton_2</tabstop>
-  <tabstop>columnView_1</tabstop>
+  <tabstop>tableWidget_1</tabstop>
   <tabstop>lineEdit_2</tabstop>
  </tabstops>
  <resources/>

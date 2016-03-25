@@ -41,6 +41,10 @@ private slots:
 public slots:
     void addNewItemObject(Item *item);
     void addNewFoodObject(Food *food);
+    void addNewDishObject(Dish *dish);
+
+signals:
+    void newDishRequest(std::list<Item *> *itemList);
 
 private:
     Ui::MainWindow *ui;

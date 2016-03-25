@@ -80,6 +80,11 @@ void MainWindow::on_pushButton_2_clicked() {
 void MainWindow::on_pushButton_3_clicked() {
     NewDishWindow newDishWindow;
 
+    QObject::connect(&newDishWindow, SIGNAL(itemObjectReady(Dish *)), this, SLOT(addNewDishObject(Dish *)));
+    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item *> *)), &newDishWindow, SLOT(fillItemList(std::list<Item *> *)));
+
+    emit newDishRequest(&itemForm->avaliableItems);
+
     newDishWindow.exec();
 }
 
@@ -147,6 +152,15 @@ void MainWindow::addNewFoodObject(Food *food) {
     displayListViewInfoItem(index);
 
     PRINT_DEBUG("New food added");
+}
+
+void MainWindow::addNewDishObject(Dish *dish) {
+    dishStringList->append(QString::fromStdString(dish->getName()));
+    dishListModel->setStringList(*dishStringList);
+
+    itemForm->avaliableDish.push_back(dish);
+
+    PRINT_DEBUG("New dish added");
 }
 
 void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
