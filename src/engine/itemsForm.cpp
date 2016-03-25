@@ -27,5 +27,12 @@ ItemForm::ItemForm(void) {
 }
 
 ItemForm::~ItemForm(void) {
+    for ( auto& entry: avaliableItems ) {
+        delete entry;
+    }
+    for ( auto& entry: avaliableDish ) {
+        delete entry;
+    }
+
     PRINT_OBJ("ItemForm destroyed");
 }
