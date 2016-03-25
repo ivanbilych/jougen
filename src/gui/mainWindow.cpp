@@ -88,6 +88,28 @@ void MainWindow::on_pushButton_3_clicked() {
     newDishWindow.exec();
 }
 
+void MainWindow::on_pushButton_4_clicked() {
+    QModelIndexList selected = ui->listView_2->selectionModel()->selectedIndexes();
+
+    if ( !selected.isEmpty() ) {
+        const QModelIndex index = dishListModel->index(selected.first().row()?selected.first().row()-1:0);
+        std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
+
+        std::advance(dish, selected.first().row());
+        itemForm->avaliableDish.erase(dish);
+
+        dishStringList->removeAt(selected.first().row());
+        dishListModel->setStringList(*dishStringList);
+
+        if ( dishStringList->size() ) {
+            ui->listView_2->setCurrentIndex(index);
+            displayListViewInfoDish(index);
+        } else {
+            ui->textEdit_1->clear();
+        }
+   }
+}
+
 void MainWindow::on_pushButton_5_clicked() {
     if ( infoWindowType == ITEM || infoWindowType == FOOD ) {
         NewIngridientWindow newIngridientWindow;
