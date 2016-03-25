@@ -39,7 +39,11 @@ void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
     avaliableItemsList = itemsList;
 
     for ( auto& entry: *itemsList ) {
-        foodStringList->append(QString::fromStdString(entry->getName()));
+        if ( dynamic_cast<Food *>(entry) ) {
+            foodStringList->append(QString::fromStdString(entry->getName()));
+        } else {
+            foodStringList->append(QString::fromStdString(entry->getName())+QString(" (item)"));
+        }
     }
 
     itemListModel->setStringList(*foodStringList);
