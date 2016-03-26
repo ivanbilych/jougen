@@ -154,6 +154,69 @@ void Dish::removeFood(const Food& food) {
     PRINT_INFO("Food " << NAME_ID_CLASS(food) << " was removed from dish " << NAME_ID << "");
 }
 
+void Dish::changeFoodAmount(const Food& food, uint64_t foodMass) {
+    uint64_t newPrice, newFats, newProteins, newCarbohydrates, newCalories;
+
+    if ( foodMass < minMass || foodMass > maxMass ) {
+        PRINT_ERR("Wrong food " << NAME_ID_CLASS(food) << " mass value provided [" << foodMass << "]");
+
+        throw WrongDishMass();
+    }
+
+    if ( !ingridients.count(food) ) {
+        PRINT_ERR("Could not change " << NAME_ID_CLASS(food) << " food that is not in the dish");
+
+        throw NoSuchFoodInMap();
+    }
+
+    newPrice = food.getPrice() * foodMass / food.getMass();
+    newFats = food.getFats() * foodMass / HUNDRED_GRAM;
+    newProteins = food.getProteins() * foodMass / HUNDRED_GRAM;
+    newCarbohydrates = food.getCarbohydrates() * foodMass / HUNDRED_GRAM;
+    newCalories = food.getCalories() * foodMass / HUNDRED_GRAM;
+
+    if ( newPrice > maxPrice ) {
+        PRINT_ERR("Could not change food " << NAME_ID_CLASS(food) << ". Result price is too big [" << newPrice << "]");
+
+        throw TooBigDishPrice();
+    }
+
+    if ( newFats > maxFats ) {
+        PRINT_ERR("Could not change food " << NAME_ID_CLASS(food) << ". Result fats are too big [" << newFats << "]");
+
+        throw TooBigDishFats();
+    }
+
+    if ( newProteins > maxProteins ) {
+        PRINT_ERR("Could not change food " << NAME_ID_CLASS(food) << ". Result proteins are too big [" << newProteins << "]");
+
+        throw TooBigDishProteins();
+    }
+
+    if ( newCarbohydrates > maxCarbohydrates ) {
+        PRINT_ERR("Could not change food " << NAME_ID_CLASS(food) << ". Result carbohydrates are too big [" << newCarbohydrates << "]");
+
+        throw TooBigDishCarbohydrates();
+    }
+
+    if ( newCalories > maxCalories ) {
+        PRINT_ERR("Could not change food " << NAME_ID_CLASS(food) << ". Result calories are too big [" << newCalories << "]");
+
+        throw TooBigDishCalories();
+    }
+
+    setMass(foodMass);
+    setPrice(newPrice);
+    setFats(newFats);
+    setProteins(newProteins);
+    setCarbohydrates(newCarbohydrates);
+    setCalories(newCalories);
+
+    (*ingridients.find(food)).second = foodMass;
+
+    PRINT_INFO("Food " << NAME_ID_CLASS(food) << " was changed in dish " << NAME_ID << "");
+}
+
 void Dish::changeAmountOfPeople(uint64_t amountOfPeople) {
     uint64_t newMass, newPrice, newFats, newProteins, newCarbohydrates, newCalories;
 

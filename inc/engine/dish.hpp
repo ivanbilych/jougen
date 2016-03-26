@@ -31,6 +31,7 @@ class Dish : public Stats {
 
         void addFood(const Food& food, uint64_t foodMass);
         void removeFood(const Food& food);
+        void changeFoodAmount(const Food& food, uint64_t foodMass);
         void changeAmountOfPeople(uint64_t amountOfPeople);
         uint64_t getAmountOfPeople(void) const;
         const std::map<Food, uint64_t, Stats::Compare>& getIngridientMap(void) const;
