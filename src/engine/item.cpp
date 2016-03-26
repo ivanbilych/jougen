@@ -64,6 +64,34 @@ Item& Item::operator=(const Item& right) {
     return *this;
 }
 
+void Item::setItemUnitType(MeasureType measureType) {
+    this->measureType = measureType;
+}
+
+void Item::setItemMass(uint64_t mass) {
+    setMass(mass);
+}
+
+void Item::setItemPrice(uint64_t price) {
+    setPrice(price);
+}
+
+void Item::setItemFats(uint64_t fats) {
+    setFats(fats);
+}
+
+void Item::setItemProteins(uint64_t proteins) {
+    setProteins(proteins);
+}
+
+void Item::setItemCarbohydrates(uint64_t carbohydrates) {
+    setCarbohydrates(carbohydrates);
+}
+
+void Item::setItemCalories(uint64_t calories) {
+    setCalories(calories);
+}
+
 Item::MeasureType Item::getUnitType(void) const {
     return measureType;
 }

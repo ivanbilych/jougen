@@ -32,6 +32,14 @@ class Item : public Stats {
 
         Item& operator=(const Item& right);
 
+        void setItemUnitType(MeasureType measureType);
+        void setItemMass(uint64_t mass);
+        void setItemPrice(uint64_t price);
+        void setItemFats(uint64_t fats);
+        void setItemProteins(uint64_t proteins);
+        void setItemCarbohydrates(uint64_t carbohydrates);
+        void setItemCalories(uint64_t calories);
+
         MeasureType getUnitType(void) const;
         std::string getUnitTypeName(void) const;
 
