@@ -22,16 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->listView_1->setModel(itemListModel);
     ui->listView_2->setModel(dishListModel);
 
-    for ( auto& entry: itemForm->avaliableItems ) {
-        itemStringList->append(QString::fromStdString(entry->getName()));
-    }
-
-    for ( auto& entry: itemForm->avaliableDish ) {
-        dishStringList->append(QString::fromStdString(entry->getName()));
-    }
-
-    itemListModel->setStringList(*itemStringList);
-    dishListModel->setStringList(*dishStringList);
+    redrawItemList();
+    redrawDishList();
 
     PRINT_OBJ("MainWindow created");
 }
@@ -244,6 +236,20 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
     }
 
     ui->textEdit_1->setText(itemInfo);
+}
+
+void MainWindow::redrawItemList(void) {
+    for ( auto& entry: itemForm->avaliableItems ) {
+        itemStringList->append(QString::fromStdString(entry->getName()));
+    }
+    itemListModel->setStringList(*itemStringList);
+}
+
+void MainWindow::redrawDishList(void) {
+    for ( auto& entry: itemForm->avaliableDish ) {
+        dishStringList->append(QString::fromStdString(entry->getName()));
+    }
+    dishListModel->setStringList(*dishStringList);
 }
 
 void MainWindow::on_actionAbout_triggered() {
