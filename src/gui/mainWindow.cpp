@@ -119,9 +119,11 @@ void MainWindow::on_pushButton_5_clicked() {
             editItem(selected);
         }
     } else if ( infoWindowType == DISH ) {
-        NewDishWindow newDishWindow;
+        QModelIndexList selected = ui->listView_2->selectionModel()->selectedIndexes();
 
-        newDishWindow.exec();
+        if ( !selected.isEmpty() ) {
+            editDish(selected);
+        }
     }
 }
 
@@ -203,6 +205,26 @@ void MainWindow::editItem(QModelIndexList &selected) {
     delete ingridientWindow;
 
     displayListViewInfoItem(index);
+}
+
+void MainWindow::editDish(QModelIndexList &selected) {
+    NewDishWindow *dishWindow;
+    int row = selected.first().row();
+    const QModelIndex index = dishListModel->index(row);
+
+    std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
+    std::advance(dish, row);
+
+    dishWindow = new NewDishWindow(*dish);
+
+    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item *> *)), dishWindow, SLOT(fillItemList(std::list<Item *> *)));
+
+    emit newDishRequest(&itemForm->avaliableItems);
+    dishWindow->exec();
+
+    delete dishWindow;
+
+    displayListViewInfoDish(index);
 }
 
 void MainWindow::displayListViewInfoItem(const QModelIndex &index) {

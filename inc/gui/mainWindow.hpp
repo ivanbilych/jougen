@@ -57,6 +57,7 @@ private:
     ItemForm *itemForm {};
 
     void editItem(QModelIndexList &selected);
+    void editDish(QModelIndexList &selected);
     void displayListViewInfoItem(const QModelIndex &index);
     void displayListViewInfoDish(const QModelIndex &index);
     void redrawItemList(void);
