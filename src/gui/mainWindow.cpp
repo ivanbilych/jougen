@@ -113,9 +113,11 @@ void MainWindow::on_pushButton_4_clicked() {
 
 void MainWindow::on_pushButton_5_clicked() {
     if ( infoWindowType == ITEM || infoWindowType == FOOD ) {
-        NewIngridientWindow newIngridientWindow;
+        QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
 
-        newIngridientWindow.exec();
+        if ( !selected.isEmpty() ) {
+            editItem(selected);
+        }
     } else if ( infoWindowType == DISH ) {
         NewDishWindow newDishWindow;
 
@@ -184,6 +186,23 @@ void MainWindow::addNewDishObject(Dish *dish) {
     itemForm->avaliableDish.push_back(dish);
 
     PRINT_DEBUG("New dish added");
+}
+
+void MainWindow::editItem(QModelIndexList &selected) {
+    NewIngridientWindow *ingridientWindow;
+    int row = selected.first().row();
+    const QModelIndex index = itemListModel->index(row);
+
+    std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+    std::advance(item, row);
+
+    ingridientWindow = (infoWindowType == ITEM) ? new NewIngridientWindow(*item) : new NewIngridientWindow(dynamic_cast<Food *>(*item));
+
+    ingridientWindow->exec();
+
+    delete ingridientWindow;
+
+    displayListViewInfoItem(index);
 }
 
 void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
