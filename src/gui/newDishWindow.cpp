@@ -47,11 +47,13 @@ void NewDishWindow::on_buttonBox_1_accepted() {
     } else {
         int pos_y = 0;
 
+        PRINT_DEBUG("Changing every food item to correct...");
         for ( auto& item: dish->getIngridientMap() ) {
             dish->changeFoodAmount(item.first, static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
             pos_y += 1;
         }
 
+        PRINT_DEBUG("Changing amount of people to correct...");
         dish->changeAmountOfPeople(static_cast<uint64_t>(ui->lineEdit_2->text().toLong()));
     }
 
@@ -78,6 +80,8 @@ void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
     }
 
     itemListModel->setStringList(*foodStringList);
+
+    PRINT_DEBUG("Item list filled");
 }
 
 Dish* NewDishWindow::createNewDish(void) {
@@ -102,6 +106,8 @@ Dish* NewDishWindow::createNewDish(void) {
         pos_y += 1;
     }
 
+    PRINT_DEBUG("Item dihs created");
+
     return dish;
 }
 
@@ -119,6 +125,8 @@ void NewDishWindow::applyStats(Dish* dish) {
 
         dishFoodList.push_back(item.first);
     }
+
+    PRINT_DEBUG("Dish stats applied");
 }
 
 void NewDishWindow::on_pushButton_1_clicked() {
@@ -141,6 +149,8 @@ void NewDishWindow::on_pushButton_1_clicked() {
             ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString((*item)->getName())));
             ui->tableWidget_1->setItem(rowCount, 1, new QTableWidgetItem(QString("1")));
         }
+
+        PRINT_DEBUG("Item was added");
     }
 }
 
@@ -161,5 +171,7 @@ void NewDishWindow::on_pushButton_2_clicked() {
 
             ui->tableWidget_1->removeRow(currentRow);
         }
+
+        PRINT_DEBUG("Item was removed");
     }
 }
