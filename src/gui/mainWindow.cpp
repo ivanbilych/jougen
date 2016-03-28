@@ -274,7 +274,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
 
     for ( auto& entry: (*item)->getIngridientMap() ) {
         itemInfo += QString::fromStdString(entry.first->getName()) + " (";
-        itemInfo += QString::number(entry.second) + ")\n";
+        itemInfo += QString::number(entry.second) + " g)\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
