@@ -20,8 +20,8 @@ ItemForm::ItemForm(void) {
     avaliableItems.push_back(new Food("Tomato", 10, 10, Item::CAN, 2100, 2200, 2300, 2400));
     avaliableItems.push_back(new Food("Beaf", 10, 10, Item::LOAF, 25001, 26001, 27001, 28001));
 
-    avaliableDish.push_back(new Dish("Apple pie", dynamic_cast<Food &>(*avaliableItems.back()), avaliableItems.back()->getMass(), 1));
-    avaliableDish.push_back(new Dish("Beaf pie", dynamic_cast<Food &>(*avaliableItems.back()), avaliableItems.back()->getMass()*10, 2));
+    avaliableDish.push_back(new Dish("Apple pie", dynamic_cast<Food*>(avaliableItems.back()), avaliableItems.back()->getMass(), 1));
+    avaliableDish.push_back(new Dish("Beaf pie", dynamic_cast<Food*>(avaliableItems.back()), avaliableItems.back()->getMass()*10, 2));
 
     PRINT_OBJ("ItemForm created");
 }
