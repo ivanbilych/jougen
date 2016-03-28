@@ -272,7 +272,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
     itemInfo += "Ingridients:\n";
 
     for ( auto& entry: (*item)->getIngridientMap() ) {
-        itemInfo += QString::fromStdString(entry.first.getName()) + " (";
+        itemInfo += QString::fromStdString(entry.first->getName()) + " (";
         itemInfo += QString::number(entry.second) + ")\n";
     }
 

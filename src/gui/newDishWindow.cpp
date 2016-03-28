@@ -45,13 +45,14 @@ void NewDishWindow::on_buttonBox_1_accepted() {
     if ( dishFoodList.size() && !editMode ) {
         emit itemObjectReady(createNewDish());
     } else {
-        dish->changeAmountOfPeople(static_cast<uint64_t>(ui->lineEdit_2->text().toLong()));
         int pos_y = 0;
 
         for ( auto& item: dish->getIngridientMap() ) {
             dish->changeFoodAmount(item.first, static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
             pos_y += 1;
         }
+
+        dish->changeAmountOfPeople(static_cast<uint64_t>(ui->lineEdit_2->text().toLong()));
     }
 
     this->hide();
@@ -89,15 +90,15 @@ Dish* NewDishWindow::createNewDish(void) {
     }
 
     dish = new Dish(ui->lineEdit_1->text().toStdString(),
-                       *dynamic_cast<Food *>(*item),
-                       static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()),
-                       amountOfPeople);
+                    dynamic_cast<Food *>(*item),
+                    static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()),
+                    amountOfPeople);
     pos_y += 1;
     std::advance(item, 1);
 
     for ( ; item != dishFoodList.end(); item++ ) {
-        dish->addFood(*dynamic_cast<Food *>(*item),
-                         static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
+        dish->addFood(dynamic_cast<Food *>(*item),
+                      static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
         pos_y += 1;
     }
 
@@ -113,10 +114,10 @@ void NewDishWindow::applyStats(Dish* dish) {
         int rowCount = ui->tableWidget_1->rowCount();
 
         ui->tableWidget_1->setRowCount(rowCount+1);
-        ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString(item.first.getName())));
+        ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString(item.first->getName())));
         ui->tableWidget_1->setItem(rowCount, 1, new QTableWidgetItem(QString::number(item.second)));
 
-        dishFoodList.push_back(const_cast<Food *>(&item.first));
+        dishFoodList.push_back(item.first);
     }
 }
 
@@ -132,7 +133,7 @@ void NewDishWindow::on_pushButton_1_clicked() {
             int rowCount = ui->tableWidget_1->rowCount();
 
             if ( editMode ) {
-                dish->addFood(*dynamic_cast<Food *>(*item), 1);
+                dish->addFood(dynamic_cast<Food *>(*item), 1);
             }
             dishFoodList.push_back(dynamic_cast<Food *>(*item));
 
@@ -151,7 +152,8 @@ void NewDishWindow::on_pushButton_2_clicked() {
         std::advance(item, currentRow);
 
         if ( editMode && dish->getIngridientMap().size() > 1 ) {
-            dish->removeFood(*dynamic_cast<Food *>(*item));
+            dish->removeFood(dynamic_cast<Food *>(*item));
+            dishFoodList.remove(*item);
 
             ui->tableWidget_1->removeRow(currentRow);
         } else if ( !editMode ) {
