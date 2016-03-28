@@ -242,6 +242,7 @@ void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
     itemInfo += "Price: " + QString::number((*item)->getPrice()) + "\n";
     itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Unit: " + QString::fromStdString((*item)->getUnitTypeName()) + "\n";
 
     if ( infoWindowType == FOOD ) {
        itemInfo += "Fats: " + QString::number((*item)->getFats()) + " (in 100 g)\n";
