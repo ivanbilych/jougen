@@ -17,6 +17,7 @@ class NewDishWindow : public QDialog {
 
 public:
     explicit NewDishWindow(QWidget *parent = 0);
+    explicit NewDishWindow(Dish *dish, QWidget *parent = 0);
     ~NewDishWindow();
 
 signals:
@@ -35,11 +36,13 @@ private:
     Ui::NewDishWindow *ui;
     QStringList *foodStringList {};
     QStringListModel *itemListModel {};
-    Dish *newDish {};
+    Dish *dish {};
     std::list<Item *> *avaliableItemsList;
-    std::list<Item *> dishFoodList;
+    std::list<Food *> dishFoodList;
+    bool editMode {false};
 
     Dish* createNewDish(void);
+    void applyStats(Dish* dish);
 };
 
 #endif // NEWDISHWINDOW_H

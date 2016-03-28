@@ -22,16 +22,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->listView_1->setModel(itemListModel);
     ui->listView_2->setModel(dishListModel);
 
-    for ( auto& entry: itemForm->avaliableItems ) {
-        itemStringList->append(QString::fromStdString(entry->getName()));
-    }
-
-    for ( auto& entry: itemForm->avaliableDish ) {
-        dishStringList->append(QString::fromStdString(entry->getName()));
-    }
-
-    itemListModel->setStringList(*itemStringList);
-    dishListModel->setStringList(*dishStringList);
+    redrawItemList();
+    redrawDishList();
 
     PRINT_OBJ("MainWindow created");
 }
@@ -121,13 +113,17 @@ void MainWindow::on_pushButton_4_clicked() {
 
 void MainWindow::on_pushButton_5_clicked() {
     if ( infoWindowType == ITEM || infoWindowType == FOOD ) {
-        NewIngridientWindow newIngridientWindow;
+        QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
 
-        newIngridientWindow.exec();
+        if ( !selected.isEmpty() ) {
+            editItem(selected);
+        }
     } else if ( infoWindowType == DISH ) {
-        NewDishWindow newDishWindow;
+        QModelIndexList selected = ui->listView_2->selectionModel()->selectedIndexes();
 
-        newDishWindow.exec();
+        if ( !selected.isEmpty() ) {
+            editDish(selected);
+        }
     }
 }
 
@@ -194,6 +190,43 @@ void MainWindow::addNewDishObject(Dish *dish) {
     PRINT_DEBUG("New dish added");
 }
 
+void MainWindow::editItem(QModelIndexList &selected) {
+    NewIngridientWindow *ingridientWindow;
+    int row = selected.first().row();
+    const QModelIndex index = itemListModel->index(row);
+
+    std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+    std::advance(item, row);
+
+    ingridientWindow = (infoWindowType == ITEM) ? new NewIngridientWindow(*item) : new NewIngridientWindow(dynamic_cast<Food *>(*item));
+
+    ingridientWindow->exec();
+
+    delete ingridientWindow;
+
+    displayListViewInfoItem(index);
+}
+
+void MainWindow::editDish(QModelIndexList &selected) {
+    NewDishWindow *dishWindow;
+    int row = selected.first().row();
+    const QModelIndex index = dishListModel->index(row);
+
+    std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
+    std::advance(dish, row);
+
+    dishWindow = new NewDishWindow(*dish);
+
+    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item *> *)), dishWindow, SLOT(fillItemList(std::list<Item *> *)));
+
+    emit newDishRequest(&itemForm->avaliableItems);
+    dishWindow->exec();
+
+    delete dishWindow;
+
+    displayListViewInfoDish(index);
+}
+
 void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
     std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
     QString itemInfo;
@@ -209,12 +242,13 @@ void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
     itemInfo += "Price: " + QString::number((*item)->getPrice()) + "\n";
     itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Unit: " + QString::fromStdString((*item)->getUnitTypeName()) + "\n";
 
     if ( infoWindowType == FOOD ) {
-       itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
-       itemInfo += "Proteins: "+ QString::number((*item)->getProteins()) + "\n";
-       itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + "\n";
-       itemInfo += "Calories: " + QString::number((*item)->getCalories()) + "\n";
+       itemInfo += "Fats: " + QString::number((*item)->getFats()) + " (in 100 g)\n";
+       itemInfo += "Proteins: "+ QString::number((*item)->getProteins()) + " (in 100 g)\n";
+       itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + " (in 100 g)\n";
+       itemInfo += "Calories: " + QString::number((*item)->getCalories()) + " (in 100 g)\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
@@ -239,11 +273,25 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
     itemInfo += "Ingridients:\n";
 
     for ( auto& entry: (*item)->getIngridientMap() ) {
-        itemInfo += QString::fromStdString(entry.first.getName()) + " (";
-        itemInfo += QString::number(entry.second) + ")\n";
+        itemInfo += QString::fromStdString(entry.first->getName()) + " (";
+        itemInfo += QString::number(entry.second) + " g)\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
+}
+
+void MainWindow::redrawItemList(void) {
+    for ( auto& entry: itemForm->avaliableItems ) {
+        itemStringList->append(QString::fromStdString(entry->getName()));
+    }
+    itemListModel->setStringList(*itemStringList);
+}
+
+void MainWindow::redrawDishList(void) {
+    for ( auto& entry: itemForm->avaliableDish ) {
+        dishStringList->append(QString::fromStdString(entry->getName()));
+    }
+    dishListModel->setStringList(*dishStringList);
 }
 
 void MainWindow::on_actionAbout_triggered() {

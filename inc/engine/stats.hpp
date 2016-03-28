@@ -33,6 +33,7 @@ class Stats {
         class Compare {
             public:
                 const bool operator()(const Stats&, const Stats&) const;
+                const bool operator()(const Stats*, const Stats*) const;
         };
 
         const uint64_t minMass;

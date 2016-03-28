@@ -15,6 +15,8 @@ class NewIngridientWindow : public QDialog {
 
 public:
     explicit NewIngridientWindow(QWidget *parent = 0);
+    explicit NewIngridientWindow(Item *item, QWidget *parent = 0);
+    explicit NewIngridientWindow(Food *food, QWidget *parent = 0);
     ~NewIngridientWindow();
 
 signals:
@@ -31,9 +33,16 @@ private slots:
 private:
     Ui::NewIngridientWindow *ui;
     QStringList measureList {};
+    bool editMode {false};
+    Item *editedItem {};
 
+    void setupMeasureList(void);
+    void applyItemStats(Item* item);
+    void applyFoodStats(Food* food);
     Item* createNewItem(void);
     Food* createNewFood(void);
+    void editItem(Item *item);
+    void editFood(Food *food);
 };
 
 #endif // NEWINGRIDIENTWINDOW_H

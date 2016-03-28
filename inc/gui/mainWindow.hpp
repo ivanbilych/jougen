@@ -56,8 +56,12 @@ private:
     QStringListModel *dishListModel {};
     ItemForm *itemForm {};
 
+    void editItem(QModelIndexList &selected);
+    void editDish(QModelIndexList &selected);
     void displayListViewInfoItem(const QModelIndex &index);
     void displayListViewInfoDish(const QModelIndex &index);
+    void redrawItemList(void);
+    void redrawDishList(void);
 };
 
 #endif // MAINWINDOW_H
