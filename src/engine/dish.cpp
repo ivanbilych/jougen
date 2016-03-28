@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <dish.hpp>
 #include <item.hpp>
 #include <engineLimits.hpp>
@@ -11,11 +13,11 @@ Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeo
            DISH_MAX_CALORIES} {
 
     setMass(foodMass);
-    setPrice(food->getPrice()/food->getMass()*foodMass);
-    setFats(food->getFats()/HUNDRED_GRAM*foodMass);
-    setProteins(food->getProteins()/HUNDRED_GRAM*foodMass);
-    setCarbohydrates(food->getCarbohydrates()/HUNDRED_GRAM*foodMass);
-    setCalories(food->getCalories()/HUNDRED_GRAM*foodMass);
+    setPrice(std::round(food->getPrice()/food->getMass()*foodMass));
+    setFats(std::round(food->getFats()*foodMass/HUNDRED_GRAM));
+    setProteins(std::round(food->getProteins()*foodMass/HUNDRED_GRAM));
+    setCarbohydrates(std::round(food->getCarbohydrates()*foodMass/HUNDRED_GRAM));
+    setCalories(std::round(food->getCalories()*foodMass/HUNDRED_GRAM));
     setAmountOfPeople(amountOfPeople);
 
     ingridients.insert(std::pair<Food*, uint64_t>(food, foodMass));
@@ -65,11 +67,11 @@ void Dish::addFood(Food* const food, uint64_t foodMass) {
     }
 
     newMass = getMass() + foodMass;
-    newPrice = getPrice() + food->getPrice() * foodMass / food->getMass();
-    newFats = getFats() + food->getFats() * foodMass / HUNDRED_GRAM;
-    newProteins = getProteins() + food->getProteins() * foodMass / HUNDRED_GRAM;
-    newCarbohydrates = getCarbohydrates() + food->getCarbohydrates() * foodMass / HUNDRED_GRAM;
-    newCalories = getCalories() + food->getCalories() * foodMass / HUNDRED_GRAM;
+    newPrice = getPrice() + std::round(food->getPrice()*foodMass/food->getMass());
+    newFats = getFats() + std::round(food->getFats()*foodMass/HUNDRED_GRAM);
+    newProteins = getProteins() + std::round(food->getProteins()*foodMass/HUNDRED_GRAM);
+    newCarbohydrates = getCarbohydrates() + std::round(food->getCarbohydrates()*foodMass/HUNDRED_GRAM);
+    newCalories = getCalories() + std::round(food->getCalories()*foodMass/HUNDRED_GRAM);
 
     if ( newMass > maxMass ) {
         PRINT_ERR("Could not add new food " << NAME_ID_CLASS(*food) << " to the dish. Result mass is too big [" << newMass << "]");
@@ -136,11 +138,11 @@ void Dish::removeFood(Food* const food) {
     }
 
     newMass = getMass() - foodMass;
-    newPrice = getPrice() - food->getPrice() * foodMass / food->getMass();
-    newFats = getFats() - food->getFats() * foodMass / 100;
-    newProteins = getProteins() - food->getProteins() * foodMass / 100;
-    newCarbohydrates = getCarbohydrates() - food->getCarbohydrates() * foodMass / 100;
-    newCalories = getCalories() - food->getCalories() * foodMass / 100;
+    newPrice = getPrice() - std::round(food->getPrice()*foodMass/food->getMass());
+    newFats = getFats() - std::round(food->getFats()*foodMass/HUNDRED_GRAM);
+    newProteins = getProteins() - std::round(food->getProteins()*foodMass/HUNDRED_GRAM);
+    newCarbohydrates = getCarbohydrates() - std::round(food->getCarbohydrates()*foodMass/HUNDRED_GRAM);
+    newCalories = getCalories() - std::round(food->getCalories()*foodMass/HUNDRED_GRAM);
 
     setMass(newMass);
     setPrice(newPrice);
@@ -156,6 +158,7 @@ void Dish::removeFood(Food* const food) {
 
 void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
     uint64_t newPrice, newFats, newProteins, newCarbohydrates, newCalories;
+    int64_t currentFoodMass = ingridients[food];
 
     if ( foodMass < minMass || foodMass > maxMass ) {
         PRINT_ERR("Wrong food " << NAME_ID_CLASS(*food) << " mass value provided [" << foodMass << "]");
@@ -169,11 +172,16 @@ void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
         throw NoSuchFoodInMap();
     }
 
-    newPrice = food->getPrice() * foodMass / food->getMass();
-    newFats = food->getFats() * foodMass / HUNDRED_GRAM;
-    newProteins = food->getProteins() * foodMass / HUNDRED_GRAM;
-    newCarbohydrates = food->getCarbohydrates() * foodMass / HUNDRED_GRAM;
-    newCalories = food->getCalories() * foodMass / HUNDRED_GRAM;
+    newPrice = getPrice() + std::round(food->getPrice()*foodMass/food->getMass()) -
+               std::round(food->getPrice()*currentFoodMass/food->getMass());
+    newFats = getFats() + std::round(food->getFats()*foodMass/HUNDRED_GRAM*amountOfPeople) -
+              std::round(food->getFats()*currentFoodMass/HUNDRED_GRAM*amountOfPeople);
+    newProteins = getProteins() + std::round(food->getProteins()*foodMass/HUNDRED_GRAM*amountOfPeople) -
+                  std::round(food->getProteins()*currentFoodMass/HUNDRED_GRAM*amountOfPeople);
+    newCarbohydrates = getCarbohydrates() + std::round(food->getCarbohydrates()*foodMass/HUNDRED_GRAM*amountOfPeople) -
+                       std::round(food->getCarbohydrates()*currentFoodMass/HUNDRED_GRAM*amountOfPeople);
+    newCalories = getCalories() + std::round(food->getCalories()*foodMass/HUNDRED_GRAM*amountOfPeople) -
+                  std::round(food->getCalories()*currentFoodMass/HUNDRED_GRAM*amountOfPeople);
 
     if ( newPrice > maxPrice ) {
         PRINT_ERR("Could not change food " << NAME_ID_CLASS(*food) << ". Result price is too big [" << newPrice << "]");
@@ -205,20 +213,21 @@ void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
         throw TooBigDishCalories();
     }
 
-    setMass(foodMass);
+    setMass(foodMass*amountOfPeople);
     setPrice(newPrice);
     setFats(newFats);
     setProteins(newProteins);
     setCarbohydrates(newCarbohydrates);
     setCalories(newCalories);
 
-    (*ingridients.find(food)).second = foodMass;
+    ingridients[food] = foodMass;
 
     PRINT_INFO("Food " << NAME_ID_CLASS(*food) << " was changed in dish " << NAME_ID << "");
 }
 
 void Dish::changeAmountOfPeople(uint64_t amountOfPeople) {
     uint64_t newMass, newPrice, newFats, newProteins, newCarbohydrates, newCalories;
+    uint64_t currentAmountOfPeople = getAmountOfPeople();
 
     if ( amountOfPeople < minAmountOfPeople || amountOfPeople > maxAmountOfPeople ) {
         PRINT_ERR("Wrong dish amount of people provided [" << amountOfPeople << "]");
@@ -226,12 +235,12 @@ void Dish::changeAmountOfPeople(uint64_t amountOfPeople) {
         throw WrongDishAmountOfPeople();
     }
 
-    newMass = getMass() * amountOfPeople / getAmountOfPeople();
-    newPrice = getPrice() * amountOfPeople / getAmountOfPeople();
-    newFats = getFats() * amountOfPeople / getAmountOfPeople();
-    newProteins = getProteins() * amountOfPeople / getAmountOfPeople();
-    newCarbohydrates = getCarbohydrates() * amountOfPeople / getAmountOfPeople();
-    newCalories = getCalories() * amountOfPeople / getAmountOfPeople();
+    newMass = std::round(getMass()*amountOfPeople/currentAmountOfPeople);
+    newPrice = std::round(getPrice()*amountOfPeople/currentAmountOfPeople);
+    newFats = std::round(getFats()*amountOfPeople/currentAmountOfPeople);
+    newProteins = std::round(getProteins()*amountOfPeople/currentAmountOfPeople);
+    newCarbohydrates = std::round(getCarbohydrates()*amountOfPeople/currentAmountOfPeople);
+    newCalories = std::round(getCalories()*amountOfPeople/currentAmountOfPeople);
 
     if ( newMass > maxMass ) {
         PRINT_ERR("Could not change amount of people in the dish. Result mass is too big [" << newMass << "]");
@@ -278,7 +287,7 @@ void Dish::changeAmountOfPeople(uint64_t amountOfPeople) {
     setAmountOfPeople(amountOfPeople);
 
     for ( auto& entry: ingridients ) {
-        entry.second = entry.second * amountOfPeople / getAmountOfPeople();
+        entry.second = entry.second * amountOfPeople / currentAmountOfPeople;
     }
 
     PRINT_INFO("Dish " << NAME_ID << " now have " << amountOfPeople << " people");
