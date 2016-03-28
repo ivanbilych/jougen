@@ -175,6 +175,11 @@ const bool Stats::Compare::operator()(const Stats& left,
     return left.getId() < right.getId();
 }
 
+const bool Stats::Compare::operator()(const Stats* left,
+                                      const Stats* right) const {
+    return left->getId() < right->getId();
+}
+
 std::ostream& operator<<(std::ostream& out, const Stats& stats) {
 #ifdef DEBUG
     char prevFill;
