@@ -14,7 +14,7 @@
 class Dish : public Stats {
     private:
         uint64_t amountOfPeople;
-        std::map<Food, uint64_t, Stats::Compare> ingridients;
+        std::map<Food*, uint64_t, Stats::Compare> ingridients;
 
         void setAmountOfPeople(uint64_t amountOfPeople);
 
@@ -24,17 +24,17 @@ class Dish : public Stats {
         const uint64_t minAmountOfPeople {DISH_MIN_AMOUNT_OF_PEOPLE};
         const uint64_t maxAmountOfPeople {DISH_MAX_AMOUNT_OF_PEOPLE};
 
-        Dish(std::string name, Food& food, uint64_t foodMass, uint64_t amountOfPeople = 1);
+        Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople = 1);
         ~Dish(void);
 
         Dish& operator=(const Dish& right);
 
-        void addFood(const Food& food, uint64_t foodMass);
-        void removeFood(const Food& food);
-        void changeFoodAmount(const Food& food, uint64_t foodMass);
+        void addFood(Food* const food, uint64_t foodMass);
+        void removeFood(Food* const food);
+        void changeFoodAmount(Food* const food, uint64_t foodMass);
         void changeAmountOfPeople(uint64_t amountOfPeople);
         uint64_t getAmountOfPeople(void) const;
-        const std::map<Food, uint64_t, Stats::Compare>& getIngridientMap(void) const;
+        const std::map<Food*, uint64_t, Stats::Compare>& getIngridientMap(void) const;
 };
 
 std::ostream& operator<<(std::ostream& out, const Dish& dish);
