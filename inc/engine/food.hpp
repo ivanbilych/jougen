@@ -14,6 +14,7 @@ class Dish;
 class Food : public Item {
     private:
         std::list<Dish *> dishesWithFood {};
+        bool unregister {true};
 
     public:
         Food(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, uint64_t fats, uint64_t proteins, uint64_t carbohydrates, uint64_t calories);

@@ -22,7 +22,9 @@ Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType me
 Food::~Food(void) {
     for ( auto& dish: dishesWithFood ) {
         try {
+            unregister = false;
             dish->removeFood(this);
+            unregister = true;
         } catch (LastFoodInMap e) {
             delete dish;
         }
@@ -53,6 +55,10 @@ void Food::registerDish(Dish* dish) {
 
 void Food::unregisterDish(Dish* dish) {
     std::list<Dish*>::iterator it;
+
+    if ( !unregister ) {
+        return;
+    }
 
     if ( (it = std::find(dishesWithFood.begin(), dishesWithFood.end(), dish)) != dishesWithFood.end() ) {
         dishesWithFood.erase(it);
