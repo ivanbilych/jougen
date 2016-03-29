@@ -1,4 +1,5 @@
 #include <cmath>
+#include <algorithm>
 
 #include <dish.hpp>
 #include <item.hpp>
@@ -6,7 +7,7 @@
 #include <debug.hpp>
 #include <errors.hpp>
 
-Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople) :
+Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople, std::list<Dish*>* dishList) :
     Stats {name, DISH_MIN_MASS, DISH_MAX_MASS, DISH_MIN_PRICE, DISH_MAX_PRICE,
            DISH_MIN_FATS, DISH_MAX_FATS, DISH_MIN_PROTEINS, DISH_MAX_PROTEINS,
            DISH_MIN_CARBOHYDRATES, DISH_MAX_CARBOHYDRATES, DISH_MIN_CALORIES,
@@ -23,10 +24,22 @@ Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeo
     ingridients.insert(std::pair<Food*, uint64_t>(food, foodMass));
     food->registerDish(this);
 
+    addDishList(dishList);
+
     PRINT_OBJ("Created dish class " << NAME_ID);
 }
 
 Dish::~Dish(void) {
+    for ( auto& entry : listOfDishLists ) {
+        std::list<Dish*>::iterator it = std::find(entry->begin(), entry->end(), this);
+
+        PRINT_DEBUG("Removing dish " << NAME_ID << " from list");
+
+        if ( it != entry->end() ) {
+            entry->erase(it);
+        }
+    }
+
     PRINT_OBJ("Destroyed dish basic class " << NAME_ID);
 }
 
@@ -44,6 +57,18 @@ Dish& Dish::operator=(const Dish& right) {
     }
 
     return *this;
+}
+
+void Dish::addDishList(std::list<Dish*>* dishList) {
+    if ( dishList != nullptr ) {
+        std::list<std::list<Dish*>* >::iterator it = std::find(listOfDishLists.begin(), listOfDishLists.end(), dishList);
+
+        if ( it == listOfDishLists.end() ) {
+            listOfDishLists.push_back(dishList);
+
+            PRINT_DEBUG("Register dish list in dish " << NAME_ID);
+        }
+    }
 }
 
 void Dish::addFood(Food* const food, uint64_t foodMass) {

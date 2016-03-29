@@ -17,6 +17,7 @@ class Dish : public Stats {
     private:
         uint64_t amountOfPeople;
         std::map<Food*, uint64_t, Stats::Compare> ingridients;
+        std::list<std::list<Dish*>* > listOfDishLists {};
 
         void setAmountOfPeople(uint64_t amountOfPeople);
 
@@ -26,10 +27,12 @@ class Dish : public Stats {
         const uint64_t minAmountOfPeople {DISH_MIN_AMOUNT_OF_PEOPLE};
         const uint64_t maxAmountOfPeople {DISH_MAX_AMOUNT_OF_PEOPLE};
 
-        Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople = 1);
+        Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople = 1, std::list<Dish*>* dishList = nullptr);
         ~Dish(void);
 
         Dish& operator=(const Dish& right);
+
+        void addDishList(std::list<Dish*>* dishList);
 
         void addFood(Food* const food, uint64_t foodMass);
         void removeFood(Food* const food);
