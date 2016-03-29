@@ -58,7 +58,6 @@ void MainWindow::on_pushButton_2_clicked() {
         std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
 
         std::advance(item, row);
-        itemForm->avaliableItems.erase(item);
 
         delete *item;
 
@@ -94,7 +93,6 @@ void MainWindow::on_pushButton_4_clicked() {
         std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
 
         std::advance(dish, row);
-        itemForm->avaliableDish.erase(dish);
 
         delete *dish;
 
