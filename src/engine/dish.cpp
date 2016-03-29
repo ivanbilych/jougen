@@ -160,7 +160,7 @@ void Dish::removeFood(Food* const food) {
 }
 
 void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
-    uint64_t newPrice, newFats, newProteins, newCarbohydrates, newCalories;
+    uint64_t newMass, newPrice, newFats, newProteins, newCarbohydrates, newCalories;
     int64_t currentFoodMass = ingridients[food];
 
     if ( foodMass < minMass || foodMass > maxMass ) {
@@ -175,6 +175,7 @@ void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
         throw NoSuchFoodInMap();
     }
 
+    newMass = getMass() + foodMass * amountOfPeople - currentFoodMass * amountOfPeople;
     newPrice = getPrice() + std::round(food->getPrice()*foodMass/food->getMass()) -
                std::round(food->getPrice()*currentFoodMass/food->getMass());
     newFats = getFats() + std::round(food->getFats()*foodMass/HUNDRED_GRAM*amountOfPeople) -
@@ -185,6 +186,12 @@ void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
                        std::round(food->getCarbohydrates()*currentFoodMass/HUNDRED_GRAM*amountOfPeople);
     newCalories = getCalories() + std::round(food->getCalories()*foodMass/HUNDRED_GRAM*amountOfPeople) -
                   std::round(food->getCalories()*currentFoodMass/HUNDRED_GRAM*amountOfPeople);
+
+    if ( newMass > maxMass ) {
+        PRINT_ERR("Could not change food " << NAME_ID_CLASS(*food) << ". Result mass is too big [" << newMass << "]");
+
+        throw TooBigDishMass();
+    }
 
     if ( newPrice > maxPrice ) {
         PRINT_ERR("Could not change food " << NAME_ID_CLASS(*food) << ". Result price is too big [" << newPrice << "]");
@@ -216,7 +223,7 @@ void Dish::changeFoodAmount(Food* const food, uint64_t foodMass) {
         throw TooBigDishCalories();
     }
 
-    setMass(foodMass*amountOfPeople);
+    setMass(newMass);
     setPrice(newPrice);
     setFats(newFats);
     setProteins(newProteins);
