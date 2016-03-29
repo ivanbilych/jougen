@@ -36,6 +36,7 @@ class WrongItemMass : public ItemException {};
 class FoodException : public EngineException {};
 
 class WrongFoodMass : public FoodException {};
+class WrongDishForUnregister : public FoodException {};
 
 // People Stats class exceptions
 

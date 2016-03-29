@@ -1,3 +1,5 @@
+#include <algorithm>
+
 #include <food.hpp>
 #include <engineLimits.hpp>
 #include <debug.hpp>
@@ -18,6 +20,14 @@ Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType me
 }
 
 Food::~Food(void) {
+    for ( auto& dish: dishesWithFood ) {
+        try {
+            dish->removeFood(this);
+        } catch (LastFoodInMap e) {
+            delete dish;
+        }
+    }
+
     PRINT_OBJ("Destroyed food class " << NAME_ID);
 }
 
@@ -29,6 +39,28 @@ Food& Food::operator=(const Food& right) {
     Food::Item::operator=(right);
 
     return *this;
+}
+
+void Food::registerDish(Dish* dish) {
+    std::list<Dish*>::iterator it = std::find(dishesWithFood.begin(), dishesWithFood.end(), dish);
+
+    if ( it == dishesWithFood.end() ) {
+        dishesWithFood.push_back(dish);
+
+        PRINT_DEBUG("Register dish " << NAME_ID_CLASS(*dish) << " in " << *this << " food");
+    }
+}
+
+void Food::unregisterDish(Dish* dish) {
+    std::list<Dish*>::iterator it;
+
+    if ( (it = std::find(dishesWithFood.begin(), dishesWithFood.end(), dish)) != dishesWithFood.end() ) {
+        dishesWithFood.erase(it);
+    } else {
+        PRINT_ERR("Could not unregister dish " << NAME_ID_CLASS(*dish) << " from " << *this << " food");
+
+        throw WrongDishForUnregister();
+    }
 }
 
 std::ostream& operator<<(std::ostream& out, const Food& food) {

@@ -11,6 +11,8 @@
 
 #define HUNDRED_GRAM 100
 
+class Food;
+
 class Dish : public Stats {
     private:
         uint64_t amountOfPeople;

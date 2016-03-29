@@ -21,6 +21,7 @@ Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeo
     setAmountOfPeople(amountOfPeople);
 
     ingridients.insert(std::pair<Food*, uint64_t>(food, foodMass));
+    food->registerDish(this);
 
     PRINT_OBJ("Created dish class " << NAME_ID);
 }
@@ -117,6 +118,7 @@ void Dish::addFood(Food* const food, uint64_t foodMass) {
     setCalories(newCalories);
 
     ingridients.insert(std::pair<Food *, uint64_t>(food, foodMass));
+    food->registerDish(this);
 
     PRINT_INFO("Food " << NAME_ID_CLASS(*food) << " was added to dish " << NAME_ID << "");
 }
@@ -152,6 +154,7 @@ void Dish::removeFood(Food* const food) {
     setCalories(newCalories);
 
     ingridients.erase(food);
+    food->unregisterDish(this);
 
     PRINT_INFO("Food " << NAME_ID_CLASS(*food) << " was removed from dish " << NAME_ID << "");
 }
