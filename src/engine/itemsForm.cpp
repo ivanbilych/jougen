@@ -18,16 +18,25 @@ ItemForm::ItemForm(void) {
     Dish* dish125 = new Dish("Dish #125", food125, food125->getMass(), 1);
 
     avaliableItems.push_back(item1);
+    item1->addItemList(&avaliableItems);
     avaliableItems.push_back(item25);
+    item25->addItemList(&avaliableItems);
     avaliableItems.push_back(item125);
+    item125->addItemList(&avaliableItems);
 
     avaliableItems.push_back(food1);
+    food1->addItemList(&avaliableItems);
     avaliableItems.push_back(food25);
+    food25->addItemList(&avaliableItems);
     avaliableItems.push_back(food125);
+    food125->addItemList(&avaliableItems);
 
     avaliableDish.push_back(dish1);
+    dish1->addDishList(&avaliableDish);
     avaliableDish.push_back(dish25);
+    dish25->addDishList(&avaliableDish);
     avaliableDish.push_back(dish125);
+    dish125->addDishList(&avaliableDish);
 
     PRINT_OBJ("ItemForm created");
 }
