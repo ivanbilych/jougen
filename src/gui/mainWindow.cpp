@@ -62,8 +62,7 @@ void MainWindow::on_pushButton_2_clicked() {
 
         delete *item;
 
-        itemStringList->removeAt(row);
-        itemListModel->setStringList(*itemStringList);
+        redrawItemList();
 
         if ( itemStringList->size() ) {
             ui->listView_1->setCurrentIndex(index);
@@ -99,8 +98,7 @@ void MainWindow::on_pushButton_4_clicked() {
 
         delete *dish;
 
-        dishStringList->removeAt(row);
-        dishListModel->setStringList(*dishStringList);
+        redrawDishList();
 
         if ( dishStringList->size() ) {
             ui->listView_2->setCurrentIndex(index);
@@ -281,6 +279,8 @@ void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
 }
 
 void MainWindow::redrawItemList(void) {
+    itemStringList->clear();
+
     for ( auto& entry: itemForm->avaliableItems ) {
         itemStringList->append(QString::fromStdString(entry->getName()));
     }
@@ -288,6 +288,8 @@ void MainWindow::redrawItemList(void) {
 }
 
 void MainWindow::redrawDishList(void) {
+    dishStringList->clear();
+
     for ( auto& entry: itemForm->avaliableDish ) {
         dishStringList->append(QString::fromStdString(entry->getName()));
     }
