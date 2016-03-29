@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <list>
 
 #include <common.hpp>
 #include <stats.hpp>
@@ -22,15 +23,18 @@ class Item : public Stats {
     private:
         static const std::string itemMeasureTypeNames[];
         MeasureType measureType;
+        std::list<std::list<Item*>* > listOfItemLists {};
 
     protected:
-        Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories);
+        Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories, std::list<Item*>* itemList = nullptr);
 
     public:
-        Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType);
+        Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, std::list<Item*>* itemList = nullptr);
         virtual ~Item(void);
 
         Item& operator=(const Item& right);
+
+        void addItemList(std::list<Item*>* itemList);
 
         void setItemUnitType(MeasureType measureType);
         void setItemMass(uint64_t mass);
