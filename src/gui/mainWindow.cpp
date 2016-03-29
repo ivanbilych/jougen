@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->listView_2->setModel(dishListModel);
 
     redrawItemList();
-    redrawDishList();
 
     PRINT_OBJ("MainWindow created");
 }
@@ -283,6 +282,8 @@ void MainWindow::redrawItemList(void) {
         itemStringList->append(QString::fromStdString(entry->getName()));
     }
     itemListModel->setStringList(*itemStringList);
+
+    redrawDishList();
 }
 
 void MainWindow::redrawDishList(void) {
