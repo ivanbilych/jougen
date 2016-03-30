@@ -42,8 +42,10 @@ ItemForm::ItemForm(void) {
 }
 
 ItemForm::~ItemForm(void) {
-    for ( auto& entry: avaliableItems ) {
-        delete entry;
+    for ( std::list<Item*>::iterator it = avaliableItems.begin(); it != avaliableItems.end(); ) {
+        std::list<Item*>::iterator oldit = it++;
+
+        delete *oldit;
     }
 
     PRINT_OBJ("ItemForm destroyed");
