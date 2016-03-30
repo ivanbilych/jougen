@@ -2,6 +2,10 @@
 #include <itemsForm.hpp>
 
 #include <string>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QString>
+#include <QFile>
 
 ItemForm::ItemForm(void) {
     // TODO: Load this list from some default settings or leave empty
@@ -49,4 +53,109 @@ ItemForm::~ItemForm(void) {
     }
 
     PRINT_OBJ("ItemForm destroyed");
+}
+
+void ItemForm::writeItem(QJsonObject &json, Item &item) const {
+    json["name"] = QString::fromStdString(item.getName());
+    json["mass"] = static_cast<qint64>(item.getMass());
+    json["price"] = static_cast<qint64>(item.getPrice());
+    json["measureType"] = static_cast<int>(item.getUnitType());
+}
+
+void ItemForm::writeFood(QJsonObject &json, Food &food) const {
+    json["name"] = QString::fromStdString(food.getName());
+    json["mass"] = static_cast<qint64>(food.getMass());
+    json["price"] = static_cast<qint64>(food.getPrice());
+    json["measureType"] = static_cast<int>(food.getUnitType());
+    json["fats"] = static_cast<qint64>(food.getFats());
+    json["proteins"] = static_cast<qint64>(food.getProteins());
+    json["carbohydrates"] = static_cast<qint64>(food.getCarbohydrates());
+    json["calories"] = static_cast<qint64>(food.getCalories());
+}
+
+void ItemForm::writeDish(QJsonObject &json, Dish &dish) const {
+    QJsonArray itemsList;
+
+    json["name"] = QString::fromStdString(dish.getName());
+    json["amountOfPeople"] = static_cast<qint64>(dish.getAmountOfPeople());
+
+    for ( auto &entry: dish.getIngridientMap() ) {
+        QJsonObject mapEntry;
+        QJsonObject food;
+
+        writeFood(food, *(entry.first));
+
+        mapEntry["food"] = food;
+        mapEntry["amount"] = static_cast<qint64>(entry.second);
+
+        itemsList.append(mapEntry);
+    }
+
+    json["items"] = itemsList;
+}
+
+void ItemForm::saveItems(QJsonObject &json) {
+    QJsonArray itemsList;
+
+    for ( auto &entry: avaliableItems ) {
+        QJsonObject itemObj;
+
+        if ( !dynamic_cast<Food *>(entry) ) {
+            writeItem(itemObj, *entry);
+
+            itemsList.append(itemObj);
+        }
+    }
+
+    json["itemList"] = itemsList;
+}
+
+void ItemForm::saveFood(QJsonObject &json) {
+    QJsonArray foodList;
+
+    for ( auto &entry: avaliableItems ) {
+        QJsonObject itemObj;
+
+        if ( dynamic_cast<Food *>(entry) ) {
+            writeItem(itemObj, *entry);
+
+            foodList.append(itemObj);
+        }
+    }
+
+    json["foodList"] = foodList;
+}
+
+void ItemForm::saveDish(QJsonObject &json) {
+    QJsonArray dishList;
+
+    for ( auto &entry: avaliableDish ) {
+        QJsonObject itemObj;
+
+        writeDish(itemObj, *entry);
+
+        dishList.append(itemObj);
+    }
+
+    json["dishList"] = dishList;
+}
+
+bool ItemForm::saveData() {
+    QJsonObject saveObj;
+    QFile saveFile(QStringLiteral("save.json"));
+
+    if ( !saveFile.open(QIODevice::WriteOnly) ) {
+        PRINT_ERR("Couldn't open save file.");
+
+        return false;
+    }
+
+    saveItems(saveObj);
+    saveFood(saveObj);
+    saveDish(saveObj);
+
+    QJsonDocument saveDoc(saveObj);
+    saveFile.write(saveDoc.toJson());
+
+    return true;
 }

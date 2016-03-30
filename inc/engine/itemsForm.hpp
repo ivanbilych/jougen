@@ -8,6 +8,8 @@
 #include <food.hpp>
 #include <dish.hpp>
 
+#include <QJsonObject>
+
 class ItemForm {
     public:
         std::list<Item *> avaliableItems {};
@@ -15,6 +17,15 @@ class ItemForm {
 
         ItemForm(void);
         ~ItemForm(void);
+
+        void writeItem(QJsonObject &json, Item &item) const;
+        void writeFood(QJsonObject &json, Food &food) const;
+        void writeDish(QJsonObject &json, Dish &dish) const;
+
+        void saveItems(QJsonObject &json);
+        void saveFood(QJsonObject &json);
+        void saveDish(QJsonObject &json);
+        bool saveData(void);
 };
 
 #endif // ITEMSFORM_H
