@@ -28,12 +28,12 @@ class ItemForm {
         void saveItems(QJsonObject &json);
         void saveFood(QJsonObject &json);
         void saveDish(QJsonObject &json);
-        bool saveData(void);
+        bool saveData(QString &fileName);
 
         void loadItems(const QJsonArray &jsonArray);
         void loadFood(const QJsonArray &jsonArray);
         void loadDish(const QJsonArray &jsonArray);
-        bool loadData(void);
+        bool loadData(QString &fileName);
 };
 
 #endif // ITEMSFORM_H
