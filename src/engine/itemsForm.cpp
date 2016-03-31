@@ -154,12 +154,12 @@ void ItemForm::saveFood(QJsonObject &json) {
     QJsonArray foodList;
 
     for ( auto &entry: avaliableItems ) {
-        QJsonObject itemObj;
+        QJsonObject foodObj;
 
         if ( dynamic_cast<Food *>(entry) ) {
-            writeItem(itemObj, *entry);
+            writeFood(foodObj, *dynamic_cast<Food *>(entry));
 
-            foodList.append(itemObj);
+            foodList.append(foodObj);
         }
     }
 
