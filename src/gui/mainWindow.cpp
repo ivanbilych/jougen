@@ -305,21 +305,25 @@ void MainWindow::on_actionAbout_triggered() {
 void MainWindow::on_actionOpen_triggered() {
     QString loadFile(QFileDialog::getOpenFileName(0, "Open File", "", "json (*.json);; binary (*)"));
 
-    for ( std::list<Item*>::iterator it = itemForm->avaliableItems.begin(); it != itemForm->avaliableItems.end(); ) {
-        std::list<Item*>::iterator oldit = it++;
+    if ( !loadFile.isEmpty() ) {
+        for ( std::list<Item*>::iterator it = itemForm->avaliableItems.begin(); it != itemForm->avaliableItems.end(); ) {
+            std::list<Item*>::iterator oldit = it++;
 
-        delete *oldit;
+            delete *oldit;
+        }
+        itemForm->avaliableItems.clear();
+        itemForm->avaliableDish.clear();
+
+        itemForm->loadData(loadFile);
+
+        redrawItemList();
     }
-    itemForm->avaliableItems.clear();
-    itemForm->avaliableDish.clear();
-
-    itemForm->loadData(loadFile);
-
-    redrawItemList();
 }
 
 void MainWindow::on_actionSave_triggered() {
     QString saveFile(QFileDialog::getSaveFileName(0, "Save File", "", "json (*.json);; binary (*)"));
 
-    itemForm->saveData(saveFile);
+    if ( !saveFile.isEmpty() ) {
+        itemForm->saveData(saveFile);
+    }
 }
