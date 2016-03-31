@@ -317,6 +317,7 @@ void MainWindow::on_actionOpen_triggered() {
         itemForm->loadData(loadFile);
 
         redrawItemList();
+        ui->textEdit_1->clear();
     }
 }
 
