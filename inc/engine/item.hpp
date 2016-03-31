@@ -1,12 +1,12 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <iostream>
-#include <string>
-#include <list>
-
 #include <common.hpp>
 #include <stats.hpp>
+
+#include <iostream>
+#include <list>
+#include <string>
 
 class Item : public Stats {
     public:

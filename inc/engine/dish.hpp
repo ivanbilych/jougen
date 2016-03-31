@@ -1,13 +1,13 @@
 #ifndef DISH_H
 #define DISH_H
 
-#include <iostream>
-#include <string>
-#include <map>
-
 #include <common.hpp>
-#include <peopleStats.hpp>
 #include <food.hpp>
+#include <peopleStats.hpp>
+
+#include <iostream>
+#include <map>
+#include <string>
 
 #define HUNDRED_GRAM 100
 

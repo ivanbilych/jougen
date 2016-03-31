@@ -1,11 +1,11 @@
+#include <debug.hpp>
+#include <dish.hpp>
+#include <engineLimits.hpp>
+#include <errors.hpp>
+#include <item.hpp>
+
 #include <cmath>
 #include <algorithm>
-
-#include <dish.hpp>
-#include <item.hpp>
-#include <engineLimits.hpp>
-#include <debug.hpp>
-#include <errors.hpp>
 
 Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople, std::list<Dish*>* dishList) :
     Stats {name, DISH_MIN_MASS, DISH_MAX_MASS, DISH_MIN_PRICE, DISH_MAX_PRICE,

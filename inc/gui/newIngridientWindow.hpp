@@ -1,10 +1,10 @@
 #ifndef NEWINGRIDIENTWINDOW_H
 #define NEWINGRIDIENTWINDOW_H
 
-#include <QDialog>
-
 #include <item.hpp>
 #include <food.hpp>
+
+#include <QDialog>
 
 namespace Ui {
     class NewIngridientWindow;

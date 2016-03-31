@@ -1,13 +1,13 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QStringListModel>
-
-#include <newIngridientWindow.hpp>
-#include <newDishWindow.hpp>
 #include <aboutWindow.hpp>
 #include <itemsForm.hpp>
+#include <newDishWindow.hpp>
+#include <newIngridientWindow.hpp>
+
+#include <QMainWindow>
+#include <QStringListModel>
 
 namespace Ui {
     class MainWindow;

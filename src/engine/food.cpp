@@ -1,9 +1,9 @@
-#include <algorithm>
-
-#include <food.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
+#include <engineLimits.hpp>
 #include <errors.hpp>
+#include <food.hpp>
+
+#include <algorithm>
 
 Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType measureType, uint64_t fats, uint64_t proteins, uint64_t carbohydrates, uint64_t calories) :
     Item {name, mass, price, measureType, FOOD_MIN_MASS, FOOD_MAX_MASS,

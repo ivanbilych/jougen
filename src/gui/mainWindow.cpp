@@ -1,13 +1,13 @@
 #include <debug.hpp>
-#include <item.hpp>
 #include <dish.hpp>
 #include <food.hpp>
-
-#include <QString>
-#include <QFileDialog>
+#include <item.hpp>
 
 #include <mainWindow.hpp>
 #include "ui_mainWindow.h"
+
+#include <QString>
+#include <QFileDialog>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow {parent},

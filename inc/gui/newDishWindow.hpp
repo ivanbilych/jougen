@@ -1,12 +1,12 @@
 #ifndef NEWDISHWINDOW_H
 #define NEWDISHWINDOW_H
 
+#include <dish.hpp>
+#include <food.hpp>
+#include <item.hpp>
+
 #include <QDialog>
 #include <QStringListModel>
-
-#include <item.hpp>
-#include <food.hpp>
-#include <dish.hpp>
 
 namespace Ui {
     class NewDishWindow;

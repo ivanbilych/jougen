@@ -1,9 +1,9 @@
 #ifndef DATE_H
 #define DATE_H
 
-#include <iostream>
-
 #include <common.hpp>
+
+#include <iostream>
 
 #define FEBRUARY               2
 #define NOT_LEAP_DAYS         28

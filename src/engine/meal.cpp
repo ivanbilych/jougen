@@ -1,7 +1,7 @@
-#include <meal.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
+#include <engineLimits.hpp>
 #include <errors.hpp>
+#include <meal.hpp>
 
 const std::string Meal::mealTypeNames[] = {
     "breakfast",

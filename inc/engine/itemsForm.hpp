@@ -1,13 +1,12 @@
 #ifndef ITEMSFORM_H
 #define ITEMSFORM_H
 
-#include <list>
-
 #include <common.hpp>
-#include <item.hpp>
-#include <food.hpp>
 #include <dish.hpp>
+#include <food.hpp>
+#include <item.hpp>
 
+#include <list>
 #include <QJsonObject>
 
 class ItemForm {
