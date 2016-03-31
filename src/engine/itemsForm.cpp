@@ -169,7 +169,12 @@ bool ItemForm::saveData(QString &fileName) {
     saveDish(saveObj);
 
     QJsonDocument saveDoc(saveObj);
-    saveFile.write(saveDoc.toJson());
+
+    if ( !fileName.right(5).compare(".json") ) {
+        saveFile.write(saveDoc.toJson());
+    } else {
+        saveFile.write(saveDoc.toBinaryData());
+    }
 
     return true;
 }
@@ -226,7 +231,9 @@ bool ItemForm::loadData(QString &fileName) {
 
     QByteArray saveData = loadFile.readAll();
 
-    QJsonDocument loadDoc(QJsonDocument::fromJson(saveData));
+    QJsonDocument loadDoc((!fileName.right(5).compare(".json")) ?
+                           QJsonDocument::fromJson(saveData) :
+                           QJsonDocument::fromBinaryData(saveData));
 
     loadDish(loadDoc.object()["dishList"].toArray());
     loadFood(loadDoc.object()["foodList"].toArray());
