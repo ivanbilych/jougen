@@ -4,6 +4,7 @@
 #include <food.hpp>
 
 #include <QString>
+#include <QFileDialog>
 
 #include <mainWindow.hpp>
 #include "ui_mainWindow.h"
@@ -299,4 +300,26 @@ void MainWindow::on_actionAbout_triggered() {
     AboutWindow aboutWindow;
 
     aboutWindow.exec();
+}
+
+void MainWindow::on_actionOpen_triggered() {
+    QString loadFile(QFileDialog::getOpenFileName(0, "Open File", "/home", "JSON (*.json);; Binary (*.jou)"));
+
+    for ( std::list<Item*>::iterator it = itemForm->avaliableItems.begin(); it != itemForm->avaliableItems.end(); ) {
+        std::list<Item*>::iterator oldit = it++;
+
+        delete *oldit;
+    }
+    itemForm->avaliableItems.clear();
+    itemForm->avaliableDish.clear();
+
+    itemForm->loadData(loadFile);
+
+    redrawItemList();
+}
+
+void MainWindow::on_actionSave_triggered() {
+    QString saveFile(QFileDialog::getSaveFileName(0, "Save File", "/home", "JSON (*.json);; Binary (*.jou)"));
+
+    itemForm->saveData(saveFile);
 }

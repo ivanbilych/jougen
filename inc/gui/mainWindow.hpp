@@ -38,6 +38,8 @@ private slots:
     void on_listView_1_entered(const QModelIndex &index);
     void on_listView_2_entered(const QModelIndex &index);
     void on_actionAbout_triggered();
+    void on_actionOpen_triggered();
+    void on_actionSave_triggered();
 
 public slots:
     void addNewItemObject(Item *item);
