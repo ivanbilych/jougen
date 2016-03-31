@@ -86,11 +86,17 @@ Dish * ItemForm::readDish(const QJsonObject &json) {
     for ( int index = 1; index < itemsList.size(); index++ ) {
         newFood = readFood(itemsList[index].toObject()["food"].toObject());
         newDish->addFood(newFood, itemsList[index].toObject()["amount"].toInt());
-        std::list<Item*>::iterator it = std::find(avaliableItems.begin(), avaliableItems.end(), dynamic_cast<Item *>(newFood));
+        std::list<Item*>::iterator it;
 
-        if ( it == avaliableItems.end() ) {
-           avaliableItems.push_back(newFood);
-           newFood->addItemList(&avaliableItems);
+        for ( it = avaliableItems.begin(); ; it++ ) {
+            if ( !(*it)->getName().compare(newFood->getName()) ) {
+                delete newFood;
+
+                break;
+            } else if ( it == avaliableItems.end() ) {
+                avaliableItems.push_back(newFood);
+                newFood->addItemList(&avaliableItems);
+            }
         }
     }
 
