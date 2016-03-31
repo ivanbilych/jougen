@@ -214,10 +214,16 @@ void ItemForm::loadItems(const QJsonArray &jsonArray) {
 void ItemForm::loadFood(const QJsonArray &jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
         Food * newFood = readFood(jsonArray[i].toObject());
-        std::list<Item*>::iterator it = std::find(avaliableItems.begin(), avaliableItems.end(), newFood);
+        std::list<Item*>::iterator it;
 
-        if ( it == avaliableItems.end() ) {
-           avaliableItems.push_back(newFood);
+        for ( it = avaliableItems.begin(); ; it++ ) {
+            if ( !(*it)->getName().compare(newFood->getName()) ) {
+                delete newFood;
+
+                break;
+            } else if ( it == avaliableItems.end() ) {
+                avaliableItems.push_back(newFood);
+            }
         }
     }
 }
