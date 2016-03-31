@@ -81,6 +81,7 @@ Dish * ItemForm::readDish(const QJsonObject &json) {
                               itemsList[0].toObject()["amount"].toInt());
 
     avaliableItems.push_back(newFood);
+    newFood->addItemList(&avaliableItems);
 
     for ( int index = 1; index < itemsList.size(); index++ ) {
         newFood = readFood(itemsList[index].toObject()["food"].toObject());
@@ -89,6 +90,7 @@ Dish * ItemForm::readDish(const QJsonObject &json) {
 
         if ( it == avaliableItems.end() ) {
            avaliableItems.push_back(newFood);
+           newFood->addItemList(&avaliableItems);
         }
     }
 
@@ -207,6 +209,7 @@ void ItemForm::loadItems(const QJsonArray &jsonArray) {
 
         if ( it == avaliableItems.end() ) {
            avaliableItems.push_back(newItem);
+           newItem->addItemList(&avaliableItems);
         }
     }
 }
@@ -223,6 +226,7 @@ void ItemForm::loadFood(const QJsonArray &jsonArray) {
                 break;
             } else if ( it == avaliableItems.end() ) {
                 avaliableItems.push_back(newFood);
+                newFood->addItemList(&avaliableItems);
             }
         }
     }
@@ -235,6 +239,7 @@ void ItemForm::loadDish(const QJsonArray &jsonArray) {
 
         if ( it == avaliableDish.end() ) {
            avaliableDish.push_back(newDish);
+           newDish->addDishList(&avaliableDish);
         }
     }
 }
