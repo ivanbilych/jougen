@@ -82,3 +82,5 @@ if (ENABLE_TESTS)
 
     add_executable(${TESTS_BINARY_NAME} ${TEST_SOURCE_FILES} src/tests.cpp)
 endif()
+
+add_custom_command(TARGET ${BINARY_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${BINARY_NAME}>)

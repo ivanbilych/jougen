@@ -1,0 +1,113 @@
+{
+    "dishList": [
+        {
+            "amountOfPeople": 1,
+            "items": [
+                {
+                    "amount": 1,
+                    "food": {
+                        "calories": 1,
+                        "carbohydrates": 1,
+                        "fats": 1,
+                        "mass": 1,
+                        "measureType": 0,
+                        "name": "Food #1",
+                        "price": 1,
+                        "proteins": 1
+                    }
+                }
+            ],
+            "name": "Dish #1"
+        },
+        {
+            "amountOfPeople": 1,
+            "items": [
+                {
+                    "amount": 25,
+                    "food": {
+                        "calories": 25,
+                        "carbohydrates": 25,
+                        "fats": 25,
+                        "mass": 25,
+                        "measureType": 1,
+                        "name": "Food #25",
+                        "price": 25,
+                        "proteins": 25
+                    }
+                }
+            ],
+            "name": "Dish #25"
+        },
+        {
+            "amountOfPeople": 1,
+            "items": [
+                {
+                    "amount": 125,
+                    "food": {
+                        "calories": 125,
+                        "carbohydrates": 125,
+                        "fats": 125,
+                        "mass": 125,
+                        "measureType": 1,
+                        "name": "Food #125",
+                        "price": 125,
+                        "proteins": 125
+                    }
+                }
+            ],
+            "name": "Dish #125"
+        }
+    ],
+    "foodList": [
+        {
+            "calories": 1,
+            "carbohydrates": 1,
+            "fats": 1,
+            "mass": 1,
+            "measureType": 0,
+            "name": "Food #1",
+            "price": 1,
+            "proteins": 1
+        },
+        {
+            "calories": 25,
+            "carbohydrates": 25,
+            "fats": 25,
+            "mass": 25,
+            "measureType": 1,
+            "name": "Food #25",
+            "price": 25,
+            "proteins": 25
+        },
+        {
+            "calories": 125,
+            "carbohydrates": 125,
+            "fats": 125,
+            "mass": 125,
+            "measureType": 1,
+            "name": "Food #125",
+            "price": 125,
+            "proteins": 125
+        }
+    ],
+    "itemList": [
+        {
+            "mass": 1,
+            "measureType": 0,
+            "name": "Item #1",
+            "price": 1
+        },
+        {
+            "mass": 25,
+            "measureType": 1,
+            "name": "Item #25",
+            "price": 25
+        },
+        {
+            "mass": 125,
+            "measureType": 1,
+            "name": "Item #125",
+            "price": 125
+        }
+    ]
+}
