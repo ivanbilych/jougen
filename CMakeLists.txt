@@ -71,16 +71,4 @@ add_executable(${BINARY_NAME} ${SOURCE_FILES} src/jougen.cpp)
 
 target_link_libraries(${BINARY_NAME} Qt5::Widgets)
 
-if (ENABLE_TESTS)
-    file(GLOB TEST_SOURCES
-        "src/tests/*.cpp")
-
-    file(GLOB TEST_HEADERS
-        "inc/tests/*.hpp")
-
-    set(TEST_SOURCE_FILES ${SOURCE_FILES} ${TEST_SOURCES} ${TEST_HEADERS})
-
-    add_executable(${TESTS_BINARY_NAME} ${TEST_SOURCE_FILES} src/tests.cpp)
-endif()
-
 add_custom_command(TARGET ${BINARY_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:${BINARY_NAME}>)
