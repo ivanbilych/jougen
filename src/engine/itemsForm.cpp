@@ -225,7 +225,8 @@ bool ItemForm::loadData(QString &fileName) {
     QFile loadFile(fileName);
 
     if ( !loadFile.open(QIODevice::ReadOnly) ) {
-        qWarning("Couldn't open save file.");
+        PRINT_ERR("Couldn't open save file.");
+
         return false;
     }
 
