@@ -3,7 +3,7 @@
 #include <newIngridientWindow.hpp>
 #include "ui_newIngridientWindow.h"
 
-NewIngridientWindow::NewIngridientWindow(QWidget *parent) :
+NewIngridientWindow::NewIngridientWindow(QWidget* parent) :
     QDialog {parent},
     ui {new Ui::NewIngridientWindow},
     measureList {QStringList()} {
@@ -14,7 +14,7 @@ NewIngridientWindow::NewIngridientWindow(QWidget *parent) :
     PRINT_OBJ("NewIngridientWindow created");
 }
 
-NewIngridientWindow::NewIngridientWindow(Item *item, QWidget *parent) :
+NewIngridientWindow::NewIngridientWindow(Item* item, QWidget* parent) :
     QDialog {parent},
     ui {new Ui::NewIngridientWindow},
     measureList {QStringList()},
@@ -28,7 +28,7 @@ NewIngridientWindow::NewIngridientWindow(Item *item, QWidget *parent) :
     PRINT_OBJ("Existed item edit window created");
 }
 
-NewIngridientWindow::NewIngridientWindow(Food *food, QWidget *parent) :
+NewIngridientWindow::NewIngridientWindow(Food* food, QWidget* parent) :
     QDialog {parent},
     ui {new Ui::NewIngridientWindow},
     measureList {QStringList()},
@@ -139,7 +139,7 @@ Food* NewIngridientWindow::createNewFood(void) {
                     ui->lineEdit_7->text().toLong());
 }
 
-void NewIngridientWindow::editItem(Item *item) {
+void NewIngridientWindow::editItem(Item* item) {
     if ( !ui->comboBox_1->currentText().toStdString().compare("gram") ) {
         item->setItemMass(1);
     } else {
@@ -149,7 +149,7 @@ void NewIngridientWindow::editItem(Item *item) {
     item->setItemUnitType(static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
-void NewIngridientWindow::editFood(Food *food) {
+void NewIngridientWindow::editFood(Food* food) {
     editItem(food);
     food->setItemFats(ui->lineEdit_3->text().toLong());
     food->setItemProteins(ui->lineEdit_5->text().toLong());
@@ -171,7 +171,7 @@ void NewIngridientWindow::on_radioButton_2_clicked() {
     ui->lineEdit_7->setDisabled(true);
 }
 
-void NewIngridientWindow::on_comboBox_1_currentIndexChanged(const QString &arg1) {
+void NewIngridientWindow::on_comboBox_1_currentIndexChanged(const QString& arg1) {
     if ( !arg1.toStdString().compare("gram") ) {
         ui->lineEdit_2->setDisabled(true);
     } else {

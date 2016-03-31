@@ -13,8 +13,8 @@ class Dish;
 
 class Food : public Item {
     private:
-        std::list<Dish *> dishesWithFood {};
-        std::list<std::list<Food*>* > listOfFoodLists {};
+        std::list<Dish*> dishesWithFood {};
+        std::list<std::list<Food*>*> listOfFoodLists {};
         bool unregister {true};
 
     public:

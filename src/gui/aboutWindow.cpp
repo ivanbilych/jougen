@@ -4,7 +4,7 @@
 #include <aboutWindow.hpp>
 #include "ui_aboutWindow.h"
 
-AboutWindow::AboutWindow(QDialog *parent) :
+AboutWindow::AboutWindow(QDialog* parent) :
     QDialog { parent },
     ui { new Ui::AboutWindow } {
 

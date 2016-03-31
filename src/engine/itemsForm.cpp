@@ -22,14 +22,14 @@ ItemForm::~ItemForm(void) {
     PRINT_OBJ("ItemForm destroyed");
 }
 
-Item * ItemForm::readItem(const QJsonObject &json) {
+Item* ItemForm::readItem(const QJsonObject& json) {
     return new Item(json["name"].toString().toStdString(),
                     json["mass"].toInt(),
                     json["price"].toInt(),
                     static_cast<Item::MeasureType>(json["measureType"].toInt()));
 }
 
-Food * ItemForm::readFood(const QJsonObject &json) {
+Food* ItemForm::readFood(const QJsonObject& json) {
     return new Food(json["name"].toString().toStdString(),
                     json["mass"].toInt(),
                     json["price"].toInt(),
@@ -40,11 +40,11 @@ Food * ItemForm::readFood(const QJsonObject &json) {
                     json["calories"].toInt());
 }
 
-Dish * ItemForm::readDish(const QJsonObject &json) {
+Dish* ItemForm::readDish(const QJsonObject& json) {
     QJsonArray itemsList = json["items"].toArray();
-    Food * newFood = readFood(itemsList[0].toObject()["food"].toObject());
-    Dish * newDish = new Dish(json["name"].toString().toStdString(), newFood,
-                              itemsList[0].toObject()["amount"].toInt());
+    Food* newFood = readFood(itemsList[0].toObject()["food"].toObject());
+    Dish* newDish = new Dish(json["name"].toString().toStdString(), newFood,
+                             itemsList[0].toObject()["amount"].toInt());
 
     avaliableItems.push_back(newFood);
     newFood->addItemList(&avaliableItems);
@@ -69,14 +69,14 @@ Dish * ItemForm::readDish(const QJsonObject &json) {
     return newDish;
 }
 
-void ItemForm::writeItem(QJsonObject &json, Item &item) const {
+void ItemForm::writeItem(QJsonObject& json, Item& item) const {
     json["name"] = QString::fromStdString(item.getName());
     json["mass"] = static_cast<qint64>(item.getMass());
     json["price"] = static_cast<qint64>(item.getPrice());
     json["measureType"] = static_cast<int>(item.getUnitType());
 }
 
-void ItemForm::writeFood(QJsonObject &json, Food &food) const {
+void ItemForm::writeFood(QJsonObject& json, Food& food) const {
     json["name"] = QString::fromStdString(food.getName());
     json["mass"] = static_cast<qint64>(food.getMass());
     json["price"] = static_cast<qint64>(food.getPrice());
@@ -87,13 +87,13 @@ void ItemForm::writeFood(QJsonObject &json, Food &food) const {
     json["calories"] = static_cast<qint64>(food.getCalories());
 }
 
-void ItemForm::writeDish(QJsonObject &json, Dish &dish) const {
+void ItemForm::writeDish(QJsonObject& json, Dish& dish) const {
     QJsonArray itemsList;
 
     json["name"] = QString::fromStdString(dish.getName());
     json["amountOfPeople"] = static_cast<qint64>(dish.getAmountOfPeople());
 
-    for ( auto &entry: dish.getIngridientMap() ) {
+    for ( auto& entry: dish.getIngridientMap() ) {
         QJsonObject mapEntry;
         QJsonObject food;
 
@@ -108,13 +108,13 @@ void ItemForm::writeDish(QJsonObject &json, Dish &dish) const {
     json["items"] = itemsList;
 }
 
-void ItemForm::saveItems(QJsonObject &json) {
+void ItemForm::saveItems(QJsonObject& json) {
     QJsonArray itemsList;
 
-    for ( auto &entry: avaliableItems ) {
+    for ( auto& entry: avaliableItems ) {
         QJsonObject itemObj;
 
-        if ( !dynamic_cast<Food *>(entry) ) {
+        if ( !dynamic_cast<Food*>(entry) ) {
             writeItem(itemObj, *entry);
 
             itemsList.append(itemObj);
@@ -124,14 +124,14 @@ void ItemForm::saveItems(QJsonObject &json) {
     json["itemList"] = itemsList;
 }
 
-void ItemForm::saveFood(QJsonObject &json) {
+void ItemForm::saveFood(QJsonObject& json) {
     QJsonArray foodList;
 
-    for ( auto &entry: avaliableItems ) {
+    for ( auto& entry: avaliableItems ) {
         QJsonObject foodObj;
 
-        if ( dynamic_cast<Food *>(entry) ) {
-            writeFood(foodObj, *dynamic_cast<Food *>(entry));
+        if ( dynamic_cast<Food*>(entry) ) {
+            writeFood(foodObj, *dynamic_cast<Food*>(entry));
 
             foodList.append(foodObj);
         }
@@ -140,10 +140,10 @@ void ItemForm::saveFood(QJsonObject &json) {
     json["foodList"] = foodList;
 }
 
-void ItemForm::saveDish(QJsonObject &json) {
+void ItemForm::saveDish(QJsonObject& json) {
     QJsonArray dishList;
 
-    for ( auto &entry: avaliableDish ) {
+    for ( auto& entry: avaliableDish ) {
         QJsonObject itemObj;
 
         writeDish(itemObj, *entry);
@@ -154,7 +154,7 @@ void ItemForm::saveDish(QJsonObject &json) {
     json["dishList"] = dishList;
 }
 
-bool ItemForm::saveData(QString &fileName) {
+bool ItemForm::saveData(QString& fileName) {
     QJsonObject saveObj;
     QFile saveFile(fileName);
 
@@ -179,9 +179,9 @@ bool ItemForm::saveData(QString &fileName) {
     return true;
 }
 
-void ItemForm::loadItems(const QJsonArray &jsonArray) {
+void ItemForm::loadItems(const QJsonArray& jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
-        Item * newItem = readItem(jsonArray[i].toObject());
+        Item* newItem = readItem(jsonArray[i].toObject());
         std::list<Item*>::iterator it = std::find(avaliableItems.begin(), avaliableItems.end(), newItem);
 
         if ( it == avaliableItems.end() ) {
@@ -191,9 +191,9 @@ void ItemForm::loadItems(const QJsonArray &jsonArray) {
     }
 }
 
-void ItemForm::loadFood(const QJsonArray &jsonArray) {
+void ItemForm::loadFood(const QJsonArray& jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
-        Food * newFood = readFood(jsonArray[i].toObject());
+        Food* newFood = readFood(jsonArray[i].toObject());
         std::list<Item*>::iterator it;
 
         for ( it = avaliableItems.begin(); ; it++ ) {
@@ -209,9 +209,9 @@ void ItemForm::loadFood(const QJsonArray &jsonArray) {
     }
 }
 
-void ItemForm::loadDish(const QJsonArray &jsonArray) {
+void ItemForm::loadDish(const QJsonArray& jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
-        Dish * newDish = readDish(jsonArray[i].toObject());
+        Dish* newDish = readDish(jsonArray[i].toObject());
         std::list<Dish*>::iterator it = std::find(avaliableDish.begin(), avaliableDish.end(), newDish);
 
         if ( it == avaliableDish.end() ) {
@@ -221,7 +221,7 @@ void ItemForm::loadDish(const QJsonArray &jsonArray) {
     }
 }
 
-bool ItemForm::loadData(QString &fileName) {
+bool ItemForm::loadData(QString& fileName) {
     QFile loadFile(fileName);
 
     if ( !loadFile.open(QIODevice::ReadOnly) ) {

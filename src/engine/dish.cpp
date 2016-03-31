@@ -142,7 +142,7 @@ void Dish::addFood(Food* const food, uint64_t foodMass) {
     setCarbohydrates(newCarbohydrates);
     setCalories(newCalories);
 
-    ingridients.insert(std::pair<Food *, uint64_t>(food, foodMass));
+    ingridients.insert(std::pair<Food*, uint64_t>(food, foodMass));
     food->registerDish(this);
 
     PRINT_INFO("Food " << NAME_ID_CLASS(*food) << " was added to dish " << NAME_ID << "");

@@ -9,7 +9,7 @@
 #include <QString>
 #include <QFileDialog>
 
-MainWindow::MainWindow(QWidget *parent) :
+MainWindow::MainWindow(QWidget* parent) :
     QMainWindow {parent},
     ui {new Ui::MainWindow},
     itemStringList {new QStringList},
@@ -42,8 +42,8 @@ MainWindow::~MainWindow() {
 void MainWindow::on_pushButton_1_clicked() {
     NewIngridientWindow newIngridientWindow;
 
-    QObject::connect(&newIngridientWindow, SIGNAL(itemObjectReady(Item *)), this, SLOT(addNewItemObject(Item *)));
-    QObject::connect(&newIngridientWindow, SIGNAL(foodObjectReady(Food *)), this, SLOT(addNewFoodObject(Food *)));
+    QObject::connect(&newIngridientWindow, SIGNAL(itemObjectReady(Item*)), this, SLOT(addNewItemObject(Item*)));
+    QObject::connect(&newIngridientWindow, SIGNAL(foodObjectReady(Food*)), this, SLOT(addNewFoodObject(Food*)));
 
     newIngridientWindow.exec();
 }
@@ -55,7 +55,7 @@ void MainWindow::on_pushButton_2_clicked() {
         int row = selected.first().row();
 
         const QModelIndex index = itemListModel->index(row?row-1:0);
-        std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+        std::list<Item*>::iterator item = itemForm->avaliableItems.begin();
 
         std::advance(item, row);
 
@@ -75,8 +75,8 @@ void MainWindow::on_pushButton_2_clicked() {
 void MainWindow::on_pushButton_3_clicked() {
     NewDishWindow newDishWindow;
 
-    QObject::connect(&newDishWindow, SIGNAL(itemObjectReady(Dish *)), this, SLOT(addNewDishObject(Dish *)));
-    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item *> *)), &newDishWindow, SLOT(fillItemList(std::list<Item *> *)));
+    QObject::connect(&newDishWindow, SIGNAL(itemObjectReady(Dish*)), this, SLOT(addNewDishObject(Dish*)));
+    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), &newDishWindow, SLOT(fillItemList(std::list<Item*>*)));
 
     emit newDishRequest(&itemForm->avaliableItems);
 
@@ -90,7 +90,7 @@ void MainWindow::on_pushButton_4_clicked() {
         int row = selected.first().row();
 
         const QModelIndex index = dishListModel->index(row?row-1:0);
-        std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
+        std::list<Dish*>::iterator dish = itemForm->avaliableDish.begin();
 
         std::advance(dish, row);
 
@@ -123,31 +123,31 @@ void MainWindow::on_pushButton_5_clicked() {
     }
 }
 
-void MainWindow::on_listView_1_clicked(const QModelIndex &index) {
+void MainWindow::on_listView_1_clicked(const QModelIndex& index) {
     displayListViewInfoItem(index);
 
     PRINT_DEBUG("Clicked item/food: " << index.data().toString().toStdString());
 }
 
-void MainWindow::on_listView_2_clicked(const QModelIndex &index) {
+void MainWindow::on_listView_2_clicked(const QModelIndex& index) {
     displayListViewInfoDish(index);
 
     PRINT_DEBUG("Clicked dish: " << index.data().toString().toStdString());
 }
 
-void MainWindow::on_listView_1_entered(const QModelIndex &index) {
+void MainWindow::on_listView_1_entered(const QModelIndex& index) {
     displayListViewInfoItem(index);
 
     PRINT_DEBUG("Entered item/food: " << index.data().toString().toStdString());
 }
 
-void MainWindow::on_listView_2_entered(const QModelIndex &index) {
+void MainWindow::on_listView_2_entered(const QModelIndex& index) {
     displayListViewInfoDish(index);
 
     PRINT_DEBUG("Entered dish: " << index.data().toString().toStdString());
 }
 
-void MainWindow::addNewItemObject(Item *item) {
+void MainWindow::addNewItemObject(Item* item) {
     QModelIndex index;
 
     itemStringList->append(QString::fromStdString(item->getName()));
@@ -162,7 +162,7 @@ void MainWindow::addNewItemObject(Item *item) {
     PRINT_DEBUG("New item added");
 }
 
-void MainWindow::addNewFoodObject(Food *food) {
+void MainWindow::addNewFoodObject(Food* food) {
     QModelIndex index;
 
     itemStringList->append(QString::fromStdString(food->getName()));
@@ -177,7 +177,7 @@ void MainWindow::addNewFoodObject(Food *food) {
     PRINT_DEBUG("New food added");
 }
 
-void MainWindow::addNewDishObject(Dish *dish) {
+void MainWindow::addNewDishObject(Dish* dish) {
     dishStringList->append(QString::fromStdString(dish->getName()));
     dishListModel->setStringList(*dishStringList);
 
@@ -186,15 +186,15 @@ void MainWindow::addNewDishObject(Dish *dish) {
     PRINT_DEBUG("New dish added");
 }
 
-void MainWindow::editItem(QModelIndexList &selected) {
-    NewIngridientWindow *ingridientWindow;
+void MainWindow::editItem(QModelIndexList& selected) {
+    NewIngridientWindow* ingridientWindow;
     int row = selected.first().row();
     const QModelIndex index = itemListModel->index(row);
 
-    std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+    std::list<Item*>::iterator item = itemForm->avaliableItems.begin();
     std::advance(item, row);
 
-    ingridientWindow = (infoWindowType == ITEM) ? new NewIngridientWindow(*item) : new NewIngridientWindow(dynamic_cast<Food *>(*item));
+    ingridientWindow = (infoWindowType == ITEM) ? new NewIngridientWindow(*item) : new NewIngridientWindow(dynamic_cast<Food*>(*item));
 
     ingridientWindow->exec();
 
@@ -203,17 +203,17 @@ void MainWindow::editItem(QModelIndexList &selected) {
     displayListViewInfoItem(index);
 }
 
-void MainWindow::editDish(QModelIndexList &selected) {
-    NewDishWindow *dishWindow;
+void MainWindow::editDish(QModelIndexList& selected) {
+    NewDishWindow* dishWindow;
     int row = selected.first().row();
     const QModelIndex index = dishListModel->index(row);
 
-    std::list<Dish *>::iterator dish = itemForm->avaliableDish.begin();
+    std::list<Dish*>::iterator dish = itemForm->avaliableDish.begin();
     std::advance(dish, row);
 
     dishWindow = new NewDishWindow(*dish);
 
-    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item *> *)), dishWindow, SLOT(fillItemList(std::list<Item *> *)));
+    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), dishWindow, SLOT(fillItemList(std::list<Item*>*)));
 
     emit newDishRequest(&itemForm->avaliableItems);
     dishWindow->exec();
@@ -223,13 +223,13 @@ void MainWindow::editDish(QModelIndexList &selected) {
     displayListViewInfoDish(index);
 }
 
-void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
-    std::list<Item *>::iterator item = itemForm->avaliableItems.begin();
+void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
+    std::list<Item*>::iterator item = itemForm->avaliableItems.begin();
     QString itemInfo;
 
     std::advance(item, index.row());
 
-    if ( dynamic_cast<Food *>(*item) ) {
+    if ( dynamic_cast<Food*>(*item) ) {
         infoWindowType = FOOD;
     } else {
         infoWindowType = ITEM;
@@ -250,8 +250,8 @@ void MainWindow::displayListViewInfoItem(const QModelIndex &index) {
     ui->textEdit_1->setText(itemInfo);
 }
 
-void MainWindow::displayListViewInfoDish(const QModelIndex &index) {
-    std::list<Dish *>::iterator item = itemForm->avaliableDish.begin();
+void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
+    std::list<Dish*>::iterator item = itemForm->avaliableDish.begin();
     QString itemInfo;
 
     std::advance(item, index.row());

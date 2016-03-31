@@ -17,7 +17,7 @@ class Dish : public Stats {
     private:
         uint64_t amountOfPeople;
         std::map<Food*, uint64_t, Stats::Compare> ingridients;
-        std::list<std::list<Dish*>* > listOfDishLists {};
+        std::list<std::list<Dish*>*> listOfDishLists {};
 
         void setAmountOfPeople(uint64_t amountOfPeople);
 

@@ -3,7 +3,7 @@
 #include <newDishWindow.hpp>
 #include "ui_newDishWindow.h"
 
-NewDishWindow::NewDishWindow(QWidget *parent) :
+NewDishWindow::NewDishWindow(QWidget* parent) :
     QDialog {parent},
     ui {new Ui::NewDishWindow},
     foodStringList {new QStringList},
@@ -16,7 +16,7 @@ NewDishWindow::NewDishWindow(QWidget *parent) :
     PRINT_OBJ("NewDishWindow created");
 }
 
-NewDishWindow::NewDishWindow(Dish *dish, QWidget *parent) :
+NewDishWindow::NewDishWindow(Dish* dish, QWidget* parent) :
     QDialog {parent},
     ui {new Ui::NewDishWindow},
     foodStringList {new QStringList},
@@ -68,11 +68,11 @@ void NewDishWindow::on_buttonBox_1_rejected() {
     PRINT_DEBUG("New dish rejected");
 }
 
-void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
+void NewDishWindow::fillItemList(std::list<Item*>* itemsList) {
     avaliableItemsList = itemsList;
 
     for ( auto& entry: *itemsList ) {
-        if ( dynamic_cast<Food *>(entry) ) {
+        if ( dynamic_cast<Food*>(entry) ) {
             foodStringList->append(QString::fromStdString(entry->getName()));
         } else {
             foodStringList->append(QString::fromStdString(entry->getName())+QString(" (item)"));
@@ -85,7 +85,7 @@ void NewDishWindow::fillItemList(std::list<Item *> *itemsList) {
 }
 
 Dish* NewDishWindow::createNewDish(void) {
-    std::list<Food *>::iterator item = dishFoodList.begin();
+    std::list<Food*>::iterator item = dishFoodList.begin();
     uint64_t amountOfPeople = static_cast<uint64_t>(ui->lineEdit_2->text().toLong());
     int pos_y = 0;
 
@@ -94,14 +94,14 @@ Dish* NewDishWindow::createNewDish(void) {
     }
 
     dish = new Dish(ui->lineEdit_1->text().toStdString(),
-                    dynamic_cast<Food *>(*item),
+                    dynamic_cast<Food*>(*item),
                     static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()),
                     amountOfPeople);
     pos_y += 1;
     std::advance(item, 1);
 
     for ( ; item != dishFoodList.end(); item++ ) {
-        dish->addFood(dynamic_cast<Food *>(*item),
+        dish->addFood(dynamic_cast<Food*>(*item),
                       static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
         pos_y += 1;
     }
@@ -133,17 +133,17 @@ void NewDishWindow::on_pushButton_1_clicked() {
     QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
 
     if ( !selected.isEmpty() ) {
-        std::list<Item *>::iterator item = avaliableItemsList->begin();
+        std::list<Item*>::iterator item = avaliableItemsList->begin();
 
         std::advance(item, selected.first().row());
 
-        if ( dynamic_cast<Food *>(*item) && *std::find(dishFoodList.begin(), dishFoodList.end(), *item) == *dishFoodList.end() ) {
+        if ( dynamic_cast<Food*>(*item) && *std::find(dishFoodList.begin(), dishFoodList.end(), *item) == *dishFoodList.end() ) {
             int rowCount = ui->tableWidget_1->rowCount();
 
             if ( editMode ) {
-                dish->addFood(dynamic_cast<Food *>(*item), 1);
+                dish->addFood(dynamic_cast<Food*>(*item), 1);
             }
-            dishFoodList.push_back(dynamic_cast<Food *>(*item));
+            dishFoodList.push_back(dynamic_cast<Food*>(*item));
 
             ui->tableWidget_1->setRowCount(rowCount+1);
             ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString((*item)->getName())));
@@ -156,13 +156,13 @@ void NewDishWindow::on_pushButton_1_clicked() {
 
 void NewDishWindow::on_pushButton_2_clicked() {
     if ( ui->tableWidget_1->currentRow() != -1 ) {
-        std::list<Food *>::iterator item = dishFoodList.begin();
+        std::list<Food*>::iterator item = dishFoodList.begin();
         int currentRow = ui->tableWidget_1->currentRow();
 
         std::advance(item, currentRow);
 
         if ( editMode && dish->getIngridientMap().size() > 1 ) {
-            dish->removeFood(dynamic_cast<Food *>(*item));
+            dish->removeFood(dynamic_cast<Food*>(*item));
             dishFoodList.remove(*item);
 
             ui->tableWidget_1->removeRow(currentRow);

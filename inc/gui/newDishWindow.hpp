@@ -16,12 +16,12 @@ class NewDishWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit NewDishWindow(QWidget *parent = 0);
-    explicit NewDishWindow(Dish *dish, QWidget *parent = 0);
+    explicit NewDishWindow(QWidget* parent = 0);
+    explicit NewDishWindow(Dish* dish, QWidget* parent = 0);
     ~NewDishWindow();
 
 signals:
-    void itemObjectReady(Dish *dish);
+    void itemObjectReady(Dish* dish);
 
 private slots:
     void on_buttonBox_1_accepted();
@@ -30,15 +30,15 @@ private slots:
     void on_pushButton_2_clicked();
 
 public slots:
-    void fillItemList(std::list<Item *> *itemsList);
+    void fillItemList(std::list<Item*>* itemsList);
 
 private:
-    Ui::NewDishWindow *ui;
-    QStringList *foodStringList {};
-    QStringListModel *itemListModel {};
-    Dish *dish {};
-    std::list<Item *> *avaliableItemsList;
-    std::list<Food *> dishFoodList;
+    Ui::NewDishWindow* ui;
+    QStringList* foodStringList {};
+    QStringListModel* itemListModel {};
+    Dish* dish {};
+    std::list<Item*>* avaliableItemsList;
+    std::list<Food*> dishFoodList;
     bool editMode {false};
 
     Dish* createNewDish(void);
