@@ -121,5 +121,9 @@ class IngridientWindowException : public GUIException {};
 class EmptyNameException : public IngridientWindowException {};
 class EmptyMassException : public IngridientWindowException {};
 class EmptyPriceException : public IngridientWindowException {};
+class EmptyFatsException : public IngridientWindowException {};
+class EmptyProteinsException : public IngridientWindowException {};
+class EmptyCarbohydratesException : public IngridientWindowException {};
+class EmptyCaloriesException : public IngridientWindowException {};
 
 #endif // ERRORS_H
