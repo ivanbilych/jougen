@@ -3,6 +3,7 @@
 
 // Stats class limits
 
+#define STATS_MASS_RATIO                                                   1000U
 #define STATS_PRICE_RATIO                                                   100U
 #define STATS_FATS_RATIO                                                     10U
 #define STATS_PROTEINS_RATIO                                                 10U

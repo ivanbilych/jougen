@@ -237,7 +237,7 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
     itemInfo += "Price: " + priceToQString((*item)->getPrice()) + "\n";
-    itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Mass: " + massToQString((*item)->getMass()) + "\n";
     itemInfo += "Unit: " + QString::fromStdString((*item)->getUnitTypeName()) + "\n";
 
     if ( infoWindowType == FOOD ) {
@@ -260,7 +260,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
     itemInfo += "Price: " + priceToQString((*item)->getPrice()) + "\n";
-    itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
+    itemInfo += "Mass: " + massToQString((*item)->getMass()) + "\n";
     itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
     itemInfo += "Proteins: " + QString::number((*item)->getProteins()) + "\n";
     itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + "\n";
@@ -345,4 +345,20 @@ QString priceToQString(uint64_t price) {
     }
 
     return priceInt + "." + priceFract;
+}
+
+QString massToQString(uint64_t mass) {
+    QString massInt = QString::number(mass/STATS_MASS_RATIO);
+    uint64_t fraction = mass % STATS_MASS_RATIO;
+    QString massFract = QString::number(fraction);
+
+    if ( fraction == 0 ) {
+        massFract.prepend("000");
+    } else if ( fraction < 10 ) {
+        massFract.prepend("00");
+    } else if ( fraction < 100 ) {
+        massFract.prepend("0");
+    }
+
+    return massInt + "." + massFract;
 }
