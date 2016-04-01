@@ -148,9 +148,9 @@ void DishWindow::on_pushButton_1_clicked() {
             ui->tableWidget_1->setRowCount(rowCount+1);
             ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString((*item)->getName())));
             ui->tableWidget_1->setItem(rowCount, 1, new QTableWidgetItem(QString("1")));
-        }
 
-        PRINT_DEBUG("Item was added");
+            PRINT_DEBUG("Item was added");
+        }
     }
 }
 
