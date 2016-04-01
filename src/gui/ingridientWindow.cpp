@@ -100,6 +100,8 @@ void IngridientWindow::applyItemStats(Item* item) {
     on_radioButton_2_clicked();
     ui->radioButton_2->setChecked(true);
     ui->radioButton_1->setDisabled(true);
+
+    PRINT_DEBUG("All items stats are applied");
 }
 
 void IngridientWindow::applyFoodStats(Food* food) {
@@ -119,9 +121,13 @@ void IngridientWindow::applyFoodStats(Food* food) {
 
     ui->radioButton_1->setChecked(true);
     ui->radioButton_2->setDisabled(true);
+
+    PRINT_DEBUG("All food stats are applied");
 }
 
 Item* IngridientWindow::createNewItem(void) {
+    PRINT_DEBUG("Creating new item");
+
     return new Item(ui->lineEdit_1->text().toStdString(),
                     (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
                     ui->lineEdit_4->text().toLong(),
@@ -129,6 +135,8 @@ Item* IngridientWindow::createNewItem(void) {
 }
 
 Food* IngridientWindow::createNewFood(void) {
+    PRINT_DEBUG("Creating new food");
+
     return new Food(ui->lineEdit_1->text().toStdString(),
                     (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
                     ui->lineEdit_4->text().toLong(),
@@ -140,6 +148,8 @@ Food* IngridientWindow::createNewFood(void) {
 }
 
 void IngridientWindow::editItem(Item* item) {
+    PRINT_DEBUG("Editing item");
+
     if ( !ui->comboBox_1->currentText().toStdString().compare("gram") ) {
         item->setItemMass(1);
     } else {
@@ -150,6 +160,8 @@ void IngridientWindow::editItem(Item* item) {
 }
 
 void IngridientWindow::editFood(Food* food) {
+    PRINT_DEBUG("Editing food");
+
     editItem(food);
     food->setItemFats(ui->lineEdit_3->text().toLong());
     food->setItemProteins(ui->lineEdit_5->text().toLong());

@@ -57,6 +57,8 @@ Food::~Food(void) {
             entry->removeFood(this);
             unregister = true;
         } catch (LastFoodInMap e) {
+            PRINT_WARN("Deleting dish " << entry->getName());
+
             delete entry;
         }
     }
@@ -64,10 +66,10 @@ Food::~Food(void) {
     for ( auto& entry: listOfFoodLists ) {
         std::list<Food*>::iterator it = std::find(entry->begin(), entry->end(), this);
 
-        PRINT_DEBUG("Removing food " << NAME_ID << " from list");
-
         if ( it != entry->end() ) {
             entry->erase(it);
+
+            PRINT_DEBUG("Removing food " << NAME_ID << " from list");
         }
     }
 

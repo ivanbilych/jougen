@@ -277,6 +277,8 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
 }
 
 void MainWindow::redrawItemList(void) {
+    PRINT_DEBUG("Redrawing items list");
+
     itemStringList->clear();
 
     for ( auto& entry: ingridients->avaliableItems ) {
@@ -288,6 +290,8 @@ void MainWindow::redrawItemList(void) {
 }
 
 void MainWindow::redrawDishList(void) {
+    PRINT_DEBUG("Redrawing dish list");
+
     dishStringList->clear();
 
     for ( auto& entry: ingridients->avaliableDish ) {

@@ -97,6 +97,9 @@ Dish* DishWindow::createNewDish(void) {
                     dynamic_cast<Food*>(*item),
                     static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()),
                     amountOfPeople);
+
+    PRINT_DEBUG("New dish created");
+
     pos_y += 1;
     std::advance(item, 1);
 
@@ -105,8 +108,6 @@ Dish* DishWindow::createNewDish(void) {
                       static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
         pos_y += 1;
     }
-
-    PRINT_DEBUG("Item dihs created");
 
     return dish;
 }
