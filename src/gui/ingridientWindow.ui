@@ -31,9 +31,15 @@
   <property name="windowTitle">
    <string>New Item/Food</string>
   </property>
+  <property name="toolTip">
+   <string/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_1">
    <item>
     <widget class="QLineEdit" name="lineEdit_1">
+     <property name="toolTip">
+      <string>Enter ingridient name, i.e. &quot;Apple&quot;</string>
+     </property>
      <property name="inputMask">
       <string/>
      </property>
@@ -52,6 +58,9 @@
     <layout class="QGridLayout" name="gridLayout_1">
      <item row="4" column="1">
       <widget class="QLineEdit" name="lineEdit_7">
+       <property name="toolTip">
+        <string>Enter ingridient calories, i.e. &quot;1&quot;</string>
+       </property>
        <property name="placeholderText">
         <string>Calories</string>
        </property>
@@ -59,6 +68,9 @@
      </item>
      <item row="2" column="0">
       <widget class="QLineEdit" name="lineEdit_4">
+       <property name="toolTip">
+        <string>Enter ingridient price, i.e. &quot;1.12&quot;</string>
+       </property>
        <property name="placeholderText">
         <string>Price</string>
        </property>
@@ -66,6 +78,9 @@
      </item>
      <item row="1" column="0">
       <widget class="QLineEdit" name="lineEdit_2">
+       <property name="toolTip">
+        <string>Enter ingridient mass, i.e. &quot;1.123&quot;</string>
+       </property>
        <property name="placeholderText">
         <string>Mass</string>
        </property>
@@ -73,6 +88,9 @@
      </item>
      <item row="1" column="1">
       <widget class="QLineEdit" name="lineEdit_3">
+       <property name="toolTip">
+        <string>Enter ingridient fats, i.e. &quot;1.1&quot;</string>
+       </property>
        <property name="placeholderText">
         <string>Fats</string>
        </property>
@@ -80,6 +98,9 @@
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="lineEdit_6">
+       <property name="toolTip">
+        <string>Enter ingridient carbohydrates, i.e. &quot;1.1&quot;</string>
+       </property>
        <property name="placeholderText">
         <string>Carbohydrates</string>
        </property>
@@ -87,6 +108,9 @@
      </item>
      <item row="2" column="1">
       <widget class="QLineEdit" name="lineEdit_5">
+       <property name="toolTip">
+        <string>Enter ingridient proteins, i.e. &quot;1.1&quot;</string>
+       </property>
        <property name="placeholderText">
         <string>Proteins</string>
        </property>
@@ -105,6 +129,9 @@
          <width>0</width>
          <height>0</height>
         </size>
+       </property>
+       <property name="toolTip">
+        <string>Select ingridient measure type</string>
        </property>
        <property name="editable">
         <bool>false</bool>
@@ -158,6 +185,9 @@
         </property>
         <item>
          <widget class="QRadioButton" name="radioButton_2">
+          <property name="toolTip">
+           <string>Select ingridient type</string>
+          </property>
           <property name="text">
            <string>Item</string>
           </property>
@@ -165,6 +195,9 @@
         </item>
         <item>
          <widget class="QRadioButton" name="radioButton_1">
+          <property name="toolTip">
+           <string>Select ingridient type</string>
+          </property>
           <property name="text">
            <string>Food</string>
           </property>
