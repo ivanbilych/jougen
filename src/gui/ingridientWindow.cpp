@@ -90,7 +90,7 @@ void IngridientWindow::applyItemStats(Item* item) {
     ui->lineEdit_1->setText(QString::fromStdString(item->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(item->getUnitType()));
-    if ( item->getUnitType() != Item::GRAM ) {
+    if ( item->getUnitType() != Item::KGRAM ) {
         ui->lineEdit_2->setText(QString::number(item->getMass()));
     } else {
         ui->lineEdit_2->setDisabled(true);
@@ -108,7 +108,7 @@ void IngridientWindow::applyFoodStats(Food* food) {
     ui->lineEdit_1->setText(QString::fromStdString(food->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(food->getUnitType()));
-    if ( food->getUnitType() != Item::GRAM ) {
+    if ( food->getUnitType() != Item::KGRAM ) {
         ui->lineEdit_2->setText(QString::number(food->getMass()));
     } else {
         ui->lineEdit_2->setDisabled(true);

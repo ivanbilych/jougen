@@ -17,7 +17,7 @@
 #define ITEM_MIN_PRICE                                                        1U
 #define ITEM_MAX_PRICE                                                 10000000U
 
-#define MIN_MASS_FOR_GRAM                                          ITEM_MIN_MASS
+#define MIN_MASS_FOR_KGRAM                                         ITEM_MIN_MASS
 
 // Food class limits
 
