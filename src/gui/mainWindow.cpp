@@ -244,7 +244,7 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
        itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " (in 100 g)\n";
        itemInfo += "Proteins: "+ proteinsToQString((*item)->getProteins()) + " (in 100 g)\n";
        itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " (in 100 g)\n";
-       itemInfo += "Calories: " + QString::number((*item)->getCalories()) + " (in 100 g)\n";
+       itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + " (in 100 g)\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
@@ -264,7 +264,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
     itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + "\n";
     itemInfo += "Proteins: " + proteinsToQString((*item)->getProteins()) + "\n";
     itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + "\n";
-    itemInfo += "Calories: " + QString::number((*item)->getCalories()) + "\n\n";
+    itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + "\n\n";
     itemInfo += "Amount of people: " + QString::number((*item)->getAmountOfPeople()) + "\n\n";
     itemInfo += "Ingridients:\n";
 
@@ -397,4 +397,8 @@ QString carbohydratesToQString(uint64_t carbohydrates) {
     }
 
     return carbohydratesInt + "." + carbohydratesFract;
+}
+
+QString caloriesToQString(uint64_t calories) {
+    return QString::number(calories);
 }
