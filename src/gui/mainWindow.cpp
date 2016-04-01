@@ -73,14 +73,14 @@ void MainWindow::on_pushButton_2_clicked() {
 }
 
 void MainWindow::on_pushButton_3_clicked() {
-    NewDishWindow newDishWindow;
+    DishWindow dishWindow;
 
-    QObject::connect(&newDishWindow, SIGNAL(itemObjectReady(Dish*)), this, SLOT(addNewDishObject(Dish*)));
-    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), &newDishWindow, SLOT(fillItemList(std::list<Item*>*)));
+    QObject::connect(&dishWindow, SIGNAL(itemObjectReady(Dish*)), this, SLOT(addNewDishObject(Dish*)));
+    QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), &dishWindow, SLOT(fillItemList(std::list<Item*>*)));
 
     emit newDishRequest(&ingridients->avaliableItems);
 
-    newDishWindow.exec();
+    dishWindow.exec();
 }
 
 void MainWindow::on_pushButton_4_clicked() {
@@ -204,14 +204,14 @@ void MainWindow::editItem(QModelIndexList& selected) {
 }
 
 void MainWindow::editDish(QModelIndexList& selected) {
-    NewDishWindow* dishWindow;
+    DishWindow* dishWindow;
     int row = selected.first().row();
     const QModelIndex index = dishListModel->index(row);
 
     std::list<Dish*>::iterator dish = ingridients->avaliableDish.begin();
     std::advance(dish, row);
 
-    dishWindow = new NewDishWindow(*dish);
+    dishWindow = new DishWindow(*dish);
 
     QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), dishWindow, SLOT(fillItemList(std::list<Item*>*)));
 

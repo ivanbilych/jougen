@@ -1,11 +1,11 @@
 #include <debug.hpp>
 
-#include <newDishWindow.hpp>
-#include "ui_newDishWindow.h"
+#include <dishWindow.hpp>
+#include "ui_dishWindow.h"
 
-NewDishWindow::NewDishWindow(QWidget* parent) :
+DishWindow::DishWindow(QWidget* parent) :
     QDialog {parent},
-    ui {new Ui::NewDishWindow},
+    ui {new Ui::DishWindow},
     foodStringList {new QStringList},
     itemListModel {new QStringListModel {*foodStringList, NULL}} {
 
@@ -13,12 +13,12 @@ NewDishWindow::NewDishWindow(QWidget* parent) :
     ui->listView_1->setModel(itemListModel);
     ui->tableWidget_1->setColumnCount(2);
 
-    PRINT_OBJ("NewDishWindow created");
+    PRINT_OBJ("DishWindow created");
 }
 
-NewDishWindow::NewDishWindow(Dish* dish, QWidget* parent) :
+DishWindow::DishWindow(Dish* dish, QWidget* parent) :
     QDialog {parent},
-    ui {new Ui::NewDishWindow},
+    ui {new Ui::DishWindow},
     foodStringList {new QStringList},
     itemListModel {new QStringListModel {*foodStringList, NULL}},
     dish {dish},
@@ -33,15 +33,15 @@ NewDishWindow::NewDishWindow(Dish* dish, QWidget* parent) :
     PRINT_OBJ("Existed dish edit window created");
 }
 
-NewDishWindow::~NewDishWindow() {
+DishWindow::~DishWindow() {
     delete ui;
     delete foodStringList;
     delete itemListModel;
 
-    PRINT_OBJ("NewDishWindow destroyed");
+    PRINT_OBJ("DishWindow destroyed");
 }
 
-void NewDishWindow::on_buttonBox_1_accepted() {
+void DishWindow::on_buttonBox_1_accepted() {
     if ( dishFoodList.size() && !editMode ) {
         emit itemObjectReady(createNewDish());
     } else {
@@ -62,13 +62,13 @@ void NewDishWindow::on_buttonBox_1_accepted() {
     PRINT_DEBUG("New dish accepted");
 }
 
-void NewDishWindow::on_buttonBox_1_rejected() {
+void DishWindow::on_buttonBox_1_rejected() {
     this->hide();
 
     PRINT_DEBUG("New dish rejected");
 }
 
-void NewDishWindow::fillItemList(std::list<Item*>* itemsList) {
+void DishWindow::fillItemList(std::list<Item*>* itemsList) {
     avaliableItemsList = itemsList;
 
     for ( auto& entry: *itemsList ) {
@@ -84,7 +84,7 @@ void NewDishWindow::fillItemList(std::list<Item*>* itemsList) {
     PRINT_DEBUG("Item list filled");
 }
 
-Dish* NewDishWindow::createNewDish(void) {
+Dish* DishWindow::createNewDish(void) {
     std::list<Food*>::iterator item = dishFoodList.begin();
     uint64_t amountOfPeople = static_cast<uint64_t>(ui->lineEdit_2->text().toLong());
     int pos_y = 0;
@@ -111,7 +111,7 @@ Dish* NewDishWindow::createNewDish(void) {
     return dish;
 }
 
-void NewDishWindow::applyStats(Dish* dish) {
+void DishWindow::applyStats(Dish* dish) {
     ui->lineEdit_1->setText(QString::fromStdString(dish->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->lineEdit_2->setText(QString::number(dish->getAmountOfPeople()));
@@ -129,7 +129,7 @@ void NewDishWindow::applyStats(Dish* dish) {
     PRINT_DEBUG("Dish stats applied");
 }
 
-void NewDishWindow::on_pushButton_1_clicked() {
+void DishWindow::on_pushButton_1_clicked() {
     QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
 
     if ( !selected.isEmpty() ) {
@@ -154,7 +154,7 @@ void NewDishWindow::on_pushButton_1_clicked() {
     }
 }
 
-void NewDishWindow::on_pushButton_2_clicked() {
+void DishWindow::on_pushButton_2_clicked() {
     if ( ui->tableWidget_1->currentRow() != -1 ) {
         std::list<Food*>::iterator item = dishFoodList.begin();
         int currentRow = ui->tableWidget_1->currentRow();

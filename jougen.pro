@@ -29,13 +29,13 @@ HEADERS += \
     inc/engine/ingridients.hpp \
     inc/gui/mainWindow.hpp \
     inc/gui/newIngridientWindow.hpp \
-    inc/gui/newDishWindow.hpp \
+    inc/gui/dishWindow.hpp \
     inc/gui/aboutWindow.hpp
 
 FORMS += \
     src/gui/mainWindow.ui \
     src/gui/newIngridientWindow.ui \
-    src/gui/newDishWindow.ui \
+    src/gui/dishWindow.ui \
     src/gui/aboutWindow.ui
 
 SOURCES += \
@@ -51,7 +51,7 @@ SOURCES += \
     src/engine/ingridients.cpp \
     src/gui/mainWindow.cpp \
     src/gui/newIngridientWindow.cpp \
-    src/gui/newDishWindow.cpp \
+    src/gui/dishWindow.cpp \
     src/gui/aboutWindow.cpp
 
 copydata.commands = $(COPY_DIR) $$PWD/res/* $$OUT_PWD

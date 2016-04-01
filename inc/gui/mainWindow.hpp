@@ -3,7 +3,7 @@
 
 #include <aboutWindow.hpp>
 #include <ingridients.hpp>
-#include <newDishWindow.hpp>
+#include <dishWindow.hpp>
 #include <newIngridientWindow.hpp>
 
 #include <QMainWindow>

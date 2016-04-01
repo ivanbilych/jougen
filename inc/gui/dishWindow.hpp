@@ -1,5 +1,5 @@
-#ifndef NEWDISHWINDOW_H
-#define NEWDISHWINDOW_H
+#ifndef DISHWINDOW_H
+#define DISHWINDOW_H
 
 #include <dish.hpp>
 #include <food.hpp>
@@ -9,16 +9,16 @@
 #include <QStringListModel>
 
 namespace Ui {
-    class NewDishWindow;
+    class DishWindow;
 }
 
-class NewDishWindow : public QDialog {
+class DishWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit NewDishWindow(QWidget* parent = 0);
-    explicit NewDishWindow(Dish* dish, QWidget* parent = 0);
-    ~NewDishWindow();
+    explicit DishWindow(QWidget* parent = 0);
+    explicit DishWindow(Dish* dish, QWidget* parent = 0);
+    ~DishWindow();
 
 signals:
     void itemObjectReady(Dish* dish);
@@ -33,7 +33,7 @@ public slots:
     void fillItemList(std::list<Item*>* itemsList);
 
 private:
-    Ui::NewDishWindow* ui;
+    Ui::DishWindow* ui;
     QStringList* foodStringList {};
     QStringListModel* itemListModel {};
     Dish* dish {};
@@ -45,4 +45,4 @@ private:
     void applyStats(Dish* dish);
 };
 
-#endif // NEWDISHWINDOW_H
+#endif // DISHWINDOW_H
