@@ -236,7 +236,7 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
     }
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
-    itemInfo += "Price: " + QString::number((*item)->getPrice()) + "\n";
+    itemInfo += "Price: " + priceToQString((*item)->getPrice()) + "\n";
     itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
     itemInfo += "Unit: " + QString::fromStdString((*item)->getUnitTypeName()) + "\n";
 
@@ -259,7 +259,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
     infoWindowType = DISH;
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
-    itemInfo += "Price: " + QString::number((*item)->getPrice()) + "\n";
+    itemInfo += "Price: " + priceToQString((*item)->getPrice()) + "\n";
     itemInfo += "Mass: " + QString::number((*item)->getMass()) + "\n";
     itemInfo += "Fats: " + QString::number((*item)->getFats()) + "\n";
     itemInfo += "Proteins: " + QString::number((*item)->getProteins()) + "\n";
@@ -331,4 +331,18 @@ void MainWindow::on_actionSave_triggered() {
     if ( !saveFile.isEmpty() ) {
         ingridients->saveData(saveFile);
     }
+}
+
+QString priceToQString(uint64_t price) {
+    QString priceInt = QString::number(price/STATS_PRICE_RATIO);
+    uint64_t fraction = price % STATS_PRICE_RATIO;
+    QString priceFract = QString::number(fraction);
+
+    if ( fraction == 0 ) {
+        priceFract.prepend("00");
+    } else if ( fraction < 10 ) {
+        priceFract.prepend("0");
+    }
+
+    return priceInt + "." + priceFract;
 }

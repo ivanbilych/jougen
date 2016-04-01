@@ -66,4 +66,6 @@ private:
     void redrawDishList(void);
 };
 
+QString priceToQString(uint64_t price);
+
 #endif // MAINWINDOW_H
