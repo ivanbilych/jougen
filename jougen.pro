@@ -28,13 +28,13 @@ HEADERS += \
     inc/engine/stats.hpp \
     inc/engine/ingridients.hpp \
     inc/gui/mainWindow.hpp \
-    inc/gui/newIngridientWindow.hpp \
+    inc/gui/ingridientWindow.hpp \
     inc/gui/dishWindow.hpp \
     inc/gui/aboutWindow.hpp
 
 FORMS += \
     src/gui/mainWindow.ui \
-    src/gui/newIngridientWindow.ui \
+    src/gui/ingridientWindow.ui \
     src/gui/dishWindow.ui \
     src/gui/aboutWindow.ui
 
@@ -50,7 +50,7 @@ SOURCES += \
     src/engine/stats.cpp \
     src/engine/ingridients.cpp \
     src/gui/mainWindow.cpp \
-    src/gui/newIngridientWindow.cpp \
+    src/gui/ingridientWindow.cpp \
     src/gui/dishWindow.cpp \
     src/gui/aboutWindow.cpp
 

@@ -1,5 +1,5 @@
-#ifndef NEWINGRIDIENTWINDOW_H
-#define NEWINGRIDIENTWINDOW_H
+#ifndef INGRIDIENTWINDOW_H
+#define INGRIDIENTWINDOW_H
 
 #include <item.hpp>
 #include <food.hpp>
@@ -7,17 +7,17 @@
 #include <QDialog>
 
 namespace Ui {
-    class NewIngridientWindow;
+    class IngridientWindow;
 }
 
-class NewIngridientWindow : public QDialog {
+class IngridientWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit NewIngridientWindow(QWidget* parent = 0);
-    explicit NewIngridientWindow(Item* item, QWidget* parent = 0);
-    explicit NewIngridientWindow(Food* food, QWidget* parent = 0);
-    ~NewIngridientWindow();
+    explicit IngridientWindow(QWidget* parent = 0);
+    explicit IngridientWindow(Item* item, QWidget* parent = 0);
+    explicit IngridientWindow(Food* food, QWidget* parent = 0);
+    ~IngridientWindow();
 
 signals:
     void itemObjectReady(Item* item);
@@ -31,7 +31,7 @@ private slots:
     void on_comboBox_1_currentIndexChanged(const QString& arg1);
 
 private:
-    Ui::NewIngridientWindow* ui;
+    Ui::IngridientWindow* ui;
     QStringList measureList {};
     bool editMode {false};
     Item* editedItem {};
@@ -45,4 +45,4 @@ private:
     void editFood(Food* food);
 };
 
-#endif // NEWINGRIDIENTWINDOW_H
+#endif // INGRIDIENTWINDOW_H

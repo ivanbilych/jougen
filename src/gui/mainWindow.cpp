@@ -40,12 +40,12 @@ MainWindow::~MainWindow() {
 }
 
 void MainWindow::on_pushButton_1_clicked() {
-    NewIngridientWindow newIngridientWindow;
+    IngridientWindow ingridientWindow;
 
-    QObject::connect(&newIngridientWindow, SIGNAL(itemObjectReady(Item*)), this, SLOT(addNewItemObject(Item*)));
-    QObject::connect(&newIngridientWindow, SIGNAL(foodObjectReady(Food*)), this, SLOT(addNewFoodObject(Food*)));
+    QObject::connect(&ingridientWindow, SIGNAL(itemObjectReady(Item*)), this, SLOT(addNewItemObject(Item*)));
+    QObject::connect(&ingridientWindow, SIGNAL(foodObjectReady(Food*)), this, SLOT(addNewFoodObject(Food*)));
 
-    newIngridientWindow.exec();
+    ingridientWindow.exec();
 }
 
 void MainWindow::on_pushButton_2_clicked() {
@@ -187,14 +187,14 @@ void MainWindow::addNewDishObject(Dish* dish) {
 }
 
 void MainWindow::editItem(QModelIndexList& selected) {
-    NewIngridientWindow* ingridientWindow;
+    IngridientWindow* ingridientWindow;
     int row = selected.first().row();
     const QModelIndex index = itemListModel->index(row);
 
     std::list<Item*>::iterator item = ingridients->avaliableItems.begin();
     std::advance(item, row);
 
-    ingridientWindow = (infoWindowType == ITEM) ? new NewIngridientWindow(*item) : new NewIngridientWindow(dynamic_cast<Food*>(*item));
+    ingridientWindow = (infoWindowType == ITEM) ? new IngridientWindow(*item) : new IngridientWindow(dynamic_cast<Food*>(*item));
 
     ingridientWindow->exec();
 

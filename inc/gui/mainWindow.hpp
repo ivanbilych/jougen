@@ -4,7 +4,7 @@
 #include <aboutWindow.hpp>
 #include <ingridients.hpp>
 #include <dishWindow.hpp>
-#include <newIngridientWindow.hpp>
+#include <ingridientWindow.hpp>
 
 #include <QMainWindow>
 #include <QStringListModel>

@@ -1,22 +1,22 @@
 #include <debug.hpp>
 
-#include <newIngridientWindow.hpp>
-#include "ui_newIngridientWindow.h"
+#include <ingridientWindow.hpp>
+#include "ui_ingridientWindow.h"
 
-NewIngridientWindow::NewIngridientWindow(QWidget* parent) :
+IngridientWindow::IngridientWindow(QWidget* parent) :
     QDialog {parent},
-    ui {new Ui::NewIngridientWindow},
+    ui {new Ui::IngridientWindow},
     measureList {QStringList()} {
 
     setupMeasureList();
     ui->lineEdit_2->setDisabled(true);
 
-    PRINT_OBJ("NewIngridientWindow created");
+    PRINT_OBJ("IngridientWindow created");
 }
 
-NewIngridientWindow::NewIngridientWindow(Item* item, QWidget* parent) :
+IngridientWindow::IngridientWindow(Item* item, QWidget* parent) :
     QDialog {parent},
-    ui {new Ui::NewIngridientWindow},
+    ui {new Ui::IngridientWindow},
     measureList {QStringList()},
     editMode {true},
     editedItem {item} {
@@ -28,9 +28,9 @@ NewIngridientWindow::NewIngridientWindow(Item* item, QWidget* parent) :
     PRINT_OBJ("Existed item edit window created");
 }
 
-NewIngridientWindow::NewIngridientWindow(Food* food, QWidget* parent) :
+IngridientWindow::IngridientWindow(Food* food, QWidget* parent) :
     QDialog {parent},
-    ui {new Ui::NewIngridientWindow},
+    ui {new Ui::IngridientWindow},
     measureList {QStringList()},
     editMode {true},
     editedItem {food} {
@@ -42,13 +42,13 @@ NewIngridientWindow::NewIngridientWindow(Food* food, QWidget* parent) :
     PRINT_OBJ("Existed food edit window created");
 }
 
-NewIngridientWindow::~NewIngridientWindow() {
+IngridientWindow::~IngridientWindow() {
     delete ui;
 
-    PRINT_OBJ("NewIngridientWindow destroyed");
+    PRINT_OBJ("IngridientWindow destroyed");
 }
 
-void NewIngridientWindow::on_buttonBox_1_accepted() {
+void IngridientWindow::on_buttonBox_1_accepted() {
     if ( editMode ) {
         if ( ui->radioButton_1->isChecked() ) {
             editFood(dynamic_cast<Food*>(editedItem));
@@ -68,13 +68,13 @@ void NewIngridientWindow::on_buttonBox_1_accepted() {
     PRINT_DEBUG("New item/food accepted");
 }
 
-void NewIngridientWindow::on_buttonBox_1_rejected() {
+void IngridientWindow::on_buttonBox_1_rejected() {
     this->hide();
 
     PRINT_DEBUG("New item/food rejected");
 }
 
-void NewIngridientWindow::setupMeasureList(void) {
+void IngridientWindow::setupMeasureList(void) {
     const std::string* names = Item::getItemMeasureTypeNamesList();
 
     ui->setupUi(this);
@@ -86,7 +86,7 @@ void NewIngridientWindow::setupMeasureList(void) {
     ui->comboBox_1->addItems(measureList);
 }
 
-void NewIngridientWindow::applyItemStats(Item* item) {
+void IngridientWindow::applyItemStats(Item* item) {
     ui->lineEdit_1->setText(QString::fromStdString(item->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(item->getUnitType()));
@@ -102,7 +102,7 @@ void NewIngridientWindow::applyItemStats(Item* item) {
     ui->radioButton_1->setDisabled(true);
 }
 
-void NewIngridientWindow::applyFoodStats(Food* food) {
+void IngridientWindow::applyFoodStats(Food* food) {
     ui->lineEdit_1->setText(QString::fromStdString(food->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(food->getUnitType()));
@@ -121,14 +121,14 @@ void NewIngridientWindow::applyFoodStats(Food* food) {
     ui->radioButton_2->setDisabled(true);
 }
 
-Item* NewIngridientWindow::createNewItem(void) {
+Item* IngridientWindow::createNewItem(void) {
     return new Item(ui->lineEdit_1->text().toStdString(),
                     (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
                     ui->lineEdit_4->text().toLong(),
                     static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
-Food* NewIngridientWindow::createNewFood(void) {
+Food* IngridientWindow::createNewFood(void) {
     return new Food(ui->lineEdit_1->text().toStdString(),
                     (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
                     ui->lineEdit_4->text().toLong(),
@@ -139,7 +139,7 @@ Food* NewIngridientWindow::createNewFood(void) {
                     ui->lineEdit_7->text().toLong());
 }
 
-void NewIngridientWindow::editItem(Item* item) {
+void IngridientWindow::editItem(Item* item) {
     if ( !ui->comboBox_1->currentText().toStdString().compare("gram") ) {
         item->setItemMass(1);
     } else {
@@ -149,7 +149,7 @@ void NewIngridientWindow::editItem(Item* item) {
     item->setItemUnitType(static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
-void NewIngridientWindow::editFood(Food* food) {
+void IngridientWindow::editFood(Food* food) {
     editItem(food);
     food->setItemFats(ui->lineEdit_3->text().toLong());
     food->setItemProteins(ui->lineEdit_5->text().toLong());
@@ -157,21 +157,21 @@ void NewIngridientWindow::editFood(Food* food) {
     food->setItemCalories(ui->lineEdit_7->text().toLong());
 }
 
-void NewIngridientWindow::on_radioButton_1_clicked() {
+void IngridientWindow::on_radioButton_1_clicked() {
     ui->lineEdit_3->setDisabled(false);
     ui->lineEdit_5->setDisabled(false);
     ui->lineEdit_6->setDisabled(false);
     ui->lineEdit_7->setDisabled(false);
 }
 
-void NewIngridientWindow::on_radioButton_2_clicked() {
+void IngridientWindow::on_radioButton_2_clicked() {
     ui->lineEdit_3->setDisabled(true);
     ui->lineEdit_5->setDisabled(true);
     ui->lineEdit_6->setDisabled(true);
     ui->lineEdit_7->setDisabled(true);
 }
 
-void NewIngridientWindow::on_comboBox_1_currentIndexChanged(const QString& arg1) {
+void IngridientWindow::on_comboBox_1_currentIndexChanged(const QString& arg1) {
     if ( !arg1.toStdString().compare("gram") ) {
         ui->lineEdit_2->setDisabled(true);
     } else {
