@@ -33,11 +33,15 @@ Dish::~Dish(void) {
     for ( auto& entry: listOfDishLists ) {
         std::list<Dish*>::iterator it = std::find(entry->begin(), entry->end(), this);
 
-        PRINT_DEBUG("Removing dish " << NAME_ID << " from list");
-
         if ( it != entry->end() ) {
+            PRINT_DEBUG("Removing dish " << NAME_ID << " from list");
+
             entry->erase(it);
         }
+    }
+
+    for ( auto& entry: ingridients ) {
+        entry.first->unregisterDish(this);
     }
 
     PRINT_OBJ("Destroyed dish basic class " << NAME_ID);

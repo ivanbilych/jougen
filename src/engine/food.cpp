@@ -116,6 +116,8 @@ void Food::unregisterDish(Dish* dish) {
     }
 
     if ( (it = std::find(dishesWithFood.begin(), dishesWithFood.end(), dish)) != dishesWithFood.end() ) {
+        PRINT_DEBUG("Unregister dish " << NAME_ID_CLASS(*dish) << " in \"" << getName() << "\" food");
+
         dishesWithFood.erase(it);
     } else {
         PRINT_ERR("Could not unregister dish " << NAME_ID_CLASS(*dish) << " from \"" << getName() << "\" food");
