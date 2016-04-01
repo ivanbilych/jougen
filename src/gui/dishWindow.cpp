@@ -48,8 +48,8 @@ void DishWindow::on_buttonBox_1_accepted() {
         int pos_y = 0;
 
         PRINT_DEBUG("Changing every food item to correct...");
-        for ( auto& item: dish->getIngridientMap() ) {
-            dish->changeFoodAmount(item.first, static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
+        for ( auto& entry: dish->getIngridientMap() ) {
+            dish->changeFoodAmount(entry.first, static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
             pos_y += 1;
         }
 
@@ -116,14 +116,14 @@ void DishWindow::applyStats(Dish* dish) {
     ui->lineEdit_1->setDisabled(true);
     ui->lineEdit_2->setText(QString::number(dish->getAmountOfPeople()));
 
-    for ( auto& item: dish->getIngridientMap() ) {
+    for ( auto& entry: dish->getIngridientMap() ) {
         int rowCount = ui->tableWidget_1->rowCount();
 
         ui->tableWidget_1->setRowCount(rowCount+1);
-        ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString(item.first->getName())));
-        ui->tableWidget_1->setItem(rowCount, 1, new QTableWidgetItem(QString::number(item.second)));
+        ui->tableWidget_1->setItem(rowCount, 0, new QTableWidgetItem(QString::fromStdString(entry.first->getName())));
+        ui->tableWidget_1->setItem(rowCount, 1, new QTableWidgetItem(QString::number(entry.second)));
 
-        dishFoodList.push_back(item.first);
+        dishFoodList.push_back(entry.first);
     }
 
     PRINT_DEBUG("Dish stats applied");

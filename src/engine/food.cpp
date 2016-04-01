@@ -51,17 +51,17 @@ Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType me
 }
 
 Food::~Food(void) {
-    for ( auto& dish: dishesWithFood ) {
+    for ( auto& entry: dishesWithFood ) {
         try {
             unregister = false;
-            dish->removeFood(this);
+            entry->removeFood(this);
             unregister = true;
         } catch (LastFoodInMap e) {
-            delete dish;
+            delete entry;
         }
     }
 
-    for ( auto& entry : listOfFoodLists ) {
+    for ( auto& entry: listOfFoodLists ) {
         std::list<Food*>::iterator it = std::find(entry->begin(), entry->end(), this);
 
         PRINT_DEBUG("Removing food " << NAME_ID << " from list");

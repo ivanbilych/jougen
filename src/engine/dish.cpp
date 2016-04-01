@@ -30,7 +30,7 @@ Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeo
 }
 
 Dish::~Dish(void) {
-    for ( auto& entry : listOfDishLists ) {
+    for ( auto& entry: listOfDishLists ) {
         std::list<Dish*>::iterator it = std::find(entry->begin(), entry->end(), this);
 
         PRINT_DEBUG("Removing dish " << NAME_ID << " from list");
