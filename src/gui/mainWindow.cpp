@@ -184,6 +184,7 @@ void MainWindow::addNewDishObject(Dish* dish) {
     dishListModel->setStringList(*dishStringList);
 
     ingridients->avaliableDish.push_back(dish);
+    dish->addDishList(&(ingridients->avaliableDish));
 
     PRINT_DEBUG("New dish added");
 }
