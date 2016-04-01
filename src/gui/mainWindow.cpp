@@ -237,14 +237,14 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
     itemInfo += "Price: " + priceToQString((*item)->getPrice()) + "\n";
-    itemInfo += "Mass: " + massToQString((*item)->getMass()) + "\n";
+    itemInfo += "Mass: " + massToQString((*item)->getMass()) + " kg\n";
     itemInfo += "Unit: " + QString::fromStdString((*item)->getUnitTypeName()) + "\n";
 
     if ( infoWindowType == FOOD ) {
-       itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " (in 100 g)\n";
-       itemInfo += "Proteins: "+ proteinsToQString((*item)->getProteins()) + " (in 100 g)\n";
-       itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " (in 100 g)\n";
-       itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + " (in 100 g)\n";
+       itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " g (in 100 g)\n";
+       itemInfo += "Proteins: "+ proteinsToQString((*item)->getProteins()) + " g (in 100 g)\n";
+       itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " g (in 100 g)\n";
+       itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + " g (in 100 g)\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
@@ -260,11 +260,11 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
 
     itemInfo += "Name: " + QString::fromStdString((*item)->getName()) + "\n";
     itemInfo += "Price: " + priceToQString((*item)->getPrice()) + "\n";
-    itemInfo += "Mass: " + massToQString((*item)->getMass()) + "\n";
-    itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + "\n";
-    itemInfo += "Proteins: " + proteinsToQString((*item)->getProteins()) + "\n";
-    itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + "\n";
-    itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + "\n\n";
+    itemInfo += "Mass: " + massToQString((*item)->getMass()) + " kg\n";
+    itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " g\n";
+    itemInfo += "Proteins: " + proteinsToQString((*item)->getProteins()) + " g\n";
+    itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " g\n";
+    itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + " g\n\n";
     itemInfo += "Amount of people: " + QString::number((*item)->getAmountOfPeople()) + "\n\n";
     itemInfo += "Ingridients:\n";
 
