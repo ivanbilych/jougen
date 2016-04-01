@@ -1,3 +1,4 @@
+#include <convert.hpp>
 #include <debug.hpp>
 
 #include <ingridientWindow.hpp>
@@ -91,11 +92,11 @@ void IngridientWindow::applyItemStats(Item* item) {
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(item->getUnitType()));
     if ( item->getUnitType() != Item::KGRAM ) {
-        ui->lineEdit_2->setText(QString::number(item->getMass()));
+        ui->lineEdit_2->setText(massToQString(item->getMass()));
     } else {
         ui->lineEdit_2->setDisabled(true);
     }
-    ui->lineEdit_4->setText(QString::number(item->getPrice()));
+    ui->lineEdit_4->setText(priceToQString(item->getPrice()));
 
     on_radioButton_2_clicked();
     ui->radioButton_2->setChecked(true);
@@ -109,15 +110,15 @@ void IngridientWindow::applyFoodStats(Food* food) {
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(food->getUnitType()));
     if ( food->getUnitType() != Item::KGRAM ) {
-        ui->lineEdit_2->setText(QString::number(food->getMass()));
+        ui->lineEdit_2->setText(massToQString(food->getMass()));
     } else {
         ui->lineEdit_2->setDisabled(true);
     }
-    ui->lineEdit_4->setText(QString::number(food->getPrice()));
-    ui->lineEdit_3->setText(QString::number(food->getFats()));
-    ui->lineEdit_5->setText(QString::number(food->getProteins()));
-    ui->lineEdit_6->setText(QString::number(food->getCarbohydrates()));
-    ui->lineEdit_7->setText(QString::number(food->getCalories()));
+    ui->lineEdit_4->setText(priceToQString(food->getPrice()));
+    ui->lineEdit_3->setText(fatsToQString(food->getFats()));
+    ui->lineEdit_5->setText(proteinsToQString(food->getProteins()));
+    ui->lineEdit_6->setText(carbohydratesToQString(food->getCarbohydrates()));
+    ui->lineEdit_7->setText(caloriesToQString(food->getCalories()));
 
     ui->radioButton_1->setChecked(true);
     ui->radioButton_2->setDisabled(true);
