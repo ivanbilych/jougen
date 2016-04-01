@@ -102,7 +102,7 @@ void Food::registerDish(Dish* dish) {
     if ( it == dishesWithFood.end() ) {
         dishesWithFood.push_back(dish);
 
-        PRINT_DEBUG("Register dish " << NAME_ID_CLASS(*dish) << " in " << *this << " food");
+        PRINT_DEBUG("Register dish " << NAME_ID_CLASS(*dish) << " in \"" << getName() << "\" food");
     }
 }
 
@@ -116,7 +116,7 @@ void Food::unregisterDish(Dish* dish) {
     if ( (it = std::find(dishesWithFood.begin(), dishesWithFood.end(), dish)) != dishesWithFood.end() ) {
         dishesWithFood.erase(it);
     } else {
-        PRINT_ERR("Could not unregister dish " << NAME_ID_CLASS(*dish) << " from " << *this << " food");
+        PRINT_ERR("Could not unregister dish " << NAME_ID_CLASS(*dish) << " from \"" << getName() << "\" food");
 
         throw WrongDishForUnregister();
     }
