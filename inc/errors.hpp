@@ -126,4 +126,13 @@ class EmptyIngridientProteinsException : public IngridientWindowException {};
 class EmptyIngridientCarbohydratesException : public IngridientWindowException {};
 class EmptyIngridientCaloriesException : public IngridientWindowException {};
 
+// Dish exceptions
+
+class DishWindowException : public GUIException {};
+
+class EmptyDishNameException : public IngridientWindowException {};
+class EmptyDishListException : public IngridientWindowException {};
+class EmptyDishIngridientException : public IngridientWindowException {};
+class EmptyAmountOfPeopleException : public IngridientWindowException {};
+
 #endif // ERRORS_H
