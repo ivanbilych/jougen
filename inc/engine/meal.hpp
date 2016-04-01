@@ -1,11 +1,11 @@
 #ifndef MEAL_H
 #define MEAL_H
 
-#include <iostream>
-
 #include <common.hpp>
-#include <peopleStats.hpp>
 #include <dish.hpp>
+#include <peopleStats.hpp>
+
+#include <iostream>
 
 class Meal : public PeopleStats<Dish> {
     public:

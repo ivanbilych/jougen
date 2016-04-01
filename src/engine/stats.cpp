@@ -1,6 +1,6 @@
-#include <stats.hpp>
 #include <debug.hpp>
 #include <errors.hpp>
+#include <stats.hpp>
 
 uint64_t Stats::lastId {};
 

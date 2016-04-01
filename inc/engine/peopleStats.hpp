@@ -1,15 +1,15 @@
 #ifndef PEOPLE_STATS_H
 #define PEOPLE_STATS_H
 
-#include <iostream>
-#include <string>
-#include <list>
-
 #include <common.hpp>
-#include <stats.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
+#include <engineLimits.hpp>
 #include <errors.hpp>
+#include <stats.hpp>
+
+#include <iostream>
+#include <list>
+#include <string>
 
 template<typename T>
 class PeopleStats : public Stats {

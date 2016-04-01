@@ -26,16 +26,16 @@ HEADERS += \
     inc/engine/meal.hpp \
     inc/engine/peopleStats.hpp \
     inc/engine/stats.hpp \
-    inc/engine/itemsForm.hpp \
+    inc/engine/ingridients.hpp \
     inc/gui/mainWindow.hpp \
-    inc/gui/newIngridientWindow.hpp \
-    inc/gui/newDishWindow.hpp \
+    inc/gui/ingridientWindow.hpp \
+    inc/gui/dishWindow.hpp \
     inc/gui/aboutWindow.hpp
 
 FORMS += \
     src/gui/mainWindow.ui \
-    src/gui/newIngridientWindow.ui \
-    src/gui/newDishWindow.ui \
+    src/gui/ingridientWindow.ui \
+    src/gui/dishWindow.ui \
     src/gui/aboutWindow.ui
 
 SOURCES += \
@@ -48,10 +48,10 @@ SOURCES += \
     src/engine/journey.cpp \
     src/engine/meal.cpp \
     src/engine/stats.cpp \
-    src/engine/itemsForm.cpp \
+    src/engine/ingridients.cpp \
     src/gui/mainWindow.cpp \
-    src/gui/newIngridientWindow.cpp \
-    src/gui/newDishWindow.cpp \
+    src/gui/ingridientWindow.cpp \
+    src/gui/dishWindow.cpp \
     src/gui/aboutWindow.cpp
 
 copydata.commands = $(COPY_DIR) $$PWD/res/* $$OUT_PWD

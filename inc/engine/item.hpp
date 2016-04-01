@@ -1,12 +1,12 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <iostream>
-#include <string>
-#include <list>
-
 #include <common.hpp>
 #include <stats.hpp>
+
+#include <iostream>
+#include <list>
+#include <string>
 
 class Item : public Stats {
     public:
@@ -23,7 +23,7 @@ class Item : public Stats {
     private:
         static const std::string itemMeasureTypeNames[];
         MeasureType measureType;
-        std::list<std::list<Item*>* > listOfItemLists {};
+        std::list<std::list<Item*>*> listOfItemLists {};
 
     protected:
         Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureType, uint64_t minMass, uint64_t maxMass, uint64_t minPrice, uint64_t maxPrice, uint64_t minFats, uint64_t maxFats, uint64_t minProteins, uint64_t maxProteins, uint64_t minCarbohydrates, uint64_t maxCarbohydrates, uint64_t minCalories, uint64_t maxCalories, std::list<Item*>* itemList = nullptr);

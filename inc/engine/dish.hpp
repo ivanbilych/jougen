@@ -1,13 +1,13 @@
 #ifndef DISH_H
 #define DISH_H
 
-#include <iostream>
-#include <string>
-#include <map>
-
 #include <common.hpp>
-#include <peopleStats.hpp>
 #include <food.hpp>
+#include <peopleStats.hpp>
+
+#include <iostream>
+#include <map>
+#include <string>
 
 #define HUNDRED_GRAM 100
 
@@ -17,7 +17,7 @@ class Dish : public Stats {
     private:
         uint64_t amountOfPeople;
         std::map<Food*, uint64_t, Stats::Compare> ingridients;
-        std::list<std::list<Dish*>* > listOfDishLists {};
+        std::list<std::list<Dish*>*> listOfDishLists {};
 
         void setAmountOfPeople(uint64_t amountOfPeople);
 

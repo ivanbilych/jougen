@@ -1,20 +1,20 @@
 #ifndef FOOD_H
 #define FOOD_H
 
-#include <iostream>
-#include <string>
-#include <list>
-
 #include <common.hpp>
-#include <item.hpp>
 #include <dish.hpp>
+#include <item.hpp>
+
+#include <iostream>
+#include <list>
+#include <string>
 
 class Dish;
 
 class Food : public Item {
     private:
-        std::list<Dish *> dishesWithFood {};
-        std::list<std::list<Food*>* > listOfFoodLists {};
+        std::list<Dish*> dishesWithFood {};
+        std::list<std::list<Food*>*> listOfFoodLists {};
         bool unregister {true};
 
     public:

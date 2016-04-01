@@ -1,11 +1,11 @@
+#include <debug.hpp>
+#include <dish.hpp>
+#include <engineLimits.hpp>
+#include <errors.hpp>
+#include <item.hpp>
+
 #include <cmath>
 #include <algorithm>
-
-#include <dish.hpp>
-#include <item.hpp>
-#include <engineLimits.hpp>
-#include <debug.hpp>
-#include <errors.hpp>
 
 Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeople, std::list<Dish*>* dishList) :
     Stats {name, DISH_MIN_MASS, DISH_MAX_MASS, DISH_MIN_PRICE, DISH_MAX_PRICE,
@@ -30,7 +30,7 @@ Dish::Dish(std::string name, Food* food, uint64_t foodMass, uint64_t amountOfPeo
 }
 
 Dish::~Dish(void) {
-    for ( auto& entry : listOfDishLists ) {
+    for ( auto& entry: listOfDishLists ) {
         std::list<Dish*>::iterator it = std::find(entry->begin(), entry->end(), this);
 
         PRINT_DEBUG("Removing dish " << NAME_ID << " from list");
@@ -142,7 +142,7 @@ void Dish::addFood(Food* const food, uint64_t foodMass) {
     setCarbohydrates(newCarbohydrates);
     setCalories(newCalories);
 
-    ingridients.insert(std::pair<Food *, uint64_t>(food, foodMass));
+    ingridients.insert(std::pair<Food*, uint64_t>(food, foodMass));
     food->registerDish(this);
 
     PRINT_INFO("Food " << NAME_ID_CLASS(*food) << " was added to dish " << NAME_ID << "");

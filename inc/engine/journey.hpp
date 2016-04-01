@@ -1,12 +1,12 @@
 #ifndef JOURNEY_H
 #define JOURNEY_H
 
+#include <common.hpp>
+#include <day.hpp>
+#include <peopleStats.hpp>
+
 #include <iostream>
 #include <string>
-
-#include <common.hpp>
-#include <peopleStats.hpp>
-#include <day.hpp>
 
 class Journey : public PeopleStats<Day> {
     public:

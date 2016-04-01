@@ -1,5 +1,5 @@
 #include <debug.hpp>
-#include <itemsForm.hpp>
+#include <ingridients.hpp>
 
 #include <algorithm>
 #include <string>
@@ -8,28 +8,32 @@
 #include <QString>
 #include <QFile>
 
-ItemForm::ItemForm(void) {
-    PRINT_OBJ("ItemForm created");
+Ingridients::Ingridients(void) {
+    PRINT_OBJ("Ingridients class created");
 }
 
-ItemForm::~ItemForm(void) {
+Ingridients::~Ingridients(void) {
     for ( std::list<Item*>::iterator it = avaliableItems.begin(); it != avaliableItems.end(); ) {
         std::list<Item*>::iterator oldit = it++;
 
         delete *oldit;
     }
 
-    PRINT_OBJ("ItemForm destroyed");
+    PRINT_OBJ("Ingridients class destroyed");
 }
 
-Item * ItemForm::readItem(const QJsonObject &json) {
+Item* Ingridients::readItem(const QJsonObject& json) {
+    PRINT_DEBUG("Reading new item");
+
     return new Item(json["name"].toString().toStdString(),
                     json["mass"].toInt(),
                     json["price"].toInt(),
                     static_cast<Item::MeasureType>(json["measureType"].toInt()));
 }
 
-Food * ItemForm::readFood(const QJsonObject &json) {
+Food* Ingridients::readFood(const QJsonObject& json) {
+    PRINT_DEBUG("Reading new food");
+
     return new Food(json["name"].toString().toStdString(),
                     json["mass"].toInt(),
                     json["price"].toInt(),
@@ -40,11 +44,13 @@ Food * ItemForm::readFood(const QJsonObject &json) {
                     json["calories"].toInt());
 }
 
-Dish * ItemForm::readDish(const QJsonObject &json) {
+Dish* Ingridients::readDish(const QJsonObject& json) {
+    PRINT_DEBUG("Reading new dish");
+
     QJsonArray itemsList = json["items"].toArray();
-    Food * newFood = readFood(itemsList[0].toObject()["food"].toObject());
-    Dish * newDish = new Dish(json["name"].toString().toStdString(), newFood,
-                              itemsList[0].toObject()["amount"].toInt());
+    Food* newFood = readFood(itemsList[0].toObject()["food"].toObject());
+    Dish* newDish = new Dish(json["name"].toString().toStdString(), newFood,
+                             itemsList[0].toObject()["amount"].toInt());
 
     avaliableItems.push_back(newFood);
     newFood->addItemList(&avaliableItems);
@@ -69,14 +75,18 @@ Dish * ItemForm::readDish(const QJsonObject &json) {
     return newDish;
 }
 
-void ItemForm::writeItem(QJsonObject &json, Item &item) const {
+void Ingridients::writeItem(QJsonObject& json, Item& item) const {
+    PRINT_DEBUG("Writing item " << item.getName());
+
     json["name"] = QString::fromStdString(item.getName());
     json["mass"] = static_cast<qint64>(item.getMass());
     json["price"] = static_cast<qint64>(item.getPrice());
     json["measureType"] = static_cast<int>(item.getUnitType());
 }
 
-void ItemForm::writeFood(QJsonObject &json, Food &food) const {
+void Ingridients::writeFood(QJsonObject& json, Food& food) const {
+    PRINT_DEBUG("Writing food" << food.getName());
+
     json["name"] = QString::fromStdString(food.getName());
     json["mass"] = static_cast<qint64>(food.getMass());
     json["price"] = static_cast<qint64>(food.getPrice());
@@ -87,13 +97,15 @@ void ItemForm::writeFood(QJsonObject &json, Food &food) const {
     json["calories"] = static_cast<qint64>(food.getCalories());
 }
 
-void ItemForm::writeDish(QJsonObject &json, Dish &dish) const {
+void Ingridients::writeDish(QJsonObject& json, Dish& dish) const {
     QJsonArray itemsList;
+
+    PRINT_DEBUG("Writing dish" << dish.getName());
 
     json["name"] = QString::fromStdString(dish.getName());
     json["amountOfPeople"] = static_cast<qint64>(dish.getAmountOfPeople());
 
-    for ( auto &entry: dish.getIngridientMap() ) {
+    for ( auto& entry: dish.getIngridientMap() ) {
         QJsonObject mapEntry;
         QJsonObject food;
 
@@ -108,13 +120,15 @@ void ItemForm::writeDish(QJsonObject &json, Dish &dish) const {
     json["items"] = itemsList;
 }
 
-void ItemForm::saveItems(QJsonObject &json) {
+void Ingridients::saveItems(QJsonObject& json) {
     QJsonArray itemsList;
 
-    for ( auto &entry: avaliableItems ) {
+    PRINT_DEBUG("Saving all items");
+
+    for ( auto& entry: avaliableItems ) {
         QJsonObject itemObj;
 
-        if ( !dynamic_cast<Food *>(entry) ) {
+        if ( !dynamic_cast<Food*>(entry) ) {
             writeItem(itemObj, *entry);
 
             itemsList.append(itemObj);
@@ -124,14 +138,16 @@ void ItemForm::saveItems(QJsonObject &json) {
     json["itemList"] = itemsList;
 }
 
-void ItemForm::saveFood(QJsonObject &json) {
+void Ingridients::saveFood(QJsonObject& json) {
     QJsonArray foodList;
 
-    for ( auto &entry: avaliableItems ) {
+    PRINT_DEBUG("Saving all food");
+
+    for ( auto& entry: avaliableItems ) {
         QJsonObject foodObj;
 
-        if ( dynamic_cast<Food *>(entry) ) {
-            writeFood(foodObj, *dynamic_cast<Food *>(entry));
+        if ( dynamic_cast<Food*>(entry) ) {
+            writeFood(foodObj, *dynamic_cast<Food*>(entry));
 
             foodList.append(foodObj);
         }
@@ -140,10 +156,12 @@ void ItemForm::saveFood(QJsonObject &json) {
     json["foodList"] = foodList;
 }
 
-void ItemForm::saveDish(QJsonObject &json) {
+void Ingridients::saveDish(QJsonObject& json) {
     QJsonArray dishList;
 
-    for ( auto &entry: avaliableDish ) {
+    PRINT_DEBUG("Saving all dish");
+
+    for ( auto& entry: avaliableDish ) {
         QJsonObject itemObj;
 
         writeDish(itemObj, *entry);
@@ -154,12 +172,14 @@ void ItemForm::saveDish(QJsonObject &json) {
     json["dishList"] = dishList;
 }
 
-bool ItemForm::saveData(QString &fileName) {
+bool Ingridients::saveData(QString& fileName) {
     QJsonObject saveObj;
     QFile saveFile(fileName);
 
+    PRINT_DEBUG("Saving all ingridients");
+
     if ( !saveFile.open(QIODevice::WriteOnly) ) {
-        PRINT_ERR("Couldn't open save file.");
+        PRINT_WARN("Couldn't open save file.");
 
         return false;
     }
@@ -179,21 +199,25 @@ bool ItemForm::saveData(QString &fileName) {
     return true;
 }
 
-void ItemForm::loadItems(const QJsonArray &jsonArray) {
+void Ingridients::loadItems(const QJsonArray& jsonArray) {
+    PRINT_DEBUG("Loading items");
+
     for ( int i = 0; i < jsonArray.size(); i++ ) {
-        Item * newItem = readItem(jsonArray[i].toObject());
+        Item* newItem = readItem(jsonArray[i].toObject());
         std::list<Item*>::iterator it = std::find(avaliableItems.begin(), avaliableItems.end(), newItem);
 
         if ( it == avaliableItems.end() ) {
-           avaliableItems.push_back(newItem);
-           newItem->addItemList(&avaliableItems);
+            avaliableItems.push_back(newItem);
+            newItem->addItemList(&avaliableItems);
         }
     }
 }
 
-void ItemForm::loadFood(const QJsonArray &jsonArray) {
+void Ingridients::loadFood(const QJsonArray& jsonArray) {
+    PRINT_DEBUG("Loading food");
+
     for ( int i = 0; i < jsonArray.size(); i++ ) {
-        Food * newFood = readFood(jsonArray[i].toObject());
+        Food* newFood = readFood(jsonArray[i].toObject());
         std::list<Item*>::iterator it;
 
         for ( it = avaliableItems.begin(); ; it++ ) {
@@ -209,23 +233,27 @@ void ItemForm::loadFood(const QJsonArray &jsonArray) {
     }
 }
 
-void ItemForm::loadDish(const QJsonArray &jsonArray) {
+void Ingridients::loadDish(const QJsonArray& jsonArray) {
+    PRINT_DEBUG("Loading dish");
+
     for ( int i = 0; i < jsonArray.size(); i++ ) {
-        Dish * newDish = readDish(jsonArray[i].toObject());
+        Dish* newDish = readDish(jsonArray[i].toObject());
         std::list<Dish*>::iterator it = std::find(avaliableDish.begin(), avaliableDish.end(), newDish);
 
         if ( it == avaliableDish.end() ) {
-           avaliableDish.push_back(newDish);
-           newDish->addDishList(&avaliableDish);
+            avaliableDish.push_back(newDish);
+            newDish->addDishList(&avaliableDish);
         }
     }
 }
 
-bool ItemForm::loadData(QString &fileName) {
+bool Ingridients::loadData(QString& fileName) {
     QFile loadFile(fileName);
 
+    PRINT_DEBUG("Loading new ingridients");
+
     if ( !loadFile.open(QIODevice::ReadOnly) ) {
-        PRINT_ERR("Couldn't open save file.");
+        PRINT_WARN("Couldn't open save file.");
 
         return false;
     }

@@ -1,11 +1,11 @@
 #ifndef STATS_H
 #define STATS_H
 
-#include <string>
-#include <iostream>
-
 #include <common.hpp>
 #include <engineLimits.hpp>
+
+#include <iostream>
+#include <string>
 
 class Stats {
     private:

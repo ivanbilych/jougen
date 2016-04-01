@@ -1,7 +1,7 @@
-#include <journey.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
+#include <engineLimits.hpp>
 #include <errors.hpp>
+#include <journey.hpp>
 
 Journey::Journey(std::string name, const Day& day) :
     PeopleStats<Day> {name, JOURNEY_MIN_MASS, JOURNEY_MAX_MASS,

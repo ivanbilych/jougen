@@ -1,9 +1,9 @@
-#include <algorithm>
-
-#include <item.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
+#include <engineLimits.hpp>
 #include <errors.hpp>
+#include <item.hpp>
+
+#include <algorithm>
 
 const std::string Item::itemMeasureTypeNames[] = {
     "gram",
@@ -55,7 +55,7 @@ Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureT
 }
 
 Item::~Item(void) {
-    for ( auto& entry : listOfItemLists ) {
+    for ( auto& entry: listOfItemLists ) {
         std::list<Item*>::iterator it = std::find(entry->begin(), entry->end(), this);
 
         PRINT_DEBUG("Removing item " << NAME_ID << " from list");

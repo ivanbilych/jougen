@@ -4,21 +4,21 @@
 #include <QDialog>
 
 namespace Ui {
-class AboutWindow;
+    class AboutWindow;
 }
 
 class AboutWindow : public QDialog {
     Q_OBJECT
 
 public:
-    explicit AboutWindow(QDialog *parent = 0);
+    explicit AboutWindow(QDialog* parent = 0);
     ~AboutWindow();
 
 private slots:
     void on_pushButton_clicked();
 
 private:
-    Ui::AboutWindow *ui;
+    Ui::AboutWindow* ui;
 };
 
 #endif // ABOUTWINDOW_H

@@ -1,9 +1,9 @@
-#include <algorithm>
-
-#include <food.hpp>
-#include <engineLimits.hpp>
 #include <debug.hpp>
+#include <engineLimits.hpp>
 #include <errors.hpp>
+#include <food.hpp>
+
+#include <algorithm>
 
 Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType measureType, uint64_t fats, uint64_t proteins, uint64_t carbohydrates, uint64_t calories) :
     Item {name, mass, price, measureType, FOOD_MIN_MASS, FOOD_MAX_MASS,
@@ -51,23 +51,25 @@ Food::Food(std::string name, uint64_t mass, uint64_t price, Item::MeasureType me
 }
 
 Food::~Food(void) {
-    for ( auto& dish: dishesWithFood ) {
+    for ( auto& entry: dishesWithFood ) {
         try {
             unregister = false;
-            dish->removeFood(this);
+            entry->removeFood(this);
             unregister = true;
         } catch (LastFoodInMap e) {
-            delete dish;
+            PRINT_WARN("Deleting dish " << entry->getName());
+
+            delete entry;
         }
     }
 
-    for ( auto& entry : listOfFoodLists ) {
+    for ( auto& entry: listOfFoodLists ) {
         std::list<Food*>::iterator it = std::find(entry->begin(), entry->end(), this);
-
-        PRINT_DEBUG("Removing food " << NAME_ID << " from list");
 
         if ( it != entry->end() ) {
             entry->erase(it);
+
+            PRINT_DEBUG("Removing food " << NAME_ID << " from list");
         }
     }
 
@@ -102,7 +104,7 @@ void Food::registerDish(Dish* dish) {
     if ( it == dishesWithFood.end() ) {
         dishesWithFood.push_back(dish);
 
-        PRINT_DEBUG("Register dish " << NAME_ID_CLASS(*dish) << " in " << *this << " food");
+        PRINT_DEBUG("Register dish " << NAME_ID_CLASS(*dish) << " in \"" << getName() << "\" food");
     }
 }
 
@@ -116,7 +118,7 @@ void Food::unregisterDish(Dish* dish) {
     if ( (it = std::find(dishesWithFood.begin(), dishesWithFood.end(), dish)) != dishesWithFood.end() ) {
         dishesWithFood.erase(it);
     } else {
-        PRINT_ERR("Could not unregister dish " << NAME_ID_CLASS(*dish) << " from " << *this << " food");
+        PRINT_ERR("Could not unregister dish " << NAME_ID_CLASS(*dish) << " from \"" << getName() << "\" food");
 
         throw WrongDishForUnregister();
     }

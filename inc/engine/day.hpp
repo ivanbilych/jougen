@@ -1,13 +1,13 @@
 #ifndef DAY_H
 #define DAY_H
 
+#include <common.hpp>
+#include <date.hpp>
+#include <meal.hpp>
+#include <peopleStats.hpp>
+
 #include <iostream>
 #include <string>
-
-#include <common.hpp>
-#include <peopleStats.hpp>
-#include <meal.hpp>
-#include <date.hpp>
 
 class Day : public PeopleStats<Meal> {
     private:
