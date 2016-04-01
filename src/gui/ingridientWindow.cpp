@@ -1,4 +1,5 @@
 #include <convert.hpp>
+#include <errors.hpp>
 #include <debug.hpp>
 
 #include <ingridientWindow.hpp>
@@ -129,10 +130,30 @@ void IngridientWindow::applyFoodStats(Food* food) {
 Item* IngridientWindow::createNewItem(void) {
     PRINT_DEBUG("Creating new item");
 
-    return new Item(ui->lineEdit_1->text().toStdString(),
-                    (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
-                    ui->lineEdit_4->text().toLong(),
-                    static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
+    QString name = ui->lineEdit_1->text();
+    QString mass = ui->lineEdit_2->text();
+    QString price = ui->lineEdit_4->text();
+
+    if ( name.isEmpty() ) {
+        PRINT_ERR("Ingridient name could not be empty");
+
+        throw EmptyNameException();
+    }
+
+    if ( mass.isEmpty() ) {
+        PRINT_ERR("Ingridient mass could not be empty");
+
+        throw EmptyMassException();
+    }
+
+    if ( price.isEmpty() ) {
+        PRINT_ERR("Ingridient price could not be empty");
+
+        throw EmptyPriceException();
+    }
+
+    return new Item(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
+                    QStringToPrice(price), static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
 Food* IngridientWindow::createNewFood(void) {
