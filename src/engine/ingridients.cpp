@@ -1,5 +1,5 @@
 #include <debug.hpp>
-#include <itemsForm.hpp>
+#include <ingridients.hpp>
 
 #include <algorithm>
 #include <string>
@@ -8,28 +8,28 @@
 #include <QString>
 #include <QFile>
 
-ItemForm::ItemForm(void) {
-    PRINT_OBJ("ItemForm created");
+Ingridients::Ingridients(void) {
+    PRINT_OBJ("Ingridients created");
 }
 
-ItemForm::~ItemForm(void) {
+Ingridients::~Ingridients(void) {
     for ( std::list<Item*>::iterator it = avaliableItems.begin(); it != avaliableItems.end(); ) {
         std::list<Item*>::iterator oldit = it++;
 
         delete *oldit;
     }
 
-    PRINT_OBJ("ItemForm destroyed");
+    PRINT_OBJ("Ingridients destroyed");
 }
 
-Item* ItemForm::readItem(const QJsonObject& json) {
+Item* Ingridients::readItem(const QJsonObject& json) {
     return new Item(json["name"].toString().toStdString(),
                     json["mass"].toInt(),
                     json["price"].toInt(),
                     static_cast<Item::MeasureType>(json["measureType"].toInt()));
 }
 
-Food* ItemForm::readFood(const QJsonObject& json) {
+Food* Ingridients::readFood(const QJsonObject& json) {
     return new Food(json["name"].toString().toStdString(),
                     json["mass"].toInt(),
                     json["price"].toInt(),
@@ -40,7 +40,7 @@ Food* ItemForm::readFood(const QJsonObject& json) {
                     json["calories"].toInt());
 }
 
-Dish* ItemForm::readDish(const QJsonObject& json) {
+Dish* Ingridients::readDish(const QJsonObject& json) {
     QJsonArray itemsList = json["items"].toArray();
     Food* newFood = readFood(itemsList[0].toObject()["food"].toObject());
     Dish* newDish = new Dish(json["name"].toString().toStdString(), newFood,
@@ -69,14 +69,14 @@ Dish* ItemForm::readDish(const QJsonObject& json) {
     return newDish;
 }
 
-void ItemForm::writeItem(QJsonObject& json, Item& item) const {
+void Ingridients::writeItem(QJsonObject& json, Item& item) const {
     json["name"] = QString::fromStdString(item.getName());
     json["mass"] = static_cast<qint64>(item.getMass());
     json["price"] = static_cast<qint64>(item.getPrice());
     json["measureType"] = static_cast<int>(item.getUnitType());
 }
 
-void ItemForm::writeFood(QJsonObject& json, Food& food) const {
+void Ingridients::writeFood(QJsonObject& json, Food& food) const {
     json["name"] = QString::fromStdString(food.getName());
     json["mass"] = static_cast<qint64>(food.getMass());
     json["price"] = static_cast<qint64>(food.getPrice());
@@ -87,7 +87,7 @@ void ItemForm::writeFood(QJsonObject& json, Food& food) const {
     json["calories"] = static_cast<qint64>(food.getCalories());
 }
 
-void ItemForm::writeDish(QJsonObject& json, Dish& dish) const {
+void Ingridients::writeDish(QJsonObject& json, Dish& dish) const {
     QJsonArray itemsList;
 
     json["name"] = QString::fromStdString(dish.getName());
@@ -108,7 +108,7 @@ void ItemForm::writeDish(QJsonObject& json, Dish& dish) const {
     json["items"] = itemsList;
 }
 
-void ItemForm::saveItems(QJsonObject& json) {
+void Ingridients::saveItems(QJsonObject& json) {
     QJsonArray itemsList;
 
     for ( auto& entry: avaliableItems ) {
@@ -124,7 +124,7 @@ void ItemForm::saveItems(QJsonObject& json) {
     json["itemList"] = itemsList;
 }
 
-void ItemForm::saveFood(QJsonObject& json) {
+void Ingridients::saveFood(QJsonObject& json) {
     QJsonArray foodList;
 
     for ( auto& entry: avaliableItems ) {
@@ -140,7 +140,7 @@ void ItemForm::saveFood(QJsonObject& json) {
     json["foodList"] = foodList;
 }
 
-void ItemForm::saveDish(QJsonObject& json) {
+void Ingridients::saveDish(QJsonObject& json) {
     QJsonArray dishList;
 
     for ( auto& entry: avaliableDish ) {
@@ -154,7 +154,7 @@ void ItemForm::saveDish(QJsonObject& json) {
     json["dishList"] = dishList;
 }
 
-bool ItemForm::saveData(QString& fileName) {
+bool Ingridients::saveData(QString& fileName) {
     QJsonObject saveObj;
     QFile saveFile(fileName);
 
@@ -179,7 +179,7 @@ bool ItemForm::saveData(QString& fileName) {
     return true;
 }
 
-void ItemForm::loadItems(const QJsonArray& jsonArray) {
+void Ingridients::loadItems(const QJsonArray& jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
         Item* newItem = readItem(jsonArray[i].toObject());
         std::list<Item*>::iterator it = std::find(avaliableItems.begin(), avaliableItems.end(), newItem);
@@ -191,7 +191,7 @@ void ItemForm::loadItems(const QJsonArray& jsonArray) {
     }
 }
 
-void ItemForm::loadFood(const QJsonArray& jsonArray) {
+void Ingridients::loadFood(const QJsonArray& jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
         Food* newFood = readFood(jsonArray[i].toObject());
         std::list<Item*>::iterator it;
@@ -209,7 +209,7 @@ void ItemForm::loadFood(const QJsonArray& jsonArray) {
     }
 }
 
-void ItemForm::loadDish(const QJsonArray& jsonArray) {
+void Ingridients::loadDish(const QJsonArray& jsonArray) {
     for ( int i = 0; i < jsonArray.size(); i++ ) {
         Dish* newDish = readDish(jsonArray[i].toObject());
         std::list<Dish*>::iterator it = std::find(avaliableDish.begin(), avaliableDish.end(), newDish);
@@ -221,7 +221,7 @@ void ItemForm::loadDish(const QJsonArray& jsonArray) {
     }
 }
 
-bool ItemForm::loadData(QString& fileName) {
+bool Ingridients::loadData(QString& fileName) {
     QFile loadFile(fileName);
 
     if ( !loadFile.open(QIODevice::ReadOnly) ) {

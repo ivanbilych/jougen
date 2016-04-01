@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <aboutWindow.hpp>
-#include <itemsForm.hpp>
+#include <ingridients.hpp>
 #include <newDishWindow.hpp>
 #include <newIngridientWindow.hpp>
 
@@ -56,7 +56,7 @@ private:
     QStringList* dishStringList {};
     QStringListModel* itemListModel {};
     QStringListModel* dishListModel {};
-    ItemForm* itemForm {};
+    Ingridients* ingridients {};
 
     void editItem(QModelIndexList& selected);
     void editDish(QModelIndexList& selected);

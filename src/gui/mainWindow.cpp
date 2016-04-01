@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget* parent) :
     dishStringList {new QStringList},
     itemListModel {new QStringListModel {*itemStringList, NULL}},
     dishListModel {new QStringListModel {*dishStringList, NULL}},
-    itemForm {new ItemForm} {
+    ingridients {new Ingridients} {
 
     ui->setupUi(this);
 
@@ -34,7 +34,7 @@ MainWindow::~MainWindow() {
     delete dishStringList;
     delete itemListModel;
     delete dishListModel;
-    delete itemForm;
+    delete ingridients;
 
     PRINT_OBJ("MainWindow destroyed");
 }
@@ -55,7 +55,7 @@ void MainWindow::on_pushButton_2_clicked() {
         int row = selected.first().row();
 
         const QModelIndex index = itemListModel->index(row?row-1:0);
-        std::list<Item*>::iterator item = itemForm->avaliableItems.begin();
+        std::list<Item*>::iterator item = ingridients->avaliableItems.begin();
 
         std::advance(item, row);
 
@@ -78,7 +78,7 @@ void MainWindow::on_pushButton_3_clicked() {
     QObject::connect(&newDishWindow, SIGNAL(itemObjectReady(Dish*)), this, SLOT(addNewDishObject(Dish*)));
     QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), &newDishWindow, SLOT(fillItemList(std::list<Item*>*)));
 
-    emit newDishRequest(&itemForm->avaliableItems);
+    emit newDishRequest(&ingridients->avaliableItems);
 
     newDishWindow.exec();
 }
@@ -90,7 +90,7 @@ void MainWindow::on_pushButton_4_clicked() {
         int row = selected.first().row();
 
         const QModelIndex index = dishListModel->index(row?row-1:0);
-        std::list<Dish*>::iterator dish = itemForm->avaliableDish.begin();
+        std::list<Dish*>::iterator dish = ingridients->avaliableDish.begin();
 
         std::advance(dish, row);
 
@@ -153,9 +153,9 @@ void MainWindow::addNewItemObject(Item* item) {
     itemStringList->append(QString::fromStdString(item->getName()));
     itemListModel->setStringList(*itemStringList);
 
-    itemForm->avaliableItems.push_back(item);
+    ingridients->avaliableItems.push_back(item);
 
-    index = itemListModel->index(itemForm->avaliableItems.size()-1);
+    index = itemListModel->index(ingridients->avaliableItems.size()-1);
     ui->listView_1->setCurrentIndex(index);
     displayListViewInfoItem(index);
 
@@ -168,9 +168,9 @@ void MainWindow::addNewFoodObject(Food* food) {
     itemStringList->append(QString::fromStdString(food->getName()));
     itemListModel->setStringList(*itemStringList);
 
-    itemForm->avaliableItems.push_back(food);
+    ingridients->avaliableItems.push_back(food);
 
-    index = itemListModel->index(itemForm->avaliableItems.size()-1);
+    index = itemListModel->index(ingridients->avaliableItems.size()-1);
     ui->listView_1->setCurrentIndex(index);
     displayListViewInfoItem(index);
 
@@ -181,7 +181,7 @@ void MainWindow::addNewDishObject(Dish* dish) {
     dishStringList->append(QString::fromStdString(dish->getName()));
     dishListModel->setStringList(*dishStringList);
 
-    itemForm->avaliableDish.push_back(dish);
+    ingridients->avaliableDish.push_back(dish);
 
     PRINT_DEBUG("New dish added");
 }
@@ -191,7 +191,7 @@ void MainWindow::editItem(QModelIndexList& selected) {
     int row = selected.first().row();
     const QModelIndex index = itemListModel->index(row);
 
-    std::list<Item*>::iterator item = itemForm->avaliableItems.begin();
+    std::list<Item*>::iterator item = ingridients->avaliableItems.begin();
     std::advance(item, row);
 
     ingridientWindow = (infoWindowType == ITEM) ? new NewIngridientWindow(*item) : new NewIngridientWindow(dynamic_cast<Food*>(*item));
@@ -208,14 +208,14 @@ void MainWindow::editDish(QModelIndexList& selected) {
     int row = selected.first().row();
     const QModelIndex index = dishListModel->index(row);
 
-    std::list<Dish*>::iterator dish = itemForm->avaliableDish.begin();
+    std::list<Dish*>::iterator dish = ingridients->avaliableDish.begin();
     std::advance(dish, row);
 
     dishWindow = new NewDishWindow(*dish);
 
     QObject::connect(this, SIGNAL(newDishRequest(std::list<Item*>*)), dishWindow, SLOT(fillItemList(std::list<Item*>*)));
 
-    emit newDishRequest(&itemForm->avaliableItems);
+    emit newDishRequest(&ingridients->avaliableItems);
     dishWindow->exec();
 
     delete dishWindow;
@@ -224,7 +224,7 @@ void MainWindow::editDish(QModelIndexList& selected) {
 }
 
 void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
-    std::list<Item*>::iterator item = itemForm->avaliableItems.begin();
+    std::list<Item*>::iterator item = ingridients->avaliableItems.begin();
     QString itemInfo;
 
     std::advance(item, index.row());
@@ -251,7 +251,7 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
 }
 
 void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
-    std::list<Dish*>::iterator item = itemForm->avaliableDish.begin();
+    std::list<Dish*>::iterator item = ingridients->avaliableDish.begin();
     QString itemInfo;
 
     std::advance(item, index.row());
@@ -279,7 +279,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
 void MainWindow::redrawItemList(void) {
     itemStringList->clear();
 
-    for ( auto& entry: itemForm->avaliableItems ) {
+    for ( auto& entry: ingridients->avaliableItems ) {
         itemStringList->append(QString::fromStdString(entry->getName()));
     }
     itemListModel->setStringList(*itemStringList);
@@ -290,7 +290,7 @@ void MainWindow::redrawItemList(void) {
 void MainWindow::redrawDishList(void) {
     dishStringList->clear();
 
-    for ( auto& entry: itemForm->avaliableDish ) {
+    for ( auto& entry: ingridients->avaliableDish ) {
         dishStringList->append(QString::fromStdString(entry->getName()));
     }
     dishListModel->setStringList(*dishStringList);
@@ -306,15 +306,15 @@ void MainWindow::on_actionOpen_triggered() {
     QString loadFile(QFileDialog::getOpenFileName(0, "Open File", "", "json (*.json);; binary (*)"));
 
     if ( !loadFile.isEmpty() ) {
-        for ( std::list<Item*>::iterator it = itemForm->avaliableItems.begin(); it != itemForm->avaliableItems.end(); ) {
+        for ( std::list<Item*>::iterator it = ingridients->avaliableItems.begin(); it != ingridients->avaliableItems.end(); ) {
             std::list<Item*>::iterator oldit = it++;
 
             delete *oldit;
         }
-        itemForm->avaliableItems.clear();
-        itemForm->avaliableDish.clear();
+        ingridients->avaliableItems.clear();
+        ingridients->avaliableDish.clear();
 
-        itemForm->loadData(loadFile);
+        ingridients->loadData(loadFile);
 
         redrawItemList();
         ui->textEdit_1->clear();
@@ -325,6 +325,6 @@ void MainWindow::on_actionSave_triggered() {
     QString saveFile(QFileDialog::getSaveFileName(0, "Save File", "", "json (*.json);; binary (*)"));
 
     if ( !saveFile.isEmpty() ) {
-        itemForm->saveData(saveFile);
+        ingridients->saveData(saveFile);
     }
 }

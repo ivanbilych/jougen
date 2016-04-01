@@ -26,7 +26,7 @@ HEADERS += \
     inc/engine/meal.hpp \
     inc/engine/peopleStats.hpp \
     inc/engine/stats.hpp \
-    inc/engine/itemsForm.hpp \
+    inc/engine/ingridients.hpp \
     inc/gui/mainWindow.hpp \
     inc/gui/newIngridientWindow.hpp \
     inc/gui/newDishWindow.hpp \
@@ -48,7 +48,7 @@ SOURCES += \
     src/engine/journey.cpp \
     src/engine/meal.cpp \
     src/engine/stats.cpp \
-    src/engine/itemsForm.cpp \
+    src/engine/ingridients.cpp \
     src/gui/mainWindow.cpp \
     src/gui/newIngridientWindow.cpp \
     src/gui/newDishWindow.cpp \

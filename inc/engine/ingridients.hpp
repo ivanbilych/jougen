@@ -1,5 +1,5 @@
-#ifndef ITEMSFORM_H
-#define ITEMSFORM_H
+#ifndef INGRIDIENTS_H
+#define INGRIDIENTS_H
 
 #include <common.hpp>
 #include <dish.hpp>
@@ -9,13 +9,13 @@
 #include <list>
 #include <QJsonObject>
 
-class ItemForm {
+class Ingridients {
     public:
         std::list<Item*> avaliableItems {};
         std::list<Dish*> avaliableDish {};
 
-        ItemForm(void);
-        ~ItemForm(void);
+        Ingridients(void);
+        ~Ingridients(void);
 
         Item* readItem(const QJsonObject& json);
         Food* readFood(const QJsonObject& json);
@@ -35,4 +35,4 @@ class ItemForm {
         bool loadData(QString& fileName);
 };
 
-#endif // ITEMSFORM_H
+#endif // INGRIDIENTS_H
