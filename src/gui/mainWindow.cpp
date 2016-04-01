@@ -241,10 +241,11 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
     itemInfo += "Unit: " + QString::fromStdString((*item)->getUnitTypeName()) + "\n";
 
     if ( infoWindowType == FOOD ) {
-       itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " g (in 100 g)\n";
-       itemInfo += "Proteins: "+ proteinsToQString((*item)->getProteins()) + " g (in 100 g)\n";
-       itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " g (in 100 g)\n";
-       itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + " g (in 100 g)\n";
+       itemInfo += "\nIn 100 g of product:\n";
+       itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " g\n";
+       itemInfo += "Proteins: "+ proteinsToQString((*item)->getProteins()) + " g\n";
+       itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " g\n";
+       itemInfo += "Calories: " + caloriesToQString((*item)->getCalories()) + " g\n";
     }
 
     ui->textEdit_1->setText(itemInfo);
