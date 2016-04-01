@@ -154,6 +154,7 @@ void MainWindow::addNewItemObject(Item* item) {
     itemListModel->setStringList(*itemStringList);
 
     ingridients->avaliableItems.push_back(item);
+    item->addItemList(&(ingridients->avaliableItems));
 
     index = itemListModel->index(ingridients->avaliableItems.size()-1);
     ui->listView_1->setCurrentIndex(index);
@@ -169,6 +170,7 @@ void MainWindow::addNewFoodObject(Food* food) {
     itemListModel->setStringList(*itemStringList);
 
     ingridients->avaliableItems.push_back(food);
+    food->addItemList(&(ingridients->avaliableItems));
 
     index = itemListModel->index(ingridients->avaliableItems.size()-1);
     ui->listView_1->setCurrentIndex(index);
