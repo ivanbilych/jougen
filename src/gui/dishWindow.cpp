@@ -46,15 +46,20 @@ void DishWindow::on_buttonBox_1_accepted() {
         emit itemObjectReady(createNewDish());
     } else {
         int pos_y = 0;
+        uint64_t newAmountOfPeople = ui->lineEdit_2->text().toLong();
 
         PRINT_DEBUG("Changing every food item to correct...");
+
         for ( auto& entry: dish->getIngridientMap() ) {
             dish->changeFoodAmount(entry.first, static_cast<uint64_t>(ui->tableWidget_1->item(pos_y, 1)->text().toLong()));
             pos_y += 1;
         }
 
-        PRINT_DEBUG("Changing amount of people to correct...");
-        dish->changeAmountOfPeople(static_cast<uint64_t>(ui->lineEdit_2->text().toLong()));
+        if ( oldAmountOfPeople != newAmountOfPeople ) {
+            PRINT_DEBUG("Changing amount of people to correct...");
+
+            dish->changeAmountOfPeople(newAmountOfPeople);
+        }
     }
 
     this->hide();
@@ -113,9 +118,11 @@ Dish* DishWindow::createNewDish(void) {
 }
 
 void DishWindow::applyStats(Dish* dish) {
+    oldAmountOfPeople = dish->getAmountOfPeople();
+
     ui->lineEdit_1->setText(QString::fromStdString(dish->getName()));
     ui->lineEdit_1->setDisabled(true);
-    ui->lineEdit_2->setText(QString::number(dish->getAmountOfPeople()));
+    ui->lineEdit_2->setText(QString::number(oldAmountOfPeople));
 
     for ( auto& entry: dish->getIngridientMap() ) {
         int rowCount = ui->tableWidget_1->rowCount();

@@ -40,6 +40,7 @@ private:
     std::list<Item*>* avaliableItemsList;
     std::list<Food*> dishFoodList;
     bool editMode {false};
+    uint64_t oldAmountOfPeople {};
 
     Dish* createNewDish(void);
     void applyStats(Dish* dish);
