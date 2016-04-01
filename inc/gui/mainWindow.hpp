@@ -69,5 +69,6 @@ private:
 QString priceToQString(uint64_t price);
 QString massToQString(uint64_t mass);
 QString fatsToQString(uint64_t fats);
+QString proteinsToQString(uint64_t proteins);
 
 #endif // MAINWINDOW_H
