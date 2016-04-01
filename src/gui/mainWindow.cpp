@@ -243,7 +243,7 @@ void MainWindow::displayListViewInfoItem(const QModelIndex& index) {
     if ( infoWindowType == FOOD ) {
        itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + " (in 100 g)\n";
        itemInfo += "Proteins: "+ proteinsToQString((*item)->getProteins()) + " (in 100 g)\n";
-       itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + " (in 100 g)\n";
+       itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + " (in 100 g)\n";
        itemInfo += "Calories: " + QString::number((*item)->getCalories()) + " (in 100 g)\n";
     }
 
@@ -263,7 +263,7 @@ void MainWindow::displayListViewInfoDish(const QModelIndex& index) {
     itemInfo += "Mass: " + massToQString((*item)->getMass()) + "\n";
     itemInfo += "Fats: " + fatsToQString((*item)->getFats()) + "\n";
     itemInfo += "Proteins: " + proteinsToQString((*item)->getProteins()) + "\n";
-    itemInfo += "Carbohydrates: " + QString::number((*item)->getCarbohydrates()) + "\n";
+    itemInfo += "Carbohydrates: " + carbohydratesToQString((*item)->getCarbohydrates()) + "\n";
     itemInfo += "Calories: " + QString::number((*item)->getCalories()) + "\n\n";
     itemInfo += "Amount of people: " + QString::number((*item)->getAmountOfPeople()) + "\n\n";
     itemInfo += "Ingridients:\n";
@@ -385,4 +385,16 @@ QString proteinsToQString(uint64_t proteins) {
     }
 
     return proteinsInt + "." + proteinsFract;
+}
+
+QString carbohydratesToQString(uint64_t carbohydrates) {
+    QString carbohydratesInt = QString::number(carbohydrates/STATS_CARBOHYDRATES_RATIO);
+    uint64_t fraction = carbohydrates % STATS_CARBOHYDRATES_RATIO;
+    QString carbohydratesFract = QString::number(fraction);
+
+    if ( fraction == 0 ) {
+        carbohydratesFract.prepend("0");
+    }
+
+    return carbohydratesInt + "." + carbohydratesFract;
 }
