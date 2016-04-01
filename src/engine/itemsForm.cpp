@@ -185,8 +185,8 @@ void ItemForm::loadItems(const QJsonArray& jsonArray) {
         std::list<Item*>::iterator it = std::find(avaliableItems.begin(), avaliableItems.end(), newItem);
 
         if ( it == avaliableItems.end() ) {
-           avaliableItems.push_back(newItem);
-           newItem->addItemList(&avaliableItems);
+            avaliableItems.push_back(newItem);
+            newItem->addItemList(&avaliableItems);
         }
     }
 }
@@ -215,8 +215,8 @@ void ItemForm::loadDish(const QJsonArray& jsonArray) {
         std::list<Dish*>::iterator it = std::find(avaliableDish.begin(), avaliableDish.end(), newDish);
 
         if ( it == avaliableDish.end() ) {
-           avaliableDish.push_back(newDish);
-           newDish->addDishList(&avaliableDish);
+            avaliableDish.push_back(newDish);
+            newDish->addDishList(&avaliableDish);
         }
     }
 }

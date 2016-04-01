@@ -4,7 +4,7 @@
 #include <QDialog>
 
 namespace Ui {
-class AboutWindow;
+    class AboutWindow;
 }
 
 class AboutWindow : public QDialog {
