@@ -70,3 +70,27 @@ QString carbohydratesToQString(uint64_t carbohydrates) {
 QString caloriesToQString(uint64_t calories) {
     return QString::number(calories);
 }
+
+uint64_t QStringToPrice(QString price) {
+    return static_cast<uint64_t>(price.toDouble()*STATS_PRICE_RATIO);
+}
+
+uint64_t QStringToMass(QString mass) {
+    return static_cast<uint64_t>(mass.toDouble()*STATS_MASS_RATIO);
+}
+
+uint64_t QStringToFats(QString fats) {
+    return static_cast<uint64_t>(fats.toDouble()*STATS_FATS_RATIO);
+}
+
+uint64_t QStringToProteins(QString proteins) {
+    return static_cast<uint64_t>(proteins.toDouble()*STATS_PROTEINS_RATIO);
+}
+
+uint64_t QStringToCarbohydrates(QString carbohydrates) {
+    return static_cast<uint64_t>(carbohydrates.toDouble()*STATS_CARBOHYDRATES_RATIO);
+}
+
+uint64_t QStringToCalories(QString calories) {
+    return static_cast<uint64_t>(calories.toDouble()*STATS_CALORIES_RATIO);
+}
