@@ -137,19 +137,19 @@ Item* IngridientWindow::createNewItem(void) {
     if ( name.isEmpty() ) {
         PRINT_ERR("Ingridient name could not be empty");
 
-        throw EmptyNameException();
+        throw EmptyIngridientNameException();
     }
 
     if ( mass.isEmpty() ) {
         PRINT_ERR("Ingridient mass could not be empty");
 
-        throw EmptyMassException();
+        throw EmptyIngridientMassException();
     }
 
     if ( price.isEmpty() ) {
         PRINT_ERR("Ingridient price could not be empty");
 
-        throw EmptyPriceException();
+        throw EmptyIngridientPriceException();
     }
 
     return new Item(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
@@ -170,43 +170,43 @@ Food* IngridientWindow::createNewFood(void) {
     if ( name.isEmpty() ) {
         PRINT_ERR("Food name could not be empty");
 
-        throw EmptyNameException();
+        throw EmptyIngridientNameException();
     }
 
     if ( mass.isEmpty() ) {
         PRINT_ERR("Food mass could not be empty");
 
-        throw EmptyMassException();
+        throw EmptyIngridientMassException();
     }
 
     if ( price.isEmpty() ) {
         PRINT_ERR("Food price could not be empty");
 
-        throw EmptyPriceException();
+        throw EmptyIngridientPriceException();
     }
 
     if ( fats.isEmpty() ) {
         PRINT_ERR("Food fats could not be empty");
 
-        throw EmptyFatsException();
+        throw EmptyIngridientFatsException();
     }
 
     if ( proteins.isEmpty() ) {
         PRINT_ERR("Food proteins could not be empty");
 
-        throw EmptyProteinsException();
+        throw EmptyIngridientProteinsException();
     }
 
     if ( carbohydrates.isEmpty() ) {
         PRINT_ERR("Food carbohydrates could not be empty");
 
-        throw EmptyCarbohydratesException();
+        throw EmptyIngridientCarbohydratesException();
     }
 
     if ( calories.isEmpty() ) {
         PRINT_ERR("Food calories could not be empty");
 
-        throw EmptyCaloriesException();
+        throw EmptyIngridientCaloriesException();
     }
 
     return new Food(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
