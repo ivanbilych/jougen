@@ -1,9 +1,17 @@
 #ifndef ERRORS_H
 #define ERRORS_H
 
+// Global Exception
+
+class Exception {};
+
 // Global Engine Exception
 
-class EngineException {};
+class EngineException : public Exception {};
+
+// Global GUI Exception
+
+class GUIException : public Exception {};
 
 // Date class exceptions
 
@@ -105,5 +113,26 @@ class TooBigJourneyCalories : public JourneyException {};
 class LastDayInList : public JourneyException {};
 class NoSuchDayInList : public JourneyException {};
 class SetJourneyPeopleAmountError : public JourneyException {};
+
+// IngridientWindow exceptions
+
+class IngridientWindowException : public GUIException {};
+
+class EmptyIngridientNameException : public IngridientWindowException {};
+class EmptyIngridientMassException : public IngridientWindowException {};
+class EmptyIngridientPriceException : public IngridientWindowException {};
+class EmptyIngridientFatsException : public IngridientWindowException {};
+class EmptyIngridientProteinsException : public IngridientWindowException {};
+class EmptyIngridientCarbohydratesException : public IngridientWindowException {};
+class EmptyIngridientCaloriesException : public IngridientWindowException {};
+
+// Dish exceptions
+
+class DishWindowException : public GUIException {};
+
+class EmptyDishNameException : public IngridientWindowException {};
+class EmptyDishListException : public IngridientWindowException {};
+class EmptyDishIngridientException : public IngridientWindowException {};
+class EmptyAmountOfPeopleException : public IngridientWindowException {};
 
 #endif // ERRORS_H

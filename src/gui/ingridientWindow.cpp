@@ -1,3 +1,5 @@
+#include <convert.hpp>
+#include <errors.hpp>
 #include <debug.hpp>
 
 #include <ingridientWindow.hpp>
@@ -90,12 +92,12 @@ void IngridientWindow::applyItemStats(Item* item) {
     ui->lineEdit_1->setText(QString::fromStdString(item->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(item->getUnitType()));
-    if ( item->getUnitType() != Item::GRAM ) {
-        ui->lineEdit_2->setText(QString::number(item->getMass()));
+    if ( item->getUnitType() != Item::KGRAM ) {
+        ui->lineEdit_2->setText(massToQString(item->getMass()));
     } else {
         ui->lineEdit_2->setDisabled(true);
     }
-    ui->lineEdit_4->setText(QString::number(item->getPrice()));
+    ui->lineEdit_4->setText(priceToQString(item->getPrice()));
 
     on_radioButton_2_clicked();
     ui->radioButton_2->setChecked(true);
@@ -108,16 +110,16 @@ void IngridientWindow::applyFoodStats(Food* food) {
     ui->lineEdit_1->setText(QString::fromStdString(food->getName()));
     ui->lineEdit_1->setDisabled(true);
     ui->comboBox_1->setCurrentIndex(static_cast<int>(food->getUnitType()));
-    if ( food->getUnitType() != Item::GRAM ) {
-        ui->lineEdit_2->setText(QString::number(food->getMass()));
+    if ( food->getUnitType() != Item::KGRAM ) {
+        ui->lineEdit_2->setText(massToQString(food->getMass()));
     } else {
         ui->lineEdit_2->setDisabled(true);
     }
-    ui->lineEdit_4->setText(QString::number(food->getPrice()));
-    ui->lineEdit_3->setText(QString::number(food->getFats()));
-    ui->lineEdit_5->setText(QString::number(food->getProteins()));
-    ui->lineEdit_6->setText(QString::number(food->getCarbohydrates()));
-    ui->lineEdit_7->setText(QString::number(food->getCalories()));
+    ui->lineEdit_4->setText(priceToQString(food->getPrice()));
+    ui->lineEdit_3->setText(fatsToQString(food->getFats()));
+    ui->lineEdit_5->setText(proteinsToQString(food->getProteins()));
+    ui->lineEdit_6->setText(carbohydratesToQString(food->getCarbohydrates()));
+    ui->lineEdit_7->setText(caloriesToQString(food->getCalories()));
 
     ui->radioButton_1->setChecked(true);
     ui->radioButton_2->setDisabled(true);
@@ -128,23 +130,91 @@ void IngridientWindow::applyFoodStats(Food* food) {
 Item* IngridientWindow::createNewItem(void) {
     PRINT_DEBUG("Creating new item");
 
-    return new Item(ui->lineEdit_1->text().toStdString(),
-                    (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
-                    ui->lineEdit_4->text().toLong(),
-                    static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
+    QString name = ui->lineEdit_1->text();
+    QString mass = ui->lineEdit_2->text();
+    QString price = ui->lineEdit_4->text();
+
+    if ( name.isEmpty() ) {
+        PRINT_ERR("Ingridient name could not be empty");
+
+        throw EmptyIngridientNameException();
+    }
+
+    if ( mass.isEmpty() ) {
+        PRINT_ERR("Ingridient mass could not be empty");
+
+        throw EmptyIngridientMassException();
+    }
+
+    if ( price.isEmpty() ) {
+        PRINT_ERR("Ingridient price could not be empty");
+
+        throw EmptyIngridientPriceException();
+    }
+
+    return new Item(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
+                    QStringToPrice(price), static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
 Food* IngridientWindow::createNewFood(void) {
     PRINT_DEBUG("Creating new food");
 
-    return new Food(ui->lineEdit_1->text().toStdString(),
-                    (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : ui->lineEdit_2->text().toLong()),
-                    ui->lineEdit_4->text().toLong(),
-                    static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()),
-                    ui->lineEdit_3->text().toLong(),
-                    ui->lineEdit_5->text().toLong(),
-                    ui->lineEdit_6->text().toLong(),
-                    ui->lineEdit_7->text().toLong());
+    QString name = ui->lineEdit_1->text();
+    QString mass = ui->lineEdit_2->text();
+    QString price = ui->lineEdit_4->text();
+    QString fats = ui->lineEdit_3->text();
+    QString proteins = ui->lineEdit_5->text();
+    QString carbohydrates = ui->lineEdit_6->text();
+    QString calories = ui->lineEdit_7->text();
+
+    if ( name.isEmpty() ) {
+        PRINT_ERR("Food name could not be empty");
+
+        throw EmptyIngridientNameException();
+    }
+
+    if ( mass.isEmpty() ) {
+        PRINT_ERR("Food mass could not be empty");
+
+        throw EmptyIngridientMassException();
+    }
+
+    if ( price.isEmpty() ) {
+        PRINT_ERR("Food price could not be empty");
+
+        throw EmptyIngridientPriceException();
+    }
+
+    if ( fats.isEmpty() ) {
+        PRINT_ERR("Food fats could not be empty");
+
+        throw EmptyIngridientFatsException();
+    }
+
+    if ( proteins.isEmpty() ) {
+        PRINT_ERR("Food proteins could not be empty");
+
+        throw EmptyIngridientProteinsException();
+    }
+
+    if ( carbohydrates.isEmpty() ) {
+        PRINT_ERR("Food carbohydrates could not be empty");
+
+        throw EmptyIngridientCarbohydratesException();
+    }
+
+    if ( calories.isEmpty() ) {
+        PRINT_ERR("Food calories could not be empty");
+
+        throw EmptyIngridientCaloriesException();
+    }
+
+    return new Food(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
+                    QStringToPrice(price), static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()),
+                    QStringToFats(fats),
+                    QStringToProteins(proteins),
+                    QStringToCarbohydrates(carbohydrates),
+                    QStringToCalories(calories));
 }
 
 void IngridientWindow::editItem(Item* item) {

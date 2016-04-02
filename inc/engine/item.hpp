@@ -11,7 +11,7 @@
 class Item : public Stats {
     public:
         enum MeasureType {
-            GRAM,
+            KGRAM,
             PIECE,
             PACK,
             STICK,

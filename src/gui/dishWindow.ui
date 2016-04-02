@@ -25,7 +25,7 @@
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>300</height>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -33,16 +33,43 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_1">
    <item>
-    <widget class="QLineEdit" name="lineEdit_1">
-     <property name="placeholderText">
-      <string>Name</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_1">
      <item>
-      <widget class="QListView" name="listView_1"/>
+      <widget class="QLineEdit" name="lineEdit_1">
+       <property name="toolTip">
+        <string>Enter dish name, i.e. &quot;Apple pie&quot;</string>
+       </property>
+       <property name="placeholderText">
+        <string>Name</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>Enter amount of people dish are ready for, i.e. &quot;1&quot;</string>
+       </property>
+       <property name="placeholderText">
+        <string>Amount of people</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QListView" name="listView_1">
+       <property name="toolTip">
+        <string>Select food for dish</string>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -95,7 +122,7 @@
         </widget>
        </item>
        <item>
-        <spacer name="verticalSpacer">
+        <spacer name="verticalSpacer_1">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -111,6 +138,9 @@
      </item>
      <item>
       <widget class="QTableWidget" name="tableWidget_1">
+       <property name="toolTip">
+        <string>Edit dish ingridients and their amount</string>
+       </property>
        <property name="lineWidth">
         <number>0</number>
        </property>
@@ -178,13 +208,6 @@
     </layout>
    </item>
    <item>
-    <widget class="QLineEdit" name="lineEdit_2">
-     <property name="placeholderText">
-      <string>Amount of people</string>
-     </property>
-    </widget>
-   </item>
-   <item>
     <widget class="QDialogButtonBox" name="buttonBox_1">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
@@ -194,12 +217,10 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lineEdit_1</tabstop>
   <tabstop>listView_1</tabstop>
   <tabstop>pushButton_1</tabstop>
   <tabstop>pushButton_2</tabstop>
   <tabstop>tableWidget_1</tabstop>
-  <tabstop>lineEdit_2</tabstop>
  </tabstops>
  <resources/>
  <connections/>

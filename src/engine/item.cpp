@@ -6,7 +6,7 @@
 #include <algorithm>
 
 const std::string Item::itemMeasureTypeNames[] = {
-    "gram",
+    "kg",
     "piece",
     "pack",
     "stick",
@@ -22,8 +22,8 @@ Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureT
            minCalories, maxCalories},
     measureType {measureType} {
 
-    if ( measureType == GRAM && mass != MIN_MASS_FOR_GRAM ) {
-        PRINT_ERR("Wrong item mass for GRAM value provided");
+    if ( measureType == KGRAM && mass != MIN_MASS_FOR_KGRAM ) {
+        PRINT_ERR("Wrong item mass for KGRAM value provided");
 
         throw WrongItemMass();
     }
@@ -40,8 +40,8 @@ Item::Item(std::string name, uint64_t mass, uint64_t price, MeasureType measureT
     Stats {name, ITEM_MIN_MASS, ITEM_MAX_MASS, ITEM_MIN_PRICE, ITEM_MAX_PRICE},
     measureType {measureType} {
 
-    if ( measureType == GRAM && mass != MIN_MASS_FOR_GRAM ) {
-        PRINT_ERR("Wrong item mass for GRAMM value provided");
+    if ( measureType == KGRAM && mass != MIN_MASS_FOR_KGRAM ) {
+        PRINT_ERR("Wrong item mass for KGRAM value provided");
 
         throw WrongItemMass();
     }

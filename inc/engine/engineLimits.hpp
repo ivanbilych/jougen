@@ -3,6 +3,7 @@
 
 // Stats class limits
 
+#define STATS_MASS_RATIO                                                   1000U
 #define STATS_PRICE_RATIO                                                   100U
 #define STATS_FATS_RATIO                                                     10U
 #define STATS_PROTEINS_RATIO                                                 10U
@@ -16,7 +17,7 @@
 #define ITEM_MIN_PRICE                                                        1U
 #define ITEM_MAX_PRICE                                                 10000000U
 
-#define MIN_MASS_FOR_GRAM                                          ITEM_MIN_MASS
+#define MIN_MASS_FOR_KGRAM                                         ITEM_MIN_MASS
 
 // Food class limits
 

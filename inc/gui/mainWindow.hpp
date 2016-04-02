@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <aboutWindow.hpp>
+#include <convert.hpp>
 #include <ingridients.hpp>
 #include <dishWindow.hpp>
 #include <ingridientWindow.hpp>
