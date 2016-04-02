@@ -34,6 +34,9 @@
   <layout class="QVBoxLayout" name="verticalLayout_1">
    <item>
     <widget class="QLineEdit" name="lineEdit_1">
+     <property name="toolTip">
+      <string>Enter dish name, i.e. &quot;Apple pie&quot;</string>
+     </property>
      <property name="placeholderText">
       <string>Name</string>
      </property>
@@ -42,7 +45,11 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_1">
      <item>
-      <widget class="QListView" name="listView_1"/>
+      <widget class="QListView" name="listView_1">
+       <property name="toolTip">
+        <string>Select food for dish</string>
+       </property>
+      </widget>
      </item>
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -111,6 +118,9 @@
      </item>
      <item>
       <widget class="QTableWidget" name="tableWidget_1">
+       <property name="toolTip">
+        <string>Edit dish ingridients and their amount</string>
+       </property>
        <property name="lineWidth">
         <number>0</number>
        </property>
@@ -179,6 +189,9 @@
    </item>
    <item>
     <widget class="QLineEdit" name="lineEdit_2">
+     <property name="toolTip">
+      <string>Enter amount of people dish are ready for, i.e. &quot;1&quot;</string>
+     </property>
      <property name="placeholderText">
       <string>Amount of people</string>
      </property>
