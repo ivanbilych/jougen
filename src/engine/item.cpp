@@ -6,7 +6,7 @@
 #include <algorithm>
 
 const std::string Item::itemMeasureTypeNames[] = {
-    "kgram",
+    "kg",
     "piece",
     "pack",
     "stick",
