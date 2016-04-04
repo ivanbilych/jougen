@@ -225,9 +225,9 @@ void IngridientWindow::editItem(Item* item) {
     if ( !ui->comboBox_1->currentText().toStdString().compare("kg") ) {
         item->setItemMass(1);
     } else {
-        item->setItemMass(ui->lineEdit_2->text().toLong());
+        item->setItemMass(QStringToMass(ui->lineEdit_2->text()));
     }
-    item->setItemPrice(ui->lineEdit_4->text().toLong());
+    item->setItemPrice(QStringToPrice(ui->lineEdit_4->text()));
     item->setItemUnitType(static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
@@ -235,10 +235,10 @@ void IngridientWindow::editFood(Food* food) {
     PRINT_DEBUG("Editing food");
 
     editItem(food);
-    food->setItemFats(ui->lineEdit_3->text().toLong());
-    food->setItemProteins(ui->lineEdit_5->text().toLong());
-    food->setItemCarbohydrates(ui->lineEdit_6->text().toLong());
-    food->setItemCalories(ui->lineEdit_7->text().toLong());
+    food->setItemFats(QStringToFats(ui->lineEdit_3->text()));
+    food->setItemProteins(QStringToProteins(ui->lineEdit_5->text()));
+    food->setItemCarbohydrates(QStringToCarbohydrates(ui->lineEdit_6->text()));
+    food->setItemCalories(QStringToCalories(ui->lineEdit_7->text()));
 }
 
 void IngridientWindow::on_radioButton_1_clicked() {
