@@ -4,7 +4,7 @@
 #include <string>
 
 #define VERSION_MAJOR "0"
-#define VERSION_MINOR_HI "0"
+#define VERSION_MINOR_HI "1"
 #define VERSION_MINOR_LO "0"
 #define VERSION_SUFFIX " alpha"
 

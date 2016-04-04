@@ -1,6 +1,9 @@
 # jougen - journey generator
 
-Work in progress, for now nothing to show :D
+**Current version:** `0.1 alpha`
+**Features:**
+* Crate/edit list of ingridients and dishes
+* Load/Save ingridient and dish list
 
 ## requirements
 I'm using Ubuntu 15.04. Install all required stuff with
