@@ -52,10 +52,16 @@ IngridientWindow::~IngridientWindow() {
 }
 
 void IngridientWindow::on_buttonBox_1_accepted() {
+    bool result = false;
+
     if ( editMode ) {
-        buttonBoxAcceptedEditMode();
+        result = buttonBoxAcceptedEditMode();
     } else {
-        buttonBoxAcceptedNewMode();
+        result = buttonBoxAcceptedNewMode();
+    }
+
+    if ( !result ) {
+        return;
     }
 
     this->hide();
@@ -232,7 +238,7 @@ void IngridientWindow::editFood(Food* food) {
     food->setItemCalories(ui->lineEdit_7->text().toLong());
 }
 
-void IngridientWindow::buttonBoxAcceptedEditMode(void) {
+bool IngridientWindow::buttonBoxAcceptedEditMode(void) {
     bool isFood = ui->radioButton_1->isChecked();
 
     try {
@@ -249,7 +255,7 @@ void IngridientWindow::buttonBoxAcceptedEditMode(void) {
         msgBox.setText("Wrong value provided");
         msgBox.exec();
 
-        return;
+        return false;
     } catch ( EngineException e ) {
         QMessageBox msgBox;
 
@@ -258,11 +264,13 @@ void IngridientWindow::buttonBoxAcceptedEditMode(void) {
         msgBox.setText("Engine calculation error");
         msgBox.exec();
 
-        return;
+        return false;
     }
+
+    return true;
 }
 
-void IngridientWindow::buttonBoxAcceptedNewMode(void) {
+bool IngridientWindow::buttonBoxAcceptedNewMode(void) {
     bool isFood = ui->radioButton_1->isChecked();
     Food* newFood = nullptr;
     Item* newItem = nullptr;
@@ -281,7 +289,7 @@ void IngridientWindow::buttonBoxAcceptedNewMode(void) {
         msgBox.setText("Wrong value provided");
         msgBox.exec();
 
-        return;
+        return false;
     } catch ( EngineException e ) {
         QMessageBox msgBox;
 
@@ -290,7 +298,7 @@ void IngridientWindow::buttonBoxAcceptedNewMode(void) {
         msgBox.setText("Engine calculation error");
         msgBox.exec();
 
-        return;
+        return false;
     }
 
     if ( isFood ) {
@@ -298,6 +306,8 @@ void IngridientWindow::buttonBoxAcceptedNewMode(void) {
     } else {
         emit itemObjectReady(newItem);
     }
+
+    return true;
 }
 
 void IngridientWindow::on_radioButton_1_clicked() {
