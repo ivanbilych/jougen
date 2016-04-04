@@ -52,17 +52,9 @@ IngridientWindow::~IngridientWindow() {
 
 void IngridientWindow::on_buttonBox_1_accepted() {
     if ( editMode ) {
-        if ( ui->radioButton_1->isChecked() ) {
-            editFood(dynamic_cast<Food*>(editedItem));
-        } else if ( ui->radioButton_2->isChecked() ) {
-            editItem(editedItem);
-        }
+        buttonBoxAcceptedEditMode();
     } else {
-        if ( ui->radioButton_1->isChecked() ) {
-            emit foodObjectReady(createNewFood());
-        } else if ( ui->radioButton_2->isChecked() ) {
-            emit itemObjectReady(createNewItem());
-        }
+        buttonBoxAcceptedNewMode();
     }
 
     this->hide();
@@ -237,6 +229,26 @@ void IngridientWindow::editFood(Food* food) {
     food->setItemProteins(ui->lineEdit_5->text().toLong());
     food->setItemCarbohydrates(ui->lineEdit_6->text().toLong());
     food->setItemCalories(ui->lineEdit_7->text().toLong());
+}
+
+void IngridientWindow::buttonBoxAcceptedEditMode(void) {
+    bool isFood = ui->radioButton_1->isChecked();
+
+    if ( isFood ) {
+        editFood(dynamic_cast<Food*>(editedItem));
+    } else {
+        editItem(editedItem);
+    }
+}
+
+void IngridientWindow::buttonBoxAcceptedNewMode(void) {
+    bool isFood = ui->radioButton_1->isChecked();
+
+    if ( isFood ) {
+        emit foodObjectReady(createNewFood());
+    } else {
+        emit itemObjectReady(createNewItem());
+    }
 }
 
 void IngridientWindow::on_radioButton_1_clicked() {
