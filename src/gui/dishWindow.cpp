@@ -151,10 +151,24 @@ Dish* DishWindow::createNewDish(void) {
         if ( foodAmount.isEmpty() ) {
             PRINT_ERR("Dish ingridient could not be empty");
 
+            delete dish;
+
             throw EmptyDishIngridientException();
         }
 
-        dish->addFood(dynamic_cast<Food*>(*item), QStringToMass(foodAmount));
+        try {
+            dish->addFood(dynamic_cast<Food*>(*item), QStringToMass(foodAmount));
+        } catch ( EngineException e ) {
+            PRINT_ERR("Something wrong while adding new food to dish");
+
+            delete dish;
+
+            throw;
+        } catch ( ... ) {
+            delete dish;
+
+            throw;
+        }
         pos_y += 1;
     }
 
