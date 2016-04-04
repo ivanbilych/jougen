@@ -44,6 +44,7 @@ private:
 
     Dish* createNewDish(void);
     void applyStats(Dish* dish);
+    void buttonBoxAcceptedEditMode(void);
 };
 
 #endif // DISHWINDOW_H

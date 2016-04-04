@@ -47,35 +47,7 @@ void DishWindow::on_buttonBox_1_accepted() {
     if ( dishFoodList.size() && !editMode ) {
         emit itemObjectReady(createNewDish());
     } else {
-        int pos_y = 0;
-        QString newAmountOfPeople = ui->lineEdit_2->text();
-
-        if ( newAmountOfPeople.isEmpty() ) {
-            PRINT_ERR("Amount of people could not be empty");
-
-            throw EmptyAmountOfPeopleException();
-        }
-
-        PRINT_DEBUG("Changing every food item to correct...");
-
-        for ( auto& entry: dish->getIngridientMap() ) {
-            QString foodAmount = ui->tableWidget_1->item(pos_y, 1)->text();
-
-            if ( foodAmount.isEmpty() ) {
-                PRINT_ERR("Dish ingridient could not be empty");
-
-                throw EmptyDishIngridientException();
-            }
-
-            dish->changeFoodAmount(entry.first, QStringToMass(foodAmount));
-            pos_y += 1;
-        }
-
-        if ( oldAmountOfPeople != newAmountOfPeople ) {
-            PRINT_DEBUG("Changing amount of people to correct...");
-
-            dish->changeAmountOfPeople(newAmountOfPeople.toLong());
-        }
+        buttonBoxAcceptedEditMode();
     }
 
     this->hide();
@@ -180,6 +152,39 @@ void DishWindow::applyStats(Dish* dish) {
 
     PRINT_DEBUG("Dish stats applied");
 }
+
+void DishWindow::buttonBoxAcceptedEditMode(void) {
+    QString newAmountOfPeople = ui->lineEdit_2->text();
+    int pos_y = 0;
+
+    if ( newAmountOfPeople.isEmpty() ) {
+        PRINT_ERR("Amount of people could not be empty");
+
+        throw EmptyAmountOfPeopleException();
+    }
+
+    PRINT_DEBUG("Changing every food item to correct...");
+
+    for ( auto& entry: dish->getIngridientMap() ) {
+        QString foodAmount = ui->tableWidget_1->item(pos_y, 1)->text();
+
+        if ( foodAmount.isEmpty() ) {
+            PRINT_ERR("Dish ingridient could not be empty");
+
+            throw EmptyDishIngridientException();
+        }
+
+        dish->changeFoodAmount(entry.first, QStringToMass(foodAmount));
+        pos_y += 1;
+    }
+
+    if ( oldAmountOfPeople != newAmountOfPeople ) {
+        PRINT_DEBUG("Changing amount of people to correct...");
+
+        dish->changeAmountOfPeople(newAmountOfPeople.toLong());
+    }
+}
+
 
 void DishWindow::on_pushButton_1_clicked() {
     QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
