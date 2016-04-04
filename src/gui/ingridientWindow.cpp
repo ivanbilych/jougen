@@ -235,10 +235,30 @@ void IngridientWindow::editFood(Food* food) {
 void IngridientWindow::buttonBoxAcceptedEditMode(void) {
     bool isFood = ui->radioButton_1->isChecked();
 
-    if ( isFood ) {
-        editFood(dynamic_cast<Food*>(editedItem));
-    } else {
-        editItem(editedItem);
+    try {
+        if ( isFood ) {
+            editFood(dynamic_cast<Food*>(editedItem));
+        } else {
+            editItem(editedItem);
+        }
+    } catch ( IngridientWindowException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Wrong value provided");
+
+        msgBox.setText("Wrong value provided");
+        msgBox.exec();
+
+        return;
+    } catch ( EngineException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Engine calculation error");
+
+        msgBox.setText("Engine calculation error");
+        msgBox.exec();
+
+        return;
     }
 }
 
