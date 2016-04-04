@@ -2,6 +2,7 @@
 #include <errors.hpp>
 #include <debug.hpp>
 
+#include <QMessageBox>
 #include <ingridientWindow.hpp>
 #include "ui_ingridientWindow.h"
 
@@ -243,11 +244,39 @@ void IngridientWindow::buttonBoxAcceptedEditMode(void) {
 
 void IngridientWindow::buttonBoxAcceptedNewMode(void) {
     bool isFood = ui->radioButton_1->isChecked();
+    Food* newFood = nullptr;
+    Item* newItem = nullptr;
+
+    try {
+        if ( isFood ) {
+            newFood = createNewFood();
+        } else {
+            newItem = createNewItem();
+        }
+    } catch ( IngridientWindowException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Wrong value provided");
+
+        msgBox.setText("Wrong value provided");
+        msgBox.exec();
+
+        return;
+    } catch ( EngineException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Engine calculation error");
+
+        msgBox.setText("Engine calculation error");
+        msgBox.exec();
+
+        return;
+    }
 
     if ( isFood ) {
-        emit foodObjectReady(createNewFood());
+        emit foodObjectReady(newFood);
     } else {
-        emit itemObjectReady(createNewItem());
+        emit itemObjectReady(newItem);
     }
 }
 
