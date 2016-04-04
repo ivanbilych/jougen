@@ -152,11 +152,13 @@ Item* IngridientWindow::createNewItem(void) {
         throw EmptyIngridientPriceException();
     }
 
-    return new Item(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
+    return new Item(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("kg") ? 1 : QStringToMass(mass)),
                     QStringToPrice(price), static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()));
 }
 
 Food* IngridientWindow::createNewFood(void) {
+    bool isKg = !ui->comboBox_1->currentText().toStdString().compare("kg");
+
     PRINT_DEBUG("Creating new food");
 
     QString name = ui->lineEdit_1->text();
@@ -173,7 +175,7 @@ Food* IngridientWindow::createNewFood(void) {
         throw EmptyIngridientNameException();
     }
 
-    if ( mass.isEmpty() ) {
+    if ( mass.isEmpty() && !isKg ) {
         PRINT_ERR("Food mass could not be empty");
 
         throw EmptyIngridientMassException();
@@ -209,7 +211,7 @@ Food* IngridientWindow::createNewFood(void) {
         throw EmptyIngridientCaloriesException();
     }
 
-    return new Food(name.toStdString(), (!ui->comboBox_1->currentText().toStdString().compare("gram") ? 1 : QStringToMass(mass)),
+    return new Food(name.toStdString(), isKg ? 1 : QStringToMass(mass),
                     QStringToPrice(price), static_cast<Item::MeasureType>(ui->comboBox_1->currentIndex()),
                     QStringToFats(fats),
                     QStringToProteins(proteins),
@@ -220,7 +222,7 @@ Food* IngridientWindow::createNewFood(void) {
 void IngridientWindow::editItem(Item* item) {
     PRINT_DEBUG("Editing item");
 
-    if ( !ui->comboBox_1->currentText().toStdString().compare("gram") ) {
+    if ( !ui->comboBox_1->currentText().toStdString().compare("kg") ) {
         item->setItemMass(1);
     } else {
         item->setItemMass(ui->lineEdit_2->text().toLong());
@@ -254,7 +256,7 @@ void IngridientWindow::on_radioButton_2_clicked() {
 }
 
 void IngridientWindow::on_comboBox_1_currentIndexChanged(const QString& arg1) {
-    if ( !arg1.toStdString().compare("gram") ) {
+    if ( !arg1.toStdString().compare("kg") ) {
         ui->lineEdit_2->setDisabled(true);
     } else {
         ui->lineEdit_2->setDisabled(false);
