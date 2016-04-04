@@ -2,6 +2,7 @@
 #include <debug.hpp>
 #include <errors.hpp>
 
+#include <QMessageBox>
 #include <dishWindow.hpp>
 #include "ui_dishWindow.h"
 
@@ -44,10 +45,37 @@ DishWindow::~DishWindow() {
 }
 
 void DishWindow::on_buttonBox_1_accepted() {
-    if ( dishFoodList.size() && !editMode ) {
-        emit itemObjectReady(createNewDish());
-    } else {
-        buttonBoxAcceptedEditMode();
+    bool isNewDish = dishFoodList.size() && !editMode;
+    Dish* newDish = nullptr;
+
+    try {
+        if ( isNewDish ) {
+            newDish = createNewDish();
+        } else {
+            buttonBoxAcceptedEditMode();
+        }
+    } catch ( IngridientWindowException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Wrong value provided");
+
+        msgBox.setText("Wrong value provided");
+        msgBox.exec();
+
+        return;
+    } catch ( EngineException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Engine calculation error");
+
+        msgBox.setText("Engine calculation error");
+        msgBox.exec();
+
+        return;
+    }
+
+    if ( isNewDish ) {
+        emit itemObjectReady(newDish);
     }
 
     this->hide();
