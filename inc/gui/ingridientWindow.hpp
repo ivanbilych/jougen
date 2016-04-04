@@ -43,6 +43,8 @@ private:
     Food* createNewFood(void);
     void editItem(Item* item);
     void editFood(Food* food);
+    bool buttonBoxAcceptedEditMode(void);
+    bool buttonBoxAcceptedNewMode(void);
 };
 
 #endif // INGRIDIENTWINDOW_H

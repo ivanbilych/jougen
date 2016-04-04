@@ -2,6 +2,7 @@
 #include <errors.hpp>
 #include <debug.hpp>
 
+#include <QMessageBox>
 #include <ingridientWindow.hpp>
 #include "ui_ingridientWindow.h"
 
@@ -51,18 +52,16 @@ IngridientWindow::~IngridientWindow() {
 }
 
 void IngridientWindow::on_buttonBox_1_accepted() {
+    bool result = false;
+
     if ( editMode ) {
-        if ( ui->radioButton_1->isChecked() ) {
-            editFood(dynamic_cast<Food*>(editedItem));
-        } else if ( ui->radioButton_2->isChecked() ) {
-            editItem(editedItem);
-        }
+        result = buttonBoxAcceptedEditMode();
     } else {
-        if ( ui->radioButton_1->isChecked() ) {
-            emit foodObjectReady(createNewFood());
-        } else if ( ui->radioButton_2->isChecked() ) {
-            emit itemObjectReady(createNewItem());
-        }
+        result = buttonBoxAcceptedNewMode();
+    }
+
+    if ( !result ) {
+        return;
     }
 
     this->hide();
@@ -239,6 +238,78 @@ void IngridientWindow::editFood(Food* food) {
     food->setItemProteins(QStringToProteins(ui->lineEdit_5->text()));
     food->setItemCarbohydrates(QStringToCarbohydrates(ui->lineEdit_6->text()));
     food->setItemCalories(QStringToCalories(ui->lineEdit_7->text()));
+}
+
+bool IngridientWindow::buttonBoxAcceptedEditMode(void) {
+    bool isFood = ui->radioButton_1->isChecked();
+
+    try {
+        if ( isFood ) {
+            editFood(dynamic_cast<Food*>(editedItem));
+        } else {
+            editItem(editedItem);
+        }
+    } catch ( IngridientWindowException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Wrong value provided");
+
+        msgBox.setText("Wrong value provided");
+        msgBox.exec();
+
+        return false;
+    } catch ( EngineException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Engine calculation error");
+
+        msgBox.setText("Engine calculation error");
+        msgBox.exec();
+
+        return false;
+    }
+
+    return true;
+}
+
+bool IngridientWindow::buttonBoxAcceptedNewMode(void) {
+    bool isFood = ui->radioButton_1->isChecked();
+    Food* newFood = nullptr;
+    Item* newItem = nullptr;
+
+    try {
+        if ( isFood ) {
+            newFood = createNewFood();
+        } else {
+            newItem = createNewItem();
+        }
+    } catch ( IngridientWindowException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Wrong value provided");
+
+        msgBox.setText("Wrong value provided");
+        msgBox.exec();
+
+        return false;
+    } catch ( EngineException e ) {
+        QMessageBox msgBox;
+
+        PRINT_ERR("Engine calculation error");
+
+        msgBox.setText("Engine calculation error");
+        msgBox.exec();
+
+        return false;
+    }
+
+    if ( isFood ) {
+        emit foodObjectReady(newFood);
+    } else {
+        emit itemObjectReady(newItem);
+    }
+
+    return true;
 }
 
 void IngridientWindow::on_radioButton_1_clicked() {

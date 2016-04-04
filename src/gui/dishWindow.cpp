@@ -2,6 +2,7 @@
 #include <debug.hpp>
 #include <errors.hpp>
 
+#include <QMessageBox>
 #include <dishWindow.hpp>
 #include "ui_dishWindow.h"
 
@@ -44,38 +45,37 @@ DishWindow::~DishWindow() {
 }
 
 void DishWindow::on_buttonBox_1_accepted() {
-    if ( dishFoodList.size() && !editMode ) {
-        emit itemObjectReady(createNewDish());
-    } else {
-        int pos_y = 0;
-        QString newAmountOfPeople = ui->lineEdit_2->text();
+    bool isNewDish = dishFoodList.size() && !editMode;
+    Dish* newDish = nullptr;
 
-        if ( newAmountOfPeople.isEmpty() ) {
-            PRINT_ERR("Amount of people could not be empty");
-
-            throw EmptyAmountOfPeopleException();
+    try {
+        if ( isNewDish ) {
+            newDish = createNewDish();
+        } else {
+            buttonBoxAcceptedEditMode();
         }
+    } catch ( IngridientWindowException e ) {
+        QMessageBox msgBox;
 
-        PRINT_DEBUG("Changing every food item to correct...");
+        PRINT_ERR("Wrong value provided");
 
-        for ( auto& entry: dish->getIngridientMap() ) {
-            QString foodAmount = ui->tableWidget_1->item(pos_y, 1)->text();
+        msgBox.setText("Wrong value provided");
+        msgBox.exec();
 
-            if ( foodAmount.isEmpty() ) {
-                PRINT_ERR("Dish ingridient could not be empty");
+        return;
+    } catch ( EngineException e ) {
+        QMessageBox msgBox;
 
-                throw EmptyDishIngridientException();
-            }
+        PRINT_ERR("Engine calculation error");
 
-            dish->changeFoodAmount(entry.first, QStringToMass(foodAmount));
-            pos_y += 1;
-        }
+        msgBox.setText("Engine calculation error");
+        msgBox.exec();
 
-        if ( oldAmountOfPeople != newAmountOfPeople ) {
-            PRINT_DEBUG("Changing amount of people to correct...");
+        return;
+    }
 
-            dish->changeAmountOfPeople(newAmountOfPeople.toLong());
-        }
+    if ( isNewDish ) {
+        emit itemObjectReady(newDish);
     }
 
     this->hide();
@@ -151,10 +151,24 @@ Dish* DishWindow::createNewDish(void) {
         if ( foodAmount.isEmpty() ) {
             PRINT_ERR("Dish ingridient could not be empty");
 
+            delete dish;
+
             throw EmptyDishIngridientException();
         }
 
-        dish->addFood(dynamic_cast<Food*>(*item), QStringToMass(foodAmount));
+        try {
+            dish->addFood(dynamic_cast<Food*>(*item), QStringToMass(foodAmount));
+        } catch ( EngineException e ) {
+            PRINT_ERR("Something wrong while adding new food to dish");
+
+            delete dish;
+
+            throw;
+        } catch ( ... ) {
+            delete dish;
+
+            throw;
+        }
         pos_y += 1;
     }
 
@@ -180,6 +194,39 @@ void DishWindow::applyStats(Dish* dish) {
 
     PRINT_DEBUG("Dish stats applied");
 }
+
+void DishWindow::buttonBoxAcceptedEditMode(void) {
+    QString newAmountOfPeople = ui->lineEdit_2->text();
+    int pos_y = 0;
+
+    if ( newAmountOfPeople.isEmpty() ) {
+        PRINT_ERR("Amount of people could not be empty");
+
+        throw EmptyAmountOfPeopleException();
+    }
+
+    PRINT_DEBUG("Changing every food item to correct...");
+
+    for ( auto& entry: dish->getIngridientMap() ) {
+        QString foodAmount = ui->tableWidget_1->item(pos_y, 1)->text();
+
+        if ( foodAmount.isEmpty() ) {
+            PRINT_ERR("Dish ingridient could not be empty");
+
+            throw EmptyDishIngridientException();
+        }
+
+        dish->changeFoodAmount(entry.first, QStringToMass(foodAmount));
+        pos_y += 1;
+    }
+
+    if ( oldAmountOfPeople != newAmountOfPeople ) {
+        PRINT_DEBUG("Changing amount of people to correct...");
+
+        dish->changeAmountOfPeople(newAmountOfPeople.toLong());
+    }
+}
+
 
 void DishWindow::on_pushButton_1_clicked() {
     QModelIndexList selected = ui->listView_1->selectionModel()->selectedIndexes();
