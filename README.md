@@ -1,6 +1,7 @@
 # jougen - journey generator
 
 **Current version:** `0.1 alpha`
+
 **Features:**
 * Crate/edit list of ingridients and dishes
 * Load/Save ingridient and dish list
